@@ -1,13 +1,13 @@
 {
-  "name": "path-value-build",
-  "version": "0.0.3",
-  "description": "path-value web builder",
+  "name": "primes-generator-build",
+  "version": "0.0.1",
+  "description": "primes-generator web builder",
   "scripts": {
-    "build": "browserify ../dist-web/index.js -o path-value.js -s pathValue && gulp"
+    "build": "browserify ../dist-web/index.js -o primes-generator.js -s primesGenerator && gulp"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vitaly-t/path-value.git"
+    "url": "https://github.com/vitaly-t/primes-generator.git"
   },
   "author": {
     "name": "Vitaly Tomilov",

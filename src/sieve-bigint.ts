@@ -1,11 +1,11 @@
 export function* sieveBigint(): IterableIterator<bigint> {
-    yield 2n;
-    yield 3n;
-    yield 5n;
+    yield BigInt(2);
+    yield BigInt(3);
+    yield BigInt(5);
     const sieve = new Map<bigint, bigint>();
     const ps = sieveBigint();
     ps.next() && ps.next();
-    for (let p = 3n, i = 7n; true; i += 2n) {
+    for (let p = BigInt(3), i = BigInt(7); true; i += BigInt(2)) {
         let s = sieve.get(i);
         if (s !== undefined) {
             sieve.delete(i);
@@ -13,7 +13,7 @@ export function* sieveBigint(): IterableIterator<bigint> {
             yield i;
             continue;
         } else {
-            s = 2n * p;
+            s = BigInt(2) * p;
             p = ps.next().value;
         }
         let k = i + s;
