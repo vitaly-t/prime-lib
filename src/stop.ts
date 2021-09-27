@@ -3,16 +3,15 @@
  * Handles both finite and infinite sequences.
  */
 export function* stopOnValue<T = number>(iterator: IterableIterator<T>, maxValue: T): IterableIterator<T> {
-    let a, n;
-    do {
-        n = iterator.next();
-        if (n.value > maxValue) {
+    let a;
+    for (; ;) {
+        a = iterator.next();
+        if (a.value > maxValue || a.done) {
             break;
         }
-        a = n.value;
-        yield a;
-    } while (!n.done);
-    return a;
+        yield a.value;
+    }
+    return a.value;
 }
 
 /**
@@ -21,12 +20,12 @@ export function* stopOnValue<T = number>(iterator: IterableIterator<T>, maxValue
  */
 export function* stopOnCount<T = number>(iterator: IterableIterator<T>, total: number): IterableIterator<T> {
     let a, count = 0;
-    do {
+    while (count++ < total) {
         a = iterator.next();
-        if (!a.done) {
-            yield a.value;
+        if (a.done) {
+            break;
         }
-        count++;
-    } while (count < total && !a.done);
-    return a;
+        yield a.value;
+    }
+    return a?.value;
 }

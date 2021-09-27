@@ -2,6 +2,7 @@ import {sieveNumber} from './sieve-number';
 import {sieveBigint} from './sieve-bigint';
 
 export {stopOnValue, stopOnCount} from './stop';
+export {isPrime} from './is-prime';
 
 export function* generatePrimes(start?: number): IterableIterator<number> {
     // TODO: Return a different iterator when 'start' is set

@@ -52,14 +52,14 @@ export function bigPrimes(start?: bigint): Observable<bigint> {
 }
 ```
 
-Example of generating 5 primes from 17 onwards:
+Example of generating 5 primes from 7 onwards:
 
 ```ts
 import {from, take} from 'rxjs';
 
-primes(17).pipe(take(5))
+primes(7).pipe(take(5))
     .subscribe(a => {
-        // will get here: 17, 19, 23, 29, 31
+        // 7, 11, 13, 17, 19
     });
 ```
 
@@ -73,6 +73,6 @@ const sequence = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 from(sequence).pipe(filter(isPrime))
     .subscribe(a => {
-        // will get here: 2, 3, 5, 7
+        // 2, 3, 5, 7
     });
 ```
