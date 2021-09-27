@@ -37,14 +37,27 @@ const values = [...i]; // 2n, 3n, 5n, 7n, 11n, 13n, 17n
 
 ### RXJS
 
+Adding reusable RXJS wrappers from start is usually a good idea:
+
+```ts
+import {from} from 'rxjs';
+import {generatePrimes, generateBigPrimes} from 'primes-generator';
+
+export function primes(start?: number): Observable<number> {
+    return from(generatePrimes(start));
+}
+
+export function bigPrimes(start?: bigint): Observable<bigint> {
+    return from(generateBigPrimes(start));
+}
+```
+
 Example of generating 5 primes from 17 onwards:
 
 ```ts
 import {from, take} from 'rxjs';
-import {generatePrimes} from 'primes-generator';
 
-from(generatePrimes(17))
-    .pipe(take(5))
+primes(17).pipe(take(5))
     .subscribe(a => {
         // will get here: 17, 19, 23, 29, 31
     });
@@ -53,13 +66,12 @@ from(generatePrimes(17))
 Example of detecting primes in another sequence:
 
 ```ts
-import {from} from 'rxjs';
+import {from, filter} from 'rxjs';
 import {isPrime} from 'primes-generator';
 
 const sequence = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-from(sequence)
-    .pipe(filter(a => isPrime(a)))
+from(sequence).pipe(filter(isPrime))
     .subscribe(a => {
         // will get here: 2, 3, 5, 7
     });
