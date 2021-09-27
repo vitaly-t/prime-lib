@@ -1,7 +1,7 @@
-path-value web build
---------------------
+primes-generator web build
+--------------------------
 
-Builds version of `path-value` for web distribution.
+Builds version of `primes-generator` for web distribution.
 
 Before building web files, you need to build source JS files from the main project:
 
@@ -25,8 +25,8 @@ $ npm run build
 
 All files will be generated in folder `../dist/web`.
 
-After including `path-value.min.js` into your web page, `pathValue` namespace will have all the functions:
+After including `primes-generator.min.js` into your web page, `primesGenerator` namespace will have all the functions:
 
 ```js
-pathValue.resolveValue({value: 123}, 'value'); //=> 123
+const iterator = primesGenerator.generatePrimes();
 ```
