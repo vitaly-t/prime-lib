@@ -2,7 +2,7 @@
  * Terminates a number/bigint iterator upon reaching a maximum value.
  * Handles both finite and infinite sequences.
  */
-export function* stopOnValue<T = number>(iterator: IterableIterator<T>, maxValue: T): IterableIterator<T> {
+export function* stopOnValue<T>(iterator: IterableIterator<T>, maxValue: T): IterableIterator<T> {
     let a;
     for (; ;) {
         a = iterator.next();
@@ -18,7 +18,7 @@ export function* stopOnValue<T = number>(iterator: IterableIterator<T>, maxValue
  * Terminates a number/bigint iterator after producing 'total' number of elements.
  * Handles both finite and infinite sequences.
  */
-export function* stopOnCount<T = number>(iterator: IterableIterator<T>, total: number): IterableIterator<T> {
+export function* stopOnCount<T>(iterator: IterableIterator<T>, total: number): IterableIterator<T> {
     let a, count = 0;
     while (count++ < total) {
         a = iterator.next();

@@ -1,11 +1,25 @@
-# primes-generator
+primes-generator
+----------------
 
-**UNDER DEVELOPMENT**
+**THIS PROJECT IS UNDER DEVELOPMENT, CHECK BACK LATER!**
 
+* [About](#about)
+* [Installation](#installation)
 * [Usage](#usage)
     * [JavaScript](#javascript)
     * [TypeScript](#typescript)
     * [RXJS](#rxjs)
+* [API](#api)
+
+## About
+
+A set of high-performance infinite generators of [prime numbers], implemented in TypeScript.
+
+## Installation
+
+```
+$ npm i primes-generator
+```
 
 ## Usage
 
@@ -76,3 +90,9 @@ from(sequence).pipe(filter(isPrime))
         // 2, 3, 5, 7
     });
 ```
+
+## API
+
+API documentation
+
+[prime numbers]:https://en.wikipedia.org/wiki/Prime_number
