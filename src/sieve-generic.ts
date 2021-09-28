@@ -48,4 +48,18 @@ function* sieveGeneric<T>(params: any): IterableIterator<T> {
     }
 }
 
-console.log('result:', [...stopOnCount(sieve_BigInt(), 10)]);
+
+(function test() {
+    let count = 0;
+    const start = Date.now();
+    let a;
+    const p = sieve_Number();
+    do {
+        a = p.next();
+        /*
+        if(!a.done){
+            console.log(a.value);
+        }*/
+    } while (++count < 10_000_000);
+    console.log('duration:', Date.now() - start);
+})();
