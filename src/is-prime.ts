@@ -30,6 +30,9 @@ export function isPrimeNumber(n: number): boolean {
     return true;
 }
 
+// Interesting also: npm i bigint-is-prime
+// https://github.com/shade/BigJS/blob/master/src/bigint.js
+// those are probability-based check for bigint primes.
 export function isBigPrime(n: bigint) {
     if (n % 1n || n < 2n) {
         return false;
@@ -70,7 +73,7 @@ function newtonIteration(n: bigint, x0: bigint): bigint {
     }*/
 
     // TODO: This one hangs:
-    console.log(isBigPrime(109000000000000005676789000007878700000000000000000055500000000000137n));
-    // console.log(newtonIteration(121n, 1n));
+    // console.log(isBigPrime(109000000000000005676789000007878700000000000000000055500000000000137n));
+    console.log(newtonIteration(3n, 1n));
 
 })();
