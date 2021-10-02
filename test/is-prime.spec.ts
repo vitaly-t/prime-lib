@@ -41,7 +41,7 @@ describe('isPrime', () => {
 
     describe('for special cases', () => {
         it('must not fail', () => {
-            const specialCase = 109000000000000005676789000007878700000000000000000055500000000000137n;
+            // const specialCase = 109000000000000005676789000007878700000000000000000055500000000000137n;
             // TODO: This special case hang, for some reasons :(
             // expect(isPrime(specialCase)).to.be.true;
         });

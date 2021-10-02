@@ -1,15 +1,12 @@
 primes-generator
 ----------------
 
-**THIS PROJECT IS UNDER DEVELOPMENT, CHECK BACK LATER!**
-
 * [About](#about)
 * [Installation](#installation)
 * [Usage](#usage)
     * [JavaScript](#javascript)
     * [TypeScript](#typescript)
     * [RXJS](#rxjs)
-* [API](#api)
 
 ## About
 
@@ -23,7 +20,7 @@ $ npm i primes-generator
 
 ## Usage
 
-**TODO:** To be documented (coming soon)
+Follows the simple usage steps below, based on your development environment.
 
 ### JavaScript
 
@@ -92,9 +89,5 @@ from(sequence).pipe(filter(isPrime))
         // 2, 3, 5, 7
     });
 ```
-
-## API
-
-API documentation
 
 [prime numbers]:https://en.wikipedia.org/wiki/Prime_number
