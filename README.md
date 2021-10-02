@@ -10,7 +10,7 @@ primes-generator
 
 ## About
 
-A set of high-performance infinite generators of [prime numbers], implemented in TypeScript.
+High-performance [prime number] generators - [Sieve of Eratosthenes] implementation in TypeScript.
 
 ## Installation
 
@@ -53,7 +53,7 @@ const values = [...s]; // 2n, 3n, 5n, 7n, 11n, 13n, 17n
 Adding reusable RXJS wrappers from start makes a good practice:
 
 ```ts
-import {from} from 'rxjs';
+import {Observable, from} from 'rxjs';
 import {generatePrimes, generateBigPrimes} from 'primes-generator';
 
 export function primes(start?: number): Observable<number> {
@@ -90,4 +90,5 @@ from(sequence).pipe(filter(isPrime))
     });
 ```
 
-[prime numbers]:https://en.wikipedia.org/wiki/Prime_number
+[prime number]:https://en.wikipedia.org/wiki/Prime_number
+[Sieve of Eratosthenes]:https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
