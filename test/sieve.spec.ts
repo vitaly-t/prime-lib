@@ -1,5 +1,5 @@
 import {expect} from './header';
-import {stopOnValue} from '../src/stop';
+import {stopOnValue} from '../src';
 import {
     sieveInt,
     sieveIntStart,
@@ -38,15 +38,13 @@ describe('sieveBigInt', () => {
 describe('sieveBigIntStart', () => {
     it('must include first prime', () => {
         const i = stopOnValue(sieveBigIntStart(5n), 17n);
-        // TODO: Doesn't work yet
-        // expect([...i]).to.eql([5n, 7n, 11n, 13n, 17n]);
+        expect([...i]).to.eql([5n, 7n, 11n, 13n, 17n]);
     });
     it('must ignore low values', () => {
         const values = [-2n, -1n, 0n, 1n, 2n];
         for (const a of values) {
             const i = stopOnValue(sieveBigIntStart(a), 17n);
-            // TODO: Doesn't work yet
-            // expect([...i], `Failed for ${a}`).to.eql([2n, 3n, 5n, 7n, 11n, 13n, 17n]);
+            expect([...i], `Failed for ${a}`).to.eql([2n, 3n, 5n, 7n, 11n, 13n, 17n]);
         }
     });
 });

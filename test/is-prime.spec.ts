@@ -1,5 +1,5 @@
 import {expect} from './header';
-import {isPrime} from '../src/is-prime';
+import {isPrime} from '../src';
 
 describe('isPrime', () => {
 

@@ -108,33 +108,30 @@ export function* sieveBigInt(): IterableIterator<bigint> {
 }
 
 export function* sieveBigIntStart(start: bigint): IterableIterator<bigint> {
-    // TODO: It doesn't work yet, needs ceil logic, etc.
-
-    /*
-    if (start <= BigInt(2)) {
-        yield BigInt(2);
+    if (start <= 2n) {
+        yield 2n;
     }
-    if (start <= BigInt(3)) {
-        yield BigInt(3);
+    if (start <= 3n) {
+        yield 3n;
     }
-    if (start <= BigInt(5)) {
-        yield BigInt(5);
+    if (start <= 5n) {
+        yield 5n;
     }
-    if (start <= BigInt(7)) {
-        yield BigInt(7);
+    if (start <= 7n) {
+        yield 7n;
     }
     const sieve = new Map<bigint, bigint>();
-    const ps = sieveBigIntStart(BigInt(2));
+    const ps = sieveBigIntStart(2n);
     ps.next();                 // skip the 2
     let p: bigint = ps.next().value;   // p==3
     let psqr = p * p;          // p^2, 9
     let c = psqr;              // first candidate, 9
-    let s = BigInt(6);                 // step value
+    let s = 6n;                 // step value
 
     while (psqr < start)      // must adjust initial state
     {
-        s = BigInt(2) * p;
-        let m = p + s * Math.ceil((start - p) / s);  // multiple of p
+        s = 2n * p;
+        let m = p + s * bigCeil((start - p), s);  // multiple of p
         while (sieve.has(m)) {
             m += s;
         }
@@ -145,20 +142,20 @@ export function* sieveBigIntStart(start: bigint): IterableIterator<bigint> {
     if (start > c) {
         c = start;
     }
-    if (c % BigInt(2) === 0) {
-        c += BigInt(1);
+    if (c % 2n === 0n) {
+        c += 1n;
     }
 
-    for (; true; c += BigInt(2))     // main loop
+    for (; true; c += 2n)     // main loop
     {
-        s = sieve.get(c);
+        s = sieve.get(c)!;
         if (s !== undefined) {
             sieve.delete(c);      // c composite
         } else if (c < psqr) {
             yield c;              // c prime
             continue;
         } else {                  // c == p^2
-            s = BigInt(2) * p;
+            s = 2n * p;
             p = ps.next().value;
             psqr = p * p;
         }
@@ -167,5 +164,15 @@ export function* sieveBigIntStart(start: bigint): IterableIterator<bigint> {
             m += s;
         }
         sieve.set(m, s);
-    }*/
+    }
+}
+
+function bigCeil(a: bigint, b: bigint): bigint {
+    if (a > b) {
+        const div = a / b;
+        const remainder = a - div * b;
+        const percent = 100n * remainder / b;
+        return percent < 50n ? div : div + 1n;
+    }
+    return a * 2n >= b ? 1n : 0n;
 }
