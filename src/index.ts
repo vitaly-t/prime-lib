@@ -1,15 +1,12 @@
-import {sieveNumber} from './sieve-number';
-import {sieveBigint} from './sieve-bigint';
+import {sieveInt, sieveIntStart, sieveBigInt, sieveBigIntStart} from './sieve';
 
 export {stopWhen, stopOnCount, stopOnValue} from './stop';
 export {isPrime} from './is-prime';
 
-export function* generatePrimes(start?: number): IterableIterator<number> {
-    // TODO: Return a different iterator when 'start' is set
-    return sieveNumber();
+export function generatePrimes(start?: number): IterableIterator<number> {
+    return start && start > 2 ? sieveIntStart(start) : sieveInt();
 }
 
 export function generateBigPrimes(start?: bigint): IterableIterator<bigint> {
-    // TODO: Return a different iterator when 'start' is set
-    return sieveBigint();
+    return start && start > 2n ? sieveBigIntStart(start) : sieveBigInt();
 }
