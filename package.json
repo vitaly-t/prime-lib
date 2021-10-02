@@ -1,14 +1,13 @@
 {
   "name": "primes-generator",
-  "version": "0.0.2-beta.3",
+  "version": "0.0.2-beta.4",
   "description": "Primes generator",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p src && tsc -p src/tsconfig.web.json",
-    "lint": "tsc -p test && tslint --fix ./src/**/*.ts ./test/**/*.ts",
-    "test": "npm run lint && nyc mocha -r ts-node/register test/**/*.spec.ts",
-    "travis": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "lint": "tsc -p test && tslint --fix ./src/*.ts ./test/*.ts",
+    "test": "nyc mocha -r ts-node/register test/*.spec.ts"
   },
   "files": [
     "dist"
