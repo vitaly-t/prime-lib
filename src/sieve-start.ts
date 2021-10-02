@@ -1,5 +1,3 @@
-import {stopOnCount} from './stop';
-
 function* primesFrom(start: number): IterableIterator<number> {
     if (start <= 2) {
         yield 2;
@@ -55,7 +53,3 @@ function* primesFrom(start: number): IterableIterator<number> {
         sieve.set(m, s);
     }
 }
-
-console.log([...stopOnCount(primesFrom(200), 10)]);
-
-// TODO: Math.ceil for bigint

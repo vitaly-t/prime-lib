@@ -1,8 +1,8 @@
-import {expect, generatorValues} from './header';
+import {expect} from './header';
 import {squareNumber} from '../src/square-number';
 import {stopOnCount} from '../src/stop';
 
-const generate = (start: number, maxValue: number) => generatorValues(stopOnCount(squareNumber(start), maxValue));
+const generate = (start: number, maxValue: number) => [...stopOnCount(squareNumber(start), maxValue)];
 
 describe('square-number', () => {
     it('must handle critical start points', () => {

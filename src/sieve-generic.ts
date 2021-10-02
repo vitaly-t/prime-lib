@@ -1,5 +1,3 @@
-import {stopOnCount} from './stop';
-
 const sieveNumbers = {
     start: [2, 3, 5, 7],
     a: 3,
@@ -47,19 +45,3 @@ function* sieveGeneric<T>(params: any): IterableIterator<T> {
         sieve.set(k, s);
     }
 }
-
-
-(function test() {
-    let count = 0;
-    const start = Date.now();
-    let a;
-    const p = sieve_Number();
-    do {
-        a = p.next();
-        /*
-        if(!a.done){
-            console.log(a.value);
-        }*/
-    } while (++count < 10_000_000);
-    console.log('duration:', Date.now() - start);
-})();

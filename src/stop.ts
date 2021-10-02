@@ -1,31 +1,28 @@
 /**
- * Terminates a number/bigint iterator upon reaching a maximum value.
- * Handles both finite and infinite sequences.
+ * Stops an iterator when a callback condition is met.
  */
-export function* stopOnValue<T>(iterator: IterableIterator<T>, maxValue: T): IterableIterator<T> {
-    let a;
+export function* stopWhen<T>(iterator: IterableIterator<T>, cb: (value: T, index: number) => boolean): IterableIterator<T> {
+    let i, index = 0;
     for (; ;) {
-        a = iterator.next();
-        if (a.value > maxValue || a.done) {
+        i = iterator.next();
+        if (i.done || cb(i.value, index++)) {
             break;
         }
-        yield a.value;
+        yield i.value;
     }
-    return a.value;
+    return i.value;
 }
 
 /**
- * Terminates a number/bigint iterator after producing 'total' number of elements.
- * Handles both finite and infinite sequences.
+ * Stops a number/bigint iterator, after producing 'total' number of values.
  */
-export function* stopOnCount<T>(iterator: IterableIterator<T>, total: number): IterableIterator<T> {
-    let a, count = 0;
-    while (count++ < total) {
-        a = iterator.next();
-        if (a.done) {
-            break;
-        }
-        yield a.value;
-    }
-    return a?.value;
+export function stopOnCount<T>(iterator: IterableIterator<T>, total: number): IterableIterator<T> {
+    return stopWhen(iterator, (value: T, index: number) => index === total);
+}
+
+/**
+ * Stops a number/bigint iterator, upon exceeding a maximum value.
+ */
+export function stopOnValue<T>(iterator: IterableIterator<T>, maxValue: T): IterableIterator<T> {
+    return stopWhen(iterator, (value: T) => value > maxValue);
 }

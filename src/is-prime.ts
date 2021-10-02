@@ -74,6 +74,6 @@ function newtonIteration(n: bigint, x0: bigint): bigint {
 
     // TODO: This one hangs:
     // console.log(isBigPrime(109000000000000005676789000007878700000000000000000055500000000000137n));
-    console.log(newtonIteration(3n, 1n));
+    // console.log(newtonIteration(3n, 1n));
 
 })();
