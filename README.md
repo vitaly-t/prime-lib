@@ -23,7 +23,7 @@ $ npm i primes-generator
 
 ## Usage
 
-To be documented...
+**TODO:** To be documented (coming soon)
 
 ### JavaScript
 
@@ -48,7 +48,7 @@ import {generateBigPrimes, stopOnValue} from 'primes-generator';
 const i = generateBigPrimes(); // create infinite prime iterator
 const s = stopOnValue(i, 17n); // stop iterator when value reaches 17
 
-const values = [...i]; // 2n, 3n, 5n, 7n, 11n, 13n, 17n
+const values = [...s]; // 2n, 3n, 5n, 7n, 11n, 13n, 17n
 ```
 
 ### RXJS
