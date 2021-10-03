@@ -20,7 +20,7 @@ $ npm i primes-generator
 
 ## Usage
 
-Follows the simple usage steps below, based on your development environment.
+Follow the simple usage examples below, based on your development environment.
 
 ### JavaScript
 
@@ -30,7 +30,7 @@ Example of generating an array with first 10 primes as `number`-s:
 const {generatePrimes, stopOnCount} = require('primes-generator');
 
 const i = generatePrimes(); // create infinite prime iterator 
-const s = stopOnCount(i, 10); // stop iterator after 10 values
+const s = stopOnCount(i, 10); // stop-iterator after 10 values
 
 const values = [...s]; // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
 ```
@@ -43,14 +43,14 @@ Example of generating an array of all primes up to 17 as `bigint`-s:
 import {generateBigPrimes, stopOnValue} from 'primes-generator';
 
 const i = generateBigPrimes(); // create infinite prime iterator
-const s = stopOnValue(i, 17n); // stop iterator when value reaches 17
+const s = stopOnValue(i, 17n); // stop-iterator when value reaches 17
 
 const values = [...s]; // 2n, 3n, 5n, 7n, 11n, 13n, 17n
 ```
 
 ### RXJS
 
-Adding reusable RXJS wrappers from start makes a good practice:
+Adding reusable RXJS wrappers from start is a good practice:
 
 ```ts
 import {Observable, from} from 'rxjs';
@@ -65,7 +65,7 @@ export function bigPrimes(start?: bigint): Observable<bigint> {
 }
 ```
 
-Example of generating 5 primes from 7 onwards:
+Example of generating 5 primes from 7 and upward:
 
 ```ts
 import {take} from 'rxjs';
