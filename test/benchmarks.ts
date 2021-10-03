@@ -1,7 +1,7 @@
 import {sieveInt} from '../dist/sieve';
 
 interface ITestResult {
-    [name: string]: any;
+    [name: string]: { [value: string]: any };
 }
 
 function testSieveInt(): ITestResult {
@@ -65,37 +65,31 @@ function testSieveBigIntStart(): ITestResult {
         },
         sieveBigIntStart() {
             return testSieveBigIntStart();
-        },
-        all() {
-            return [
-                testSieveInt(),
-                testSieveIntStart(),
-                testSieveBigInt(),
-                testSieveBigIntStart()
-            ];
         }
     };
 
-    if (process.argv.length > 2) {
+    const {argv} = process;
+    if (argv.length > 2) {
         let i = 2;
         do {
-            runTest(process.argv[i]);
-        } while (++i < process.argv.length);
+            runTest(argv[i]);
+        } while (++i < argv.length);
     } else {
-        runTest('all');
+        // run all benchmarks
+        for (const c in commands) {
+            runTest(c);
+        }
     }
 
     function runTest(testName: string): void {
         // tslint:disable:no-console
 
         if (testName in commands) {
-            if (testName === 'all') {
-                console.log('*** Running all tests...');
-            } else {
-                console.log(`*** Running tests for ${JSON.stringify(testName)}...`);
-            }
+            console.log(`*** Benchmarking ${JSON.stringify(testName)}...`);
             const result = commands[testName]();
-            console.table(result);
+            if (Object.keys(result).length) {
+                console.table(result);
+            }
         } else {
             console.error(`Unknown test ${JSON.stringify(testName)}\n`);
             process.exit(0);

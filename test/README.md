@@ -11,16 +11,10 @@ $ npm test
 
 All benchmarks are inside [./benchmarks.ts](./benchmarks.ts) file.
 
-* To run all benchmarks:
+* To run all available benchmarks:
 
 ```shell
 $npm run bench
-```
-
-or
-
-```shell
-$npm run bench all
 ```
 
 * To run individual benchmarks / per method:
