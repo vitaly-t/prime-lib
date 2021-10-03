@@ -1,3 +1,6 @@
+/**
+ * Highly optimized, postponed Sieve of Eratosthenes algorithm.
+ */
 export function* sieveInt(): IterableIterator<number> {
     yield 2;
     yield 3;
@@ -25,6 +28,10 @@ export function* sieveInt(): IterableIterator<number> {
     }
 }
 
+/**
+ * Highly optimized, postponed Sieve of Eratosthenes algorithm,
+ * extended for 'start' logic.
+ */
 export function* sieveIntStart(start: number): IterableIterator<number> {
     if (start <= 2) {
         yield 2;
@@ -41,7 +48,7 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
     const sieve = new Map();
     const ps = sieveIntStart(2);
     ps.next();                 // skip the 2
-    let p = ps.next().value;   // p==3
+    let p = ps.next().value;   // p === 3
     let pSqr = p * p;          // p^2, 9
     let c = pSqr;              // first candidate, 9
     let s = 6;                 // step value
@@ -61,7 +68,6 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
     if (c % 2 === 0) {
         c += 1;
     }
-
     for (; true; c += 2)     // main loop
     {
         s = sieve.get(c);
@@ -81,14 +87,17 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
     }
 }
 
+/**
+ * Highly optimized, postponed Sieve of Eratosthenes algorithm for bigint type.
+ */
 export function* sieveBigInt(): IterableIterator<bigint> {
-    yield BigInt(2);
-    yield BigInt(3);
-    yield BigInt(5);
-    const sieve = new Map<bigint, bigint>();
+    yield 2n;
+    yield 3n;
+    yield 5n;
+    const sieve = new Map();
     const ps = sieveBigInt();
     ps.next() && ps.next();
-    for (let p = BigInt(3), i = BigInt(7); true; i += BigInt(2)) {
+    for (let p = 3n, i = 7n; true; i += 2n) {
         let s = sieve.get(i);
         if (s !== undefined) {
             sieve.delete(i);
@@ -96,7 +105,7 @@ export function* sieveBigInt(): IterableIterator<bigint> {
             yield i;
             continue;
         } else {
-            s = BigInt(2) * p;
+            s = 2n * p;
             p = ps.next().value;
         }
         let k = i + s;
@@ -107,6 +116,10 @@ export function* sieveBigInt(): IterableIterator<bigint> {
     }
 }
 
+/**
+ * Highly optimized, postponed Sieve of Eratosthenes algorithm for bigint-s,
+ * and extended for 'start' logic.
+ */
 export function* sieveBigIntStart(start: bigint): IterableIterator<bigint> {
     if (start <= 2n) {
         yield 2n;
@@ -120,15 +133,15 @@ export function* sieveBigIntStart(start: bigint): IterableIterator<bigint> {
     if (start <= 7n) {
         yield 7n;
     }
-    const sieve = new Map<bigint, bigint>();
+    const sieve = new Map();
     const ps = sieveBigIntStart(2n);
     ps.next();                 // skip the 2
-    let p: bigint = ps.next().value;   // p==3
-    let psqr = p * p;          // p^2, 9
-    let c = psqr;              // first candidate, 9
-    let s = 6n;                 // step value
+    let p: bigint = ps.next().value;   // p === 3
+    let pSqr = p * p;          // p^2, 9
+    let c = pSqr;              // first candidate, 9
+    let s = 6n;                // step value
 
-    while (psqr < start)      // must adjust initial state
+    while (pSqr < start)       // must adjust initial state
     {
         s = 2n * p;
         let m = p + s * bigCeil((start - p), s);  // multiple of p
@@ -137,7 +150,7 @@ export function* sieveBigIntStart(start: bigint): IterableIterator<bigint> {
         }
         sieve.set(m, s);
         p = ps.next().value;
-        psqr = p * p;
+        pSqr = p * p;
     }
     if (start > c) {
         c = start;
@@ -151,13 +164,13 @@ export function* sieveBigIntStart(start: bigint): IterableIterator<bigint> {
         s = sieve.get(c)!;
         if (s !== undefined) {
             sieve.delete(c);      // c composite
-        } else if (c < psqr) {
+        } else if (c < pSqr) {
             yield c;              // c prime
             continue;
         } else {                  // c == p^2
             s = 2n * p;
             p = ps.next().value;
-            psqr = p * p;
+            pSqr = p * p;
         }
         let m = c + s;
         while (sieve.has(m)) {
@@ -167,7 +180,7 @@ export function* sieveBigIntStart(start: bigint): IterableIterator<bigint> {
     }
 }
 
-function bigCeil(a: bigint, b: bigint): bigint {
+export function bigCeil(a: bigint, b: bigint): bigint {
     if (a > b) {
         const div = a / b;
         const remainder = a - div * b;

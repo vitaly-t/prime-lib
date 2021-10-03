@@ -1,3 +1,6 @@
+/**
+ * Verifies if number/bigint is a prime.
+ */
 export function isPrime(value: number | bigint): boolean {
     switch (typeof value) {
         case 'number':
@@ -9,7 +12,10 @@ export function isPrime(value: number | bigint): boolean {
     }
 }
 
-export function isPrimeNumber(n: number): boolean {
+/**
+ * Highly-optimized prime-number verification.
+ */
+function isPrimeNumber(n: number): boolean {
     if (isNaN(n) || !isFinite(n) || n % 1 || n < 2) {
         return false;
     }
@@ -32,8 +38,12 @@ export function isPrimeNumber(n: number): boolean {
 
 // Interesting also: npm i bigint-is-prime
 // https://github.com/shade/BigJS/blob/master/src/bigint.js
-// those are probability-based check for bigint primes.
-export function isBigPrime(n: bigint) {
+// Those are probability-based checks for bigint primes.
+
+/**
+ * Highly-optimized prime-bigint verification.
+ */
+function isBigPrime(n: bigint) {
     if (n % 1n || n < 2n) {
         return false;
     }
