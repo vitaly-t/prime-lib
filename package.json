@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc -p src",
     "lint": "tsc -p test && tslint --fix ./src/*.ts ./test/*.ts",
-    "test": "nyc mocha -r ts-node/register test/*.spec.ts"
+    "test": "nyc mocha -r ts-node/register test/*.spec.ts",
+    "bench": "node test/benchmark.js"
   },
   "files": [
     "dist"

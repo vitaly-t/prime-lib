@@ -104,10 +104,11 @@ export function* sieveBigInt(): IterableIterator<bigint> {
     yield 2n;
     yield 3n;
     yield 5n;
+    yield 7n;
     const sieve = new Map();
     const ps = sieveBigInt();
     ps.next() && ps.next();
-    for (let p = 3n, i = 7n; true; i += 2n) {
+    for (let p = 3n, i = 9n; true; i += 2n) {
         let s = sieve.get(i);
         if (s !== undefined) {
             sieve.delete(i);
