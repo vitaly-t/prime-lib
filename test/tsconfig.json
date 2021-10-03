@@ -3,7 +3,8 @@
     "module": "commonjs",
     "target": "ES2020",
     "strict": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "esModuleInterop": true
   },
   "include": [
     "./*.ts"

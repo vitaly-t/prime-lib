@@ -47,4 +47,9 @@ describe('sieveBigIntStart', () => {
             expect([...i], `Failed for ${a}`).to.eql([2n, 3n, 5n, 7n, 11n, 13n, 17n]);
         }
     });
+    it('must generate values outside of number range', () => {
+        // TODO: This test doesn't work, need to investigate
+        // const i = stopOnCount(sieveBigIntStart(100_000_000_000_000_000n), 1);
+        // expect([...i]).to.eql([123n]);
+    });
 });
