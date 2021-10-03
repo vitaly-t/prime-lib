@@ -1,4 +1,4 @@
-import {sieveInt} from '../dist/sieve';
+import {sieveInt} from '../src/sieve';
 
 interface ITestResult {
     [name: string]: { [value: string]: any };
