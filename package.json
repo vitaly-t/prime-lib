@@ -1,11 +1,11 @@
 {
   "name": "primes-generator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Primes generator",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc -p src && tsc -p src/tsconfig.web.json",
+    "build": "tsc -p src",
     "lint": "tsc -p test && tslint --fix ./src/*.ts ./test/*.ts",
     "test": "nyc mocha -r ts-node/register test/*.spec.ts"
   },
