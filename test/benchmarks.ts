@@ -76,13 +76,14 @@ function testSieveIntStart(): ITestResult {
     for (const t in tests) {
         const i = sieveIntStart(tests[t].start);
         const start = Date.now();
-        let count = 0, p;
+        let count = 0, p, f;
         do {
-            p = p || i.next();
+            p = i.next();
+            f = f || p;
         } while (++count < 1_000_000);
         result[t] = {
             'ms': Date.now() - start,
-            'First Prime': p.value,
+            'First Prime': f.value,
             'Description': tests[t].desc
         };
     }
