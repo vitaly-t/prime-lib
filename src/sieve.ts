@@ -1,4 +1,14 @@
 /**
+ * CREDITS
+ *
+ * Many thanks to Will Ness, who implemented most of the algorithms used in this file.
+ *
+ * See:
+ *   - https://stackoverflow.com/users/849891/will-ness
+ *   - https://stackoverflow.com/questions/69336435/postponed-sieve-algorithm-with-start-logic
+ */
+
+/**
  * Highly optimized, postponed Sieve of Eratosthenes algorithm.
  */
 export function* sieveInt(): IterableIterator<number> {
