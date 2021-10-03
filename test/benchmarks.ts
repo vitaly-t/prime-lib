@@ -1,4 +1,4 @@
-import {sieveInt} from '../src/sieve';
+import {sieveInt, sieveIntStart} from '../src/sieve';
 
 interface ITestResult {
     [name: string]: { [value: string]: any };
@@ -6,17 +6,17 @@ interface ITestResult {
 
 function testSieveInt(): ITestResult {
     const tests = {
-        '1mln': {
+        '10^6': {
             max: 1_000_000,
-            desc: 'Time in milliseconds to generate the first million primes'
+            desc: 'Time in ms, to generate the first million primes'
         },
-        '10mln': {
+        '10^7': {
             max: 10_000_000,
-            desc: 'Time in milliseconds to generate the first 10 million primes'
+            desc: 'Time in ms, to generate the first 10 million primes'
         },
-        '100mln': {
+        '10^8': {
             max: 100_000_000,
-            desc: 'Time in milliseconds to generate the first 100 million primes'
+            desc: 'Time in ms, to generate the first 100 million primes'
         }
     };
     const result = {};
@@ -38,8 +38,55 @@ function testSieveInt(): ITestResult {
 }
 
 function testSieveIntStart(): ITestResult {
-    // TODO: Add some tests here
-    return {};
+    const tests = {
+        '10^9': {
+            start: 1_000_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 1 billion'
+        },
+        '10^10': {
+            start: 10_000_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 10 billions'
+        },
+        '10^11': {
+            start: 100_000_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 100 billions'
+        },
+        '10^12': {
+            start: 1_000_000_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 1 trillion'
+        },
+        '10^13': {
+            start: 10_000_000_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 10 trillions'
+        },
+        '10^14': {
+            start: 100_000_000_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 100 trillions'
+        },
+        '10^15': {
+            start: 1_000_000_000_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 1 quadrillion'
+        },
+        '10^16': {
+            start: 10_000_000_000_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 10 quadrillions'
+        }
+    };
+    const result = {};
+    for (const t in tests) {
+        const i = sieveIntStart(tests[t].start);
+        const start = Date.now();
+        let count = 0, p;
+        do {
+            p = p || i.next();
+        } while (++count < 1_000_000);
+        result[t] = {
+            'ms': Date.now() - start,
+            'First Prime': p.value,
+            'Description': tests[t].desc
+        };
+    }
+    return result;
 }
 
 function testSieveBigInt(): ITestResult {
@@ -89,6 +136,9 @@ function testSieveBigIntStart(): ITestResult {
             const result = commands[testName]();
             if (Object.keys(result).length) {
                 console.table(result);
+                console.log();
+            } else {
+                console.log('Nothing :(\n');
             }
         } else {
             console.error(`Unknown test ${JSON.stringify(testName)}\n`);
