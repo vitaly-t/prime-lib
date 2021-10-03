@@ -1,5 +1,3 @@
-// tslint:disable:no-console
-
 import {sieveInt} from '../dist/sieve';
 
 interface ITestResult {
@@ -40,14 +38,17 @@ function testSieveInt(): ITestResult {
 }
 
 function testSieveIntStart(): ITestResult {
+    // TODO: Add some tests here
     return {};
 }
 
 function testSieveBigInt(): ITestResult {
+    // TODO: Add some tests here
     return {};
 }
 
 function testSieveBigIntStart(): ITestResult {
+    // TODO: Add some tests here
     return {};
 }
 
@@ -85,6 +86,8 @@ function testSieveBigIntStart(): ITestResult {
     }
 
     function runTest(testName: string): void {
+        // tslint:disable:no-console
+
         if (testName in commands) {
             if (testName === 'all') {
                 console.log('*** Running all tests...');
