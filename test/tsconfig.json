@@ -6,6 +6,6 @@
     "noUnusedLocals": true
   },
   "include": [
-    "./*.spec.ts"
+    "./*.ts"
   ]
 }

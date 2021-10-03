@@ -1,11 +1,16 @@
 import {sieveInt, sieveIntStart} from '../src/sieve';
+import {sieveBigInt, sieveBigIntStart} from '../dist/sieve';
+
+interface ITestInput {
+    [name: string]: { [value: string]: any };
+}
 
 interface ITestResult {
     [name: string]: { [value: string]: any };
 }
 
 function testSieveInt(): ITestResult {
-    const tests = {
+    const tests: ITestInput = {
         '10^6': {
             max: 1_000_000,
             desc: 'Time in ms, to generate the first million primes'
@@ -19,7 +24,7 @@ function testSieveInt(): ITestResult {
             desc: 'Time in ms, to generate the first 100 million primes'
         }
     };
-    const result = {};
+    const result: any = {};
     for (const t in tests) {
         const i = sieveInt();
         const maxPrimes = tests[t].max;
@@ -38,7 +43,7 @@ function testSieveInt(): ITestResult {
 }
 
 function testSieveIntStart(): ITestResult {
-    const tests = {
+    const tests: ITestInput = {
         '10^9': {
             start: 1_000_000_000,
             desc: 'Time in ms, to generate 1 million primes after 1 billion'
@@ -72,7 +77,7 @@ function testSieveIntStart(): ITestResult {
             desc: 'Time in ms, to generate 1 million primes after 10 quadrillions'
         }
     };
-    const result = {};
+    const result: any = {};
     for (const t in tests) {
         const i = sieveIntStart(tests[t].start);
         const start = Date.now();
@@ -91,17 +96,109 @@ function testSieveIntStart(): ITestResult {
 }
 
 function testSieveBigInt(): ITestResult {
-    // TODO: Add some tests here
-    return {};
+    const tests: ITestInput = {
+        '10^6': {
+            max: 1_000_000,
+            desc: 'Time in ms, to generate the first million primes'
+        },
+        '10^7': {
+            max: 10_000_000,
+            desc: 'Time in ms, to generate the first 10 million primes'
+        },
+        '10^8': {
+            max: 100_000_000,
+            desc: 'Time in ms, to generate the first 100 million primes'
+        }
+    };
+    const result: any = {};
+    for (const t in tests) {
+        const i = sieveBigInt();
+        const maxPrimes = tests[t].max;
+        const start = Date.now();
+        let count = 0, p;
+        do {
+            p = i.next();
+        } while (++count < maxPrimes);
+        result[t] = {
+            'ms': Date.now() - start,
+            'Last Prime': p.value,
+            'Description': tests[t].desc
+        };
+    }
+    return result;
 }
 
 function testSieveBigIntStart(): ITestResult {
-    // TODO: Add some tests here
-    return {};
+    const tests: ITestInput = {
+        '10^9': {
+            start: 1_000_000_000n,
+            limit: 1_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 1 billion'
+        },
+        '10^10': {
+            start: 10_000_000_000n,
+            limit: 1_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 10 billions'
+        },
+        '10^11': {
+            start: 100_000_000_000n,
+            limit: 1_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 100 billions'
+        },
+        '10^12': {
+            start: 1_000_000_000_000n,
+            limit: 1_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 1 trillion'
+        },
+        '10^13': {
+            start: 10_000_000_000_000n,
+            limit: 1_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 10 trillions'
+        },
+        '10^14': {
+            start: 100_000_000_000_000n,
+            limit: 1_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 100 trillions'
+        },
+        '10^15': {
+            start: 1_000_000_000_000_000n,
+            limit: 1_000_000,
+            desc: 'Time in ms, to generate 1 million primes after 1 quadrillion'
+        },
+        '10^16': {
+            start: 10_000_000_000_000_000n,
+            limit: 1_000,
+            desc: 'Time in ms, to generate 1000 primes after 10 quadrillions'
+        },
+        /*
+        TODO: Fails with 'out of range' error, need to fix it.
+        '10^17': {
+            start: 100_000_000_000_000_000n,
+            limit: 1_000,
+            desc: 'Time in ms, to generate 1000 primes after 100 quadrillions'
+        }*/
+    };
+    const result: any = {};
+    for (const t in tests) {
+        const i = sieveBigIntStart(tests[t].start);
+        const {limit} = tests[t];
+        const start = Date.now();
+        let count = 0, p, f;
+        do {
+            p = i.next();
+            f = f || p;
+        } while (++count < limit);
+        result[t] = {
+            'ms': Date.now() - start,
+            'First Prime': f.value,
+            'Description': tests[t].desc
+        };
+    }
+    return result;
 }
 
 (function () {
-    const commands = {
+    const commands: { [name: string]: any } = {
         sieveInt() {
             return testSieveInt();
         },
