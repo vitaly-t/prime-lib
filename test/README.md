@@ -1,4 +1,5 @@
-## Tests
+Tests
+-----
 
 To run all tests, with code coverage:
 
@@ -7,6 +8,8 @@ $ npm test
 ```
 
 ## Benchmarks
+
+All benchmarks are inside [./benchmarks.ts](./benchmarks.ts) file.
 
 * To run all benchmarks:
 
