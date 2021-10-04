@@ -71,11 +71,8 @@ function testSieveIntStart(): ITestResult {
         '10^15': {
             start: 1_000_000_000_000_000,
             desc: 'Time in ms, to generate 1 million primes after 1 quadrillion'
-        },
-        '10^16': {
-            start: 10_000_000_000_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 10 quadrillions'
         }
+        // NOTE: Maximum prime is 9_007_199_254_740_881, i.e. less then 10^16
     };
     const result: any = {};
     for (const t in tests) {
