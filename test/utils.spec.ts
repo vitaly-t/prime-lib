@@ -1,8 +1,19 @@
 import {expect} from './header';
-import {bigSqrt} from '../src/utils';
+import {bigSqrt, bigCeil} from '../src/utils';
 
 describe('bigCeil', () => {
+    it('must succeed for small numbers', () => {
+        for (let i = 1; i < 100; i++) {
+            for (let k = 1; k < 100; k++) {
+                const a = bigCeil(BigInt(i), BigInt(k));
+                const b = BigInt(Math.ceil(i / k));
+                expect(a, `Failed for ${i}/${k}`).to.eql(b);
+            }
+        }
+    });
 
+    it('must succeed for large numbers', () => {
+    });
 });
 
 describe('bigSqrt', () => {

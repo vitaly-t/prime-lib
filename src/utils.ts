@@ -3,13 +3,8 @@
  * Returns ceil value of a/b
  */
 export function bigCeil(a: bigint, b: bigint): bigint {
-    if (a > b) {
-        const div = a / b;
-        const remainder = a - div * b;
-        const percent = 100n * remainder / b;
-        return percent < 50n ? div : div + 1n;
-    }
-    return a * 2n >= b ? 1n : 0n;
+    const div = a / b;
+    return a === div * b ? div : div + 1n;
 }
 
 /**
