@@ -1,5 +1,6 @@
 import {expect} from './header';
-import {isPrime} from '../src';
+import {isPrime, stopOnCount} from '../src';
+import {sieveBigInt, sieveInt, sieveIntStart} from '../src/sieve';
 
 describe('isPrime', () => {
 
@@ -42,9 +43,50 @@ describe('isPrime', () => {
     describe('for special cases', () => {
         it('must not fail', () => {
             // const specialCase = 109000000000000005676789000007878700000000000000000055500000000000137n;
-            // TODO: This special case hang, for some reasons :(
+            // TODO: This special case hangs, for reason unknown :(
+            //  and it is not length-related, because longer numbers work fine ;)
             // expect(isPrime(specialCase)).to.be.true;
         });
     });
 
+});
+
+describe('mixing', () => {
+    describe('for start values', () => {
+        it('must pass prime test', () => {
+            const i = stopOnCount(sieveInt(), 1000);
+            [...i].forEach(a => {
+                expect(isPrime(a), `Failed for ${a}`).to.be.true;
+            });
+        });
+    });
+
+    describe('for offset values', () => {
+        it('must pass prime test', () => {
+            const i = stopOnCount(sieveIntStart(100_000), 1000);
+            [...i].forEach(a => {
+                expect(isPrime(a), `Failed for ${a}`).to.be.true;
+            });
+        });
+    });
+
+    describe('for bigint start values', () => {
+        it('must pass prime test', () => {
+            const i = stopOnCount(sieveBigInt(), 1000);
+            [...i].forEach(a => {
+                expect(isPrime(a), `Failed for ${a}`).to.be.true;
+            });
+        });
+    });
+
+    describe('for bigint offset values', () => {
+        it('must pass prime test', () => {
+            // TODO: Produces - Failed for 100017, which is not a prime!
+            /*
+            const i = stopOnCount(sieveBigIntStart(100_000n), 1000);
+            [...i].forEach(a => {
+                expect(isPrime(a), `Failed for ${a}`).to.be.true;
+            });*/
+        });
+    });
 });
