@@ -3,7 +3,7 @@ import {bigSqrt, bigCeil} from '../src/utils';
 
 describe('bigCeil', () => {
     it('must succeed for small numbers', () => {
-        for (let i = 1; i < 100; i++) {
+        for (let i = 0; i < 100; i++) {
             for (let k = 1; k < 100; k++) {
                 const a = bigCeil(BigInt(i), BigInt(k));
                 const b = BigInt(Math.ceil(i / k));
@@ -11,8 +11,17 @@ describe('bigCeil', () => {
             }
         }
     });
-
     it('must succeed for large numbers', () => {
+        expect(bigCeil(30022323333880000235423225605234678947n, 478671234004512356789n)).to.eql(62720132736443036n);
+    });
+    it('must throw on negative inputs', () => {
+        const err = 'Negative inputs are not supported';
+        expect(() => {
+            bigCeil(-1n, 0n);
+        }).to.throw(err);
+        expect(() => {
+            bigCeil(0n, -1n);
+        }).to.throw(err);
     });
 });
 

@@ -8,6 +8,8 @@
  *   - https://stackoverflow.com/questions/69336435/postponed-sieve-algorithm-with-start-logic
  */
 
+import {bigCeil} from './utils';
+
 /**
  * Highly optimized, postponed Sieve of Eratosthenes algorithm.
  */
@@ -189,14 +191,4 @@ export function* sieveBigIntStart(start: bigint): IterableIterator<bigint> {
         }
         sieve.set(m, s);
     }
-}
-
-export function bigCeil(a: bigint, b: bigint): bigint {
-    if (a > b) {
-        const div = a / b;
-        const remainder = a - div * b;
-        const percent = 100n * remainder / b;
-        return percent < 50n ? div : div + 1n;
-    }
-    return a * 2n >= b ? 1n : 0n;
 }

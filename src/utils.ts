@@ -1,8 +1,14 @@
 /**
  * Math.ceil implementation for bigint.
  * Returns ceil value of a/b
+ *
+ * Note that we do not support negative numbers here,
+ * because they are not needed in this library.
  */
 export function bigCeil(a: bigint, b: bigint): bigint {
+    if (a < 0 || b < 0) {
+        throw new TypeError('Negative inputs are not supported');
+    }
     const div = a / b;
     return a === div * b ? div : div + 1n;
 }
