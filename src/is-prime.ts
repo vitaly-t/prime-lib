@@ -67,3 +67,4 @@ function isBigPrime(n: bigint) {
     }
     return true;
 }
+

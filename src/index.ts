@@ -1,13 +1,8 @@
 import {sieveInt, sieveIntStart, sieveBigInt, sieveBigIntStart} from './sieve';
 
-export {stopWhen, stopOnCount, stopOnValue} from './stop';
+export {maxPrime} from './sieve';
 export {isPrime} from './is-prime';
-
-/**
- * Maximum prime number that can be generated in JavaScript,
- * using the standard 'number' type (53-bit of integer range).
- */
-export const maxPrime = 9_007_199_254_740_881;
+export {stopWhen, stopOnCount, stopOnValue} from './stop';
 
 /**
  * Infinite generator of prime numbers, based on Sieve of Eratosthenes algorithm,

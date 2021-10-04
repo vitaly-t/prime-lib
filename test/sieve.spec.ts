@@ -6,6 +6,7 @@ import {
     sieveBigInt,
     sieveBigIntStart
 } from '../src/sieve';
+import {maxPrime} from '../dist';
 
 describe('sieveInt', () => {
     it('must generate correct values', () => {
@@ -25,6 +26,14 @@ describe('sieveIntStart', () => {
             const i = stopOnValue(sieveIntStart(a), 17);
             expect([...i], `Failed for ${a}`).to.eql([2, 3, 5, 7, 11, 13, 17]);
         }
+    });
+    it('must terminate on last prime', () => {
+        /*
+        TODO: this doesn't work yet
+        const i1 = sieveIntStart(maxPrime);
+        expect([...i1]).to.eql([maxPrime]);
+        const i2 = sieveIntStart(maxPrime - 1);
+        expect([...i2]).to.eql([maxPrime]);*/
     });
 });
 
@@ -47,9 +56,10 @@ describe('sieveBigIntStart', () => {
             expect([...i], `Failed for ${a}`).to.eql([2n, 3n, 5n, 7n, 11n, 13n, 17n]);
         }
     });
-    it('must generate values outside of number range', () => {
-        // TODO: This test doesn't work, need to investigate
-        // const i = stopOnCount(sieveBigIntStart(100_000_000_000_000_000n), 1);
-        // expect([...i]).to.eql([123n]);
+    it('must generate correct values outside of number range', () => {
+        // TODO: This test doesn't work, need to investigate:
+        //  It fails for 100qdrl, and takes too long for 10qdrl
+        // const i = stopOnCount(sieveBigIntStart(10_000_000_000_000_000n), 3);
+        // expect([...i]).to.eql([10_000_000_000_000_061n, 10000000000000069n, 10000000000000079n]);
     });
 });
