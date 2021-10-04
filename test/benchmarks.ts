@@ -162,11 +162,14 @@ function testSieveBigIntStart(): ITestResult {
             limit: 1_000_000,
             desc: 'Time in ms, to generate 1 million primes after 1 quadrillion'
         },
+        /*
+        TODO: takes less than after 1 quadrillion, means values are not good.
         '10^16': {
             start: 10_000_000_000_000_000n,
             limit: 1_000,
             desc: 'Time in ms, to generate 1000 primes after 10 quadrillions'
-        },
+        },*/
+
         /*
         TODO: Fails with 'out of range' error, need to fix it.
         '10^17': {
