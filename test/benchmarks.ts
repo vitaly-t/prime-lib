@@ -1,5 +1,4 @@
-import {sieveInt, sieveIntStart} from '../src/sieve';
-import {sieveBigInt, sieveBigIntStart} from '../dist/sieve';
+import {sieveInt, sieveIntStart, sieveBigInt, sieveBigIntStart} from '../src/sieve';
 
 interface ITestInput {
     [name: string]: { [value: string]: any };
