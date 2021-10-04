@@ -1,13 +1,14 @@
 import {expect} from './header';
+import {primes} from './primes';
 import {isPrime} from '../src';
 
 describe('isPrime', () => {
 
-    describe('for valid prime numbers', () => {
-        it('must return true', () => {
-            const values = [2, 3, 5, 7, 11, 13, 17];
-            for (const a of values) {
-                expect(isPrime(a), `Failed for ${a}`).to.be.true;
+    describe('for initial range of numbers', () => {
+        it('must return correct result', () => {
+            for (let i = 0; i < 1000; i++) {
+                const isInPrimes = primes.indexOf(i) >= 0;
+                expect(isPrime(i), `Failed for ${i}`).to.eql(isInPrimes);
             }
         });
     });
@@ -18,14 +19,15 @@ describe('isPrime', () => {
             for (const a of values) {
                 expect(isPrime(a), `Failed for ${a}`).to.be.false;
             }
+            expect(isPrime('bla-bla' as any)).to.be.false;
         });
     });
 
-    describe('for valid prime bigint-s', () => {
-        it('must return true', () => {
-            const values = [2n, 3n, 5n, 7n, 11n, 13n, 17n];
-            for (const a of values) {
-                expect(isPrime(a), `Failed for ${a}`).to.be.true;
+    describe('for initial range of bigint-s', () => {
+        it('must return correct result', () => {
+            for (let i = 0; i < 1000; i++) {
+                const isInPrimes = primes.indexOf(i) >= 0;
+                expect(isPrime(BigInt(i)), `Failed for ${i}`).to.eql(isInPrimes);
             }
         });
     });
