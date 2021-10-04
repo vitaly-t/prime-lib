@@ -1,3 +1,5 @@
+import {bigSqrt} from './utils';
+
 /**
  * Verifies if number/bigint is a prime.
  */
@@ -51,7 +53,7 @@ function isBigPrime(n: bigint) {
     if (n % 3n === 0n) return n === 3n;
     if (n % 5n === 0n) return n === 5n;
 
-    const m = newtonIteration(n, 1n);
+    const m = bigSqrt(n);
 
     for (let i = 7n; i <= m; i += 30n) {
         if (n % i === 0n) return i === n;
@@ -64,12 +66,4 @@ function isBigPrime(n: bigint) {
         if (n % (i + 24n) === 0n) return i + 24n === n;
     }
     return true;
-}
-
-function newtonIteration(n: bigint, x0: bigint): bigint {
-    const x1 = ((n / x0) + x0) >> 1n;
-    if (x0 === x1 || x0 === (x1 - 1n)) {
-        return x0;
-    }
-    return newtonIteration(n, x1);
 }
