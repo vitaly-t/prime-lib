@@ -12,6 +12,8 @@ primes-generator
 
 High-performance [prime number] generators - [Sieve of Eratosthenes] implementation in TypeScript.
 
+For tests and benchmarks, see [./test](./test) folder.
+
 ## Installation
 
 ```
