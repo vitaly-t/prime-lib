@@ -1,4 +1,5 @@
 import {bigSqrt} from './utils';
+import {maxPrime} from './sieve';
 
 /**
  * Verifies if number/bigint is a prime.
@@ -46,6 +47,9 @@ function isPrimeNumber(n: number): boolean {
  * Highly-optimized prime-bigint verification.
  */
 function isBigPrime(n: bigint) {
+    // TODO: It should use the logic below for up to maxPrime length,
+    //  at most, and then utilize a probability algorithm.
+
     if (n % 1n || n < 2n) {
         return false;
     }
