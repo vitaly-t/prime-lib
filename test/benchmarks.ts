@@ -1,4 +1,5 @@
 import {sieveInt, sieveIntStart, sieveBigInt, sieveBigIntStart} from '../src/sieve';
+import {isPrime} from '../src';
 
 interface ITestInput {
     [name: string]: { [value: string]: any };
@@ -45,31 +46,31 @@ function testSieveIntStart(): ITestResult {
     const tests: ITestInput = {
         '10^9': {
             start: 1_000_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 1 billion'
+            desc: 'Time in ms, to generate 1 million primes, after 1 billion'
         },
         '10^10': {
             start: 10_000_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 10 billions'
+            desc: 'Time in ms, to generate 1 million primes, after 10 billions'
         },
         '10^11': {
             start: 100_000_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 100 billions'
+            desc: 'Time in ms, to generate 1 million primes, after 100 billions'
         },
         '10^12': {
             start: 1_000_000_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 1 trillion'
+            desc: 'Time in ms, to generate 1 million primes, after 1 trillion'
         },
         '10^13': {
             start: 10_000_000_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 10 trillions'
+            desc: 'Time in ms, to generate 1 million primes, after 10 trillions'
         },
         '10^14': {
             start: 100_000_000_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 100 trillions'
+            desc: 'Time in ms, to generate 1 million primes, after 100 trillions'
         },
         '10^15': {
             start: 1_000_000_000_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 1 quadrillion'
+            desc: 'Time in ms, to generate 1 million primes, after 1 quadrillion'
         }
         // NOTE: Maximum prime is 9_007_199_254_740_881, i.e. less then 10^16
     };
@@ -129,44 +130,44 @@ function testSieveBigIntStart(): ITestResult {
         '10^9': {
             start: 1_000_000_000n,
             limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 1 billion'
+            desc: 'Time in ms, to generate 1 million primes, after 1 billion'
         },
         '10^10': {
             start: 10_000_000_000n,
             limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 10 billions'
+            desc: 'Time in ms, to generate 1 million primes, after 10 billions'
         },
         '10^11': {
             start: 100_000_000_000n,
             limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 100 billions'
+            desc: 'Time in ms, to generate 1 million primes, after 100 billions'
         },
         '10^12': {
             start: 1_000_000_000_000n,
             limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 1 trillion'
+            desc: 'Time in ms, to generate 1 million primes, after 1 trillion'
         },
         '10^13': {
             start: 10_000_000_000_000n,
             limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 10 trillions'
+            desc: 'Time in ms, to generate 1 million primes, after 10 trillions'
         },
         '10^14': {
             start: 100_000_000_000_000n,
             limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 100 trillions'
+            desc: 'Time in ms, to generate 1 million primes, after 100 trillions'
         },
         '10^15': {
             start: 1_000_000_000_000_000n,
             limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes after 1 quadrillion'
+            desc: 'Time in ms, to generate 1 million primes, after 1 quadrillion'
         },
         /*
         TODO: takes less than after 1 quadrillion, means values are not good.
         '10^16': {
             start: 10_000_000_000_000_000n,
             limit: 1_000,
-            desc: 'Time in ms, to generate 1000 primes after 10 quadrillions'
+            desc: 'Time in ms, to generate 1000 primes, after 10 quadrillions'
         },*/
 
         /*
@@ -174,7 +175,7 @@ function testSieveBigIntStart(): ITestResult {
         '10^17': {
             start: 100_000_000_000_000_000n,
             limit: 1_000,
-            desc: 'Time in ms, to generate 1000 primes after 100 quadrillions'
+            desc: 'Time in ms, to generate 1000 primes, after 100 quadrillions'
         }*/
     };
     const result: any = {};
@@ -196,6 +197,67 @@ function testSieveBigIntStart(): ITestResult {
     return result;
 }
 
+function testIsPrime(): ITestResult {
+    const tests: ITestInput = {
+        '0': {
+            start: 0,
+            limit: 1_000_000,
+            desc: 'Time in ms, to verify the first million numbers'
+        },
+        '10^9': {
+            start: 1_000_000_000,
+            limit: 1_000_000,
+            desc: 'Time in ms, to verify 1 million numbers, after 1 billion'
+        },
+        '10^10': {
+            start: 10_000_000_000,
+            limit: 1_000_000,
+            desc: 'Time in ms, to verify 1 million numbers, after 10 billions'
+        },
+        '10^11': {
+            start: 100_000_000_000,
+            limit: 1_000,
+            desc: 'Time in ms, to verify 1000 numbers, after 100 billions'
+        },
+        '10^12': {
+            start: 1_000_000_000_000,
+            limit: 1_000,
+            desc: 'Time in ms, to verify 1000 numbers, after 1 trillion'
+        },
+        '10^13': {
+            start: 10_000_000_000_000,
+            limit: 1_000,
+            desc: 'Time in ms, to verify 1000 numbers, after 10 trillions'
+        },
+        '10^14': {
+            start: 100_000_000_000_000,
+            limit: 1_000,
+            desc: 'Time in ms, to verify 1000 numbers, after 100 trillions'
+        },
+        '10^15': {
+            start: 1_000_000_000_000_000,
+            limit: 1_000,
+            desc: 'Time in ms, to verify 1000 numbers, after 1 quadrillion'
+        }
+    };
+
+    const result: any = {};
+    for (const t in tests) {
+        const {start, limit, desc} = tests[t];
+        const end = start + limit;
+        const begin = Date.now();
+        for (let i = start; i < end; i++) {
+            isPrime(i);
+        }
+        result[t] = {
+            'ms': Date.now() - begin,
+            'Description': desc
+        };
+    }
+    return result;
+
+}
+
 (function () {
     const commands: { [name: string]: any } = {
         sieveInt() {
@@ -209,6 +271,9 @@ function testSieveBigIntStart(): ITestResult {
         },
         sieveBigIntStart() {
             return testSieveBigIntStart();
+        },
+        isPrime() {
+            return testIsPrime();
         }
     };
 

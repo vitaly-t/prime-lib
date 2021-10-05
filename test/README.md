@@ -24,6 +24,7 @@ $ npm run bench sieveInt
 $ npm run bench sieveIntStart
 $ npm run bench sieveBigInt
 $ npm run bench sieveBigIntStart
+$ npm run bench isPrime
 ```
 
 * To run several specific benchmarks, list them via space:
