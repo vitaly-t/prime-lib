@@ -11,7 +11,7 @@ $ npm test
 
 All benchmarks are inside [./benchmarks.ts](./benchmarks.ts) file.
 
-* To run all available benchmarks (may take about 5 mins to complete):
+* To run all available benchmarks (takes about 10 min to complete):
 
 ```shell
 $ npm run bench
