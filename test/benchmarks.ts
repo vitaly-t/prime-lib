@@ -44,31 +44,31 @@ function testSieveInt(): ITestResult {
 
 function testSieveIntStart(): ITestResult {
     const tests: ITestInput = {
-        '10^9': {
+        '10^9 -> 10^6': {
             start: 1_000_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 1 billion'
         },
-        '10^10': {
+        '10^10 -> 10^6': {
             start: 10_000_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 10 billions'
         },
-        '10^11': {
+        '10^11 -> 10^6': {
             start: 100_000_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 100 billions'
         },
-        '10^12': {
+        '10^12 -> 10^6': {
             start: 1_000_000_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 1 trillion'
         },
-        '10^13': {
+        '10^13 -> 10^6': {
             start: 10_000_000_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 10 trillions'
         },
-        '10^14': {
+        '10^14 -> 10^6': {
             start: 100_000_000_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 100 trillions'
         },
-        '10^15': {
+        '10^15 -> 10^6': {
             start: 1_000_000_000_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 1 quadrillion'
         }
@@ -127,44 +127,44 @@ function testSieveBigInt(): ITestResult {
 
 function testSieveBigIntStart(): ITestResult {
     const tests: ITestInput = {
-        '10^9': {
+        '10^9 -> 10^6': {
             start: 1_000_000_000n,
             limit: 1_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 1 billion'
         },
-        '10^10': {
+        '10^10 -> 10^6': {
             start: 10_000_000_000n,
             limit: 1_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 10 billions'
         },
-        '10^11': {
+        '10^11 -> 10^6': {
             start: 100_000_000_000n,
             limit: 1_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 100 billions'
         },
-        '10^12': {
+        '10^12 -> 10^6': {
             start: 1_000_000_000_000n,
             limit: 1_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 1 trillion'
         },
-        '10^13': {
+        '10^13 -> 10^6': {
             start: 10_000_000_000_000n,
             limit: 1_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 10 trillions'
         },
-        '10^14': {
+        '10^14 -> 10^6': {
             start: 100_000_000_000_000n,
             limit: 1_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 100 trillions'
         },
-        '10^15': {
+        '10^15 -> 10^6': {
             start: 1_000_000_000_000_000n,
             limit: 1_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 1 quadrillion'
         },
         /*
         TODO: takes less than after 1 quadrillion, means values are not good.
-        '10^16': {
+        '10^16 -> 1000': {
             start: 10_000_000_000_000_000n,
             limit: 1_000,
             desc: 'Time in ms, to generate 1000 primes, after 10 quadrillions'
@@ -172,7 +172,7 @@ function testSieveBigIntStart(): ITestResult {
 
         /*
         TODO: Fails with 'out of range' error, need to fix it.
-        '10^17': {
+        '10^17 -> 1000': {
             start: 100_000_000_000_000_000n,
             limit: 1_000,
             desc: 'Time in ms, to generate 1000 primes, after 100 quadrillions'
@@ -199,42 +199,52 @@ function testSieveBigIntStart(): ITestResult {
 
 function testIsPrime(): ITestResult {
     const tests: ITestInput = {
-        '0': {
+        '0 -> 10^6': {
             start: 0,
             limit: 1_000_000,
             desc: 'Time in ms, to verify the first million numbers'
         },
-        '10^9': {
+        '0 -> 10^7': {
+            start: 0,
+            limit: 10_000_000,
+            desc: 'Time in ms, to verify the first 10 million numbers'
+        },
+        '0 -> 10^8': {
+            start: 0,
+            limit: 100_000_000,
+            desc: 'Time in ms, to verify the first 100 million numbers'
+        },
+        '10^9 -> 10^6': {
             start: 1_000_000_000,
             limit: 1_000_000,
             desc: 'Time in ms, to verify 1 million numbers, after 1 billion'
         },
-        '10^10': {
+        '10^10 -> 10^6': {
             start: 10_000_000_000,
             limit: 1_000_000,
             desc: 'Time in ms, to verify 1 million numbers, after 10 billions'
         },
-        '10^11': {
+        '10^11 -> 1000': {
             start: 100_000_000_000,
             limit: 1_000,
             desc: 'Time in ms, to verify 1000 numbers, after 100 billions'
         },
-        '10^12': {
+        '10^12 -> 1000': {
             start: 1_000_000_000_000,
             limit: 1_000,
             desc: 'Time in ms, to verify 1000 numbers, after 1 trillion'
         },
-        '10^13': {
+        '10^13 -> 1000': {
             start: 10_000_000_000_000,
             limit: 1_000,
             desc: 'Time in ms, to verify 1000 numbers, after 10 trillions'
         },
-        '10^14': {
+        '10^14 -> 1000': {
             start: 100_000_000_000_000,
             limit: 1_000,
             desc: 'Time in ms, to verify 1000 numbers, after 100 trillions'
         },
-        '10^15': {
+        '10^15 -> 1000': {
             start: 1_000_000_000_000_000,
             limit: 1_000,
             desc: 'Time in ms, to verify 1000 numbers, after 1 quadrillion'
