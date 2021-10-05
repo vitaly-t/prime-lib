@@ -1,6 +1,7 @@
 import {expect} from './header';
-import {stopOnValue} from '../src';
+import {stopOnValue, stopOnCount} from '../src';
 import {generatePrimes, generateBigPrimes} from '../src';
+import {primes} from './primes';
 
 describe('sieveInt', () => {
     it('must generate correct values', () => {
@@ -33,8 +34,8 @@ describe('sieveIntStart', () => {
 
 describe('sieveBigInt', () => {
     it('must generate correct values', () => {
-        const i = stopOnValue(generateBigPrimes(), 17n);
-        expect([...i]).to.eql([2n, 3n, 5n, 7n, 11n, 13n, 17n]);
+        const i = stopOnCount(generateBigPrimes(), primes.length);
+        expect([...i]).to.eql(primes.map(BigInt));
     });
 });
 
