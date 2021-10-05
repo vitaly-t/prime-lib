@@ -1,5 +1,4 @@
 import {bigSqrt} from './utils';
-import {maxPrime} from './sieve';
 
 /**
  * Verifies if number/bigint is a prime.
@@ -15,8 +14,16 @@ export function isPrime(value: number | bigint): boolean {
     }
 }
 
+const primeDividers = [
+    0, 2, 6, 8, 12, 18, 20, 26, 30, 32, 36, 42, 48, 50, 56, 60, 62, 68, 72, 78, 86, 90, 92, 96, 98,
+    102, 110, 116, 120, 126, 128, 132, 138, 140, 146, 152, 156, 158, 162, 168, 170, 176, 180, 182, 186, 188, 198, 200];
+
+const bigPrimeDividers = primeDividers.map(BigInt);
+
 /**
  * Highly-optimized prime-number verification.
+ *
+ * Source: http://www.javascripter.net/faq/numberisprime.htm
  */
 function isPrimeNumber(n: number): boolean {
     if (isNaN(n) || !isFinite(n) || n % 1 || n < 2) {
@@ -25,92 +32,35 @@ function isPrimeNumber(n: number): boolean {
     if (n % 2 === 0) return n === 2;
     if (n % 3 === 0) return n === 3;
     if (n % 5 === 0) return n === 5;
+    if (n % 7 === 0) return n === 7;
     const m = Math.sqrt(n);
-    for (let i = 7; i <= m; i += 30) {
-        if (n % i === 0) return i === n;
-        if (n % (i + 4) === 0) return i + 4 === n;
-        if (n % (i + 6) === 0) return i + 6 === n;
-        if (n % (i + 10) === 0) return i + 10 === n;
-        if (n % (i + 12) === 0) return i + 12 === n;
-        if (n % (i + 16) === 0) return i + 16 === n;
-        if (n % (i + 22) === 0) return i + 22 === n;
-        if (n % (i + 24) === 0) return i + 24 === n;
+    for (let i = 11; i <= m; i += 210) {
+        for (const a of primeDividers) {
+            if (n % (i + a) === 0) {
+                return i + a === n;
+            }
+        }
     }
     return true;
 }
-
-// Interesting also: npm i bigint-is-prime
-// https://github.com/shade/BigJS/blob/master/src/bigint.js
-// Those are probability-based checks for bigint primes.
 
 /**
  * Highly-optimized prime-bigint verification.
  */
 function isBigPrime(n: bigint) {
-    // TODO: It should use the logic below for up to maxPrime length,
-    //  at most, and then utilize a probability algorithm.
-
     if (n % 1n || n < 2n) {
         return false;
     }
     if (n % 2n === 0n) return n === 2n;
     if (n % 3n === 0n) return n === 3n;
     if (n % 5n === 0n) return n === 5n;
-
+    if (n % 7n === 0n) return n === 7n;
     const m = bigSqrt(n);
-
-    for (let i = 7n; i <= m; i += 30n) {
-        if (n % i === 0n) return i === n;
-        if (n % (i + 4n) === 0n) return i + 4n === n;
-        if (n % (i + 6n) === 0n) return i + 6n === n;
-        if (n % (i + 10n) === 0n) return i + 10n === n;
-        if (n % (i + 12n) === 0n) return i + 12n === n;
-        if (n % (i + 16n) === 0n) return i + 16n === n;
-        if (n % (i + 22n) === 0n) return i + 22n === n;
-        if (n % (i + 24n) === 0n) return i + 24n === n;
-    }
-    return true;
-}
-
-// This one needs testing, but appears to be the fastest so far:
-// https://github.com/henrikfredriksson/prime-q/blob/master/index.js
-
-// NOTE: I tested it for 5, and it didn't work :(
-export function isPrime_MillerRabin(n: number, k = 100) {
-    if (n === 2 || n === 3) {
-        return true;
-    }
-    const smallPrimes = [2, 3, 5, 7, 11, 13, 17];
-    const res = smallPrimes.map(x => n % x === 0).filter(x => x).includes(true);
-    if (res) {
-        return false;
-    }
-    if (n % 2 === 0 || n % 3 === 0 || n % 5 === 0 || n % 7 === 0 || n < 2) {
-        return false;
-    }
-    let s = 0;
-    let d = n - 1;
-    while (d % 2 === 0) {
-        d /= 2;
-        ++s;
-    }
-    const witness = a => Math.floor(Math.random() * (a - 2)) + 2;
-
-    while (k--) {
-        let a = Math.pow(witness(n), s);
-        if (a % n === 1) {
-            continue;
-        }
-        let testFails = false;
-        for (let i = 0; i < s; i++) {
-            a = Math.pow(a, 2) % n;
-            if (a === n - 1) {
-                testFails = true;
-                break;
+    for (let i = 11n; i <= m; i += 210n) {
+        for (const a of bigPrimeDividers) {
+            if (n % (i + a) === 0n) {
+                return i + a === n;
             }
-        }
-        if (testFails) {
-            return false;
         }
     }
     return true;
