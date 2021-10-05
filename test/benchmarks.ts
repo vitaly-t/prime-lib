@@ -1,3 +1,4 @@
+const {cpus, version} = require('os');
 import {sieveInt, sieveIntStart, sieveBigInt, sieveBigIntStart} from '../src/sieve';
 import {isPrime} from '../src';
 
@@ -269,6 +270,8 @@ function testIsPrime(): ITestResult {
 }
 
 (function () {
+    // tslint:disable:no-console
+
     const commands: { [name: string]: any } = {
         sieveInt() {
             return testSieveInt();
@@ -288,6 +291,7 @@ function testIsPrime(): ITestResult {
     };
 
     const {argv} = process;
+    const start = Date.now();
     if (argv.length > 2) {
         let i = 2;
         do {
@@ -300,8 +304,12 @@ function testIsPrime(): ITestResult {
         }
     }
 
+    const duration = Math.ceil((Date.now() - start) / 1000);
+    const {model, speed} = cpus()[0];
+    const cpu = `${model.trim()}, ${speed}Mhz`;
+    console.log(`Duration: ${duration}s\nNodeJS: ${process.version}\nCPU: ${cpu}\nOS: ${version()}\n`);
+
     function runTest(testName: string): void {
-        // tslint:disable:no-console
 
         if (testName in commands) {
             console.log(`*** Benchmarking ${JSON.stringify(testName)}...`);
