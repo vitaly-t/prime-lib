@@ -33,3 +33,18 @@ function newtonIteration(n: bigint, x0: bigint): bigint {
     }
     return newtonIteration(n, x1);
 }
+
+/**
+ * Stops an iterator when a callback condition is met.
+ */
+export function* stopWhen<T>(iterator: IterableIterator<T>, cb: (value: T, index: number) => boolean): IterableIterator<T> {
+    let i, index = 0;
+    for (; ;) {
+        i = iterator.next();
+        if (i.done || cb(i.value, index++)) {
+            break;
+        }
+        yield i.value;
+    }
+    return i.value;
+}

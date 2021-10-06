@@ -1,5 +1,6 @@
 import {expect} from './header';
 import {bigSqrt, bigCeil} from '../src/utils';
+import {stopWhen} from '../src';
 
 describe('bigCeil', () => {
     it('must succeed for small numbers', () => {
@@ -42,5 +43,18 @@ describe('bigSqrt', () => {
             const a = bigSqrt(v);
             expect(a * a, 'Failed for: ' + v).to.eql(v);
         });
+    });
+});
+
+describe('stopWhen', () => {
+    it('must stop on condition', () => {
+        const gen = function* (limit: number) {
+            let i = 0;
+            while (i++ < limit) {
+                yield i;
+            }
+        };
+        const res = [...stopWhen(gen(100), (_, index) => index === 5)];
+        expect(res).to.eql([1, 2, 3, 4, 5]);
     });
 });

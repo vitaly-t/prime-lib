@@ -1,6 +1,6 @@
 import {expect} from './header';
 import {primes} from './primes';
-import {isPrime} from '../src';
+import {isPrime, maxPrime} from '../src';
 
 describe('isPrime', () => {
 
@@ -42,10 +42,15 @@ describe('isPrime', () => {
     });
 
     describe('for special cases', () => {
+        it('must recognize the maximum prime number', () => {
+            expect(isPrime(maxPrime)).to.be.true;
+        });
+        it('must recognize the maximum prime bigint', () => {
+            expect(isPrime(BigInt(maxPrime))).to.be.true;
+        });
         it('must not fail', () => {
             // const specialCase = 109000000000000005676789000007878700000000000000000055500000000000137n;
-            // TODO: This special case hangs, for reason unknown :(
-            //  and it is not length-related, because longer numbers work fine ;)
+            // TODO: This special case hangs, because it is a prime, and the algorithm fails to process it.
             // expect(isPrime(specialCase)).to.be.true;
         });
     });
