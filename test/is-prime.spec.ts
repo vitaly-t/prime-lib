@@ -13,6 +13,12 @@ describe('isPrime', () => {
         });
     });
 
+    describe('for values outside maxPrime', () => {
+        it('must fail the test', () => {
+            expect(isPrime(maxPrime + 111)).to.be.false;
+        });
+    });
+
     describe('for invalid prime numbers', () => {
         it('must return false', () => {
             const values = [-2, -1, 0, 1, 1.5, 1.99, 2.01, 3.1, 4, 6, 8, 9];
@@ -48,10 +54,9 @@ describe('isPrime', () => {
         it('must recognize the maximum prime bigint', () => {
             expect(isPrime(BigInt(maxPrime))).to.be.true;
         });
-        it('must not fail', () => {
-            // const specialCase = 109000000000000005676789000007878700000000000000000055500000000000137n;
-            // TODO: This special case hangs, because it is a prime, and the algorithm fails to process it.
-            // expect(isPrime(specialCase)).to.be.true;
+        it('must reject when above maxPrime', () => {
+            const hugePrime = 109000000000000005676789000007878700000000000000000055500000000000137n;
+            expect(isPrime(hugePrime)).to.be.false;
         });
     });
 

@@ -1,6 +1,6 @@
 import {expect} from './header';
 import {bigSqrt, bigCeil} from '../src/utils';
-import {stopWhen} from '../src';
+import {stopWhen} from '../src'; // importing from root helps with coverage
 
 describe('bigCeil', () => {
     it('must succeed for small numbers', () => {

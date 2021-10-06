@@ -1,9 +1,8 @@
 import {sieveInt, sieveIntStart, sieveBigInt, sieveBigIntStart} from './sieve';
 import {stopWhen} from './utils';
 
-export {stopWhen} from './utils';
+export {stopWhen, maxPrime} from './utils';
 export {isPrime} from './is-prime';
-export {maxPrime} from './sieve';
 
 /**
  * Infinite generator of prime numbers, based on Sieve of Eratosthenes algorithm,

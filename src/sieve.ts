@@ -11,12 +11,6 @@
 import {bigCeil} from './utils';
 
 /**
- * Maximum prime number that can be generated in JavaScript,
- * using the standard 'number' type (53-bit of integer range).
- */
-export const maxPrime = 9_007_199_254_740_881;
-
-/**
  * Highly optimized, postponed Sieve of Eratosthenes algorithm.
  */
 export function* sieveInt(): IterableIterator<number> {

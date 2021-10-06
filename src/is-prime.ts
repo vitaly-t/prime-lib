@@ -1,4 +1,6 @@
-import {bigSqrt} from './utils';
+import {bigSqrt, maxPrime} from './utils';
+
+const maxBigPrime = BigInt(maxPrime);
 
 /**
  * Verifies if number/bigint is a prime.
@@ -21,12 +23,12 @@ const primeDividers = [
 const bigPrimeDividers = primeDividers.map(BigInt);
 
 /**
- * Highly-optimized prime-number verification.
+ * Optimized prime-number verification.
  *
  * Source: http://www.javascripter.net/faq/numberisprime.htm
  */
 function isPrimeNumber(n: number): boolean {
-    if (isNaN(n) || !isFinite(n) || n % 1 || n < 2) {
+    if (isNaN(n) || n < 2 || n > maxPrime || n % 1) {
         return false;
     }
     if (n % 2 === 0) return n === 2;
@@ -45,10 +47,12 @@ function isPrimeNumber(n: number): boolean {
 }
 
 /**
- * Highly-optimized prime-bigint verification.
+ * Optimized prime-bigint verification.
+ *
+ * Current version is limited by maxBigPrime, because going over 10^15 gets quite slow.
  */
 function isBigPrime(n: bigint) {
-    if (n % 1n || n < 2n) {
+    if (n % 1n || n < 2n || n > maxBigPrime) {
         return false;
     }
     if (n % 2n === 0n) return n === 2n;
