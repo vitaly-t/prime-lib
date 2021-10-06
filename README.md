@@ -14,7 +14,7 @@ This set of [prime number] generators combines performance of [Sieve of Eratosth
 with the maximum memory efficiency. It is best suited for infinite generators offered here,
 to run in lite clients, like web apps, and to be stream-compatible and RXJS-friendly.
 
-Any further performance optimization requires use of pre-allocated buffers, which compromises
+Further performance optimizations require use of pre-allocated buffers, which compromises
 on the memory consumption, and thus out of scope here.
 
 For tests and benchmarks, see [./test](./test) folder.
