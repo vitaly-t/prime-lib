@@ -110,13 +110,13 @@ const RESIDUES = new Uint32Array([
     181, 187, 191, 193, 197, 199, 209, 211, 221, 223, 227, 229, 233
 ]);
 
-function sumSieveBuffer(lwi, bitndxlmt, cmpsts) {
+function* sumSieveBuffer(lwi, bitndxlmt, cmpsts) {
     const whlfctr = WHLODDCRC + WHLODDCRC;
     for (let i = 0; i <= bitndxlmt; ++i) for (let ri = 0; ri < WHLHITS; ++ri) if ((cmpsts[ri][i >> 3] & (1 << (i & 7))) == 0) {
         const prime = ((lwi + i) * whlfctr + RESIDUES[ri];
         if (prime) {
-            // yield prime;
-            console.log(prime);
+            yield prime;
+            // console.log(prime);
         }
     }
 }
@@ -136,7 +136,7 @@ function countPage(bitlmt, sb) {
     return cnt;
 }
 
-function countSoEPrimesTo(limit) {
+function* countSoEPrimesTo(limit) {
     if (limit < 3) {
         if (limit < 2) return 0;
         return 1;
@@ -155,11 +155,24 @@ function countSoEPrimesTo(limit) {
         len = buf.length << 3;
         nxti = lowi + len;
         if (nxti > lmti) {
-            sumSieveBuffer(lowi, lmti, buf);
-            // cnt += countPage(lmti - lowi, buf);
+            const r = sumSieveBuffer(lowi, lmti, buf);
+            let b;
+            do {
+                b = r.next();
+                if (!b.done) {
+                    yield b.value;
+                }
+            } while (!b.done);
             break;
         }
-        sumSieveBuffer(lowi, len - 1, buf);
+        const i = sumSieveBuffer(lowi, len - 1, buf);
+        let a;
+        do {
+            a = i.next();
+            if (!a.done) {
+                yield a.value;
+            }
+        } while (!a.done);
         // cnt += countPage(len - 1, buf);
     }
     return cnt;
@@ -167,7 +180,9 @@ function countSoEPrimesTo(limit) {
 
 var limit = 1000; // sieve to this limit...
 var start = +new Date();
-var answr = countSoEPrimesTo(limit);
+var answr = [...countSoEPrimesTo(limit)];
 var elpsd = +new Date() - start;
 
-console.log('Found ' + answr + ' primes up to ' + limit + ' in ' + elpsd + ' milliseconds.');
+console.log(answr);
+
+// console.log('Found ' + answr + ' primes up to ' + limit + ' in ' + elpsd + ' milliseconds.');
