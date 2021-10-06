@@ -74,8 +74,10 @@ function basePrimes() {
             }
             //find next marker still with prime status
             while (bi < len && buf[bi >> 3] & ((1 >>> 0) << (bi & 7))) bi++;
-            if (bi < len) // within buffer: output computed prime
-                return 3 + ((lowi + bi++) << 1);
+            if (bi < len) { // within buffer: output computed prime
+                const a = 3 + ((lowi + bi++) << 1);
+                return a;
+            }
             // beyond buffer range: advance buffer
             bi = 0;
             lowi += len; // and recursively loop to make a new page buffer
@@ -96,6 +98,28 @@ const CLUT = function () {
     }
     return arr;
 }();
+
+const FRSTSVPRM = 23;
+const WHLODDCRC = 105 | 0;
+const WHLHITS = 48 | 0;
+
+const RESIDUES = new Uint32Array([
+    23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
+    73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 121, 127,
+    131, 137, 139, 143, 149, 151, 157, 163, 167, 169, 173, 179,
+    181, 187, 191, 193, 197, 199, 209, 211, 221, 223, 227, 229, 233
+]);
+
+function sumSieveBuffer(lwi, bitndxlmt, cmpsts) {
+    const whlfctr = WHLODDCRC + WHLODDCRC;
+    for (let i = 0; i <= bitndxlmt; ++i) for (let ri = 0; ri < WHLHITS; ++ri) if ((cmpsts[ri][i >> 3] & (1 << (i & 7))) == 0) {
+        const prime = ((lwi + i) * whlfctr + RESIDUES[ri];
+        if (prime) {
+            // yield prime;
+            console.log(prime);
+        }
+    }
+}
 
 function countPage(bitlmt, sb) {
     let lst = bitlmt >> 5;
@@ -131,15 +155,17 @@ function countSoEPrimesTo(limit) {
         len = buf.length << 3;
         nxti = lowi + len;
         if (nxti > lmti) {
-            cnt += countPage(lmti - lowi, buf);
+            sumSieveBuffer(lowi, lmti, buf);
+            // cnt += countPage(lmti - lowi, buf);
             break;
         }
-        cnt += countPage(len - 1, buf);
+        sumSieveBuffer(lowi, len - 1, buf);
+        // cnt += countPage(len - 1, buf);
     }
     return cnt;
 }
 
-var limit = 1000000000; // sieve to this limit...
+var limit = 1000; // sieve to this limit...
 var start = +new Date();
 var answr = countSoEPrimesTo(limit);
 var elpsd = +new Date() - start;
