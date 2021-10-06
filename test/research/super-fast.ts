@@ -5,6 +5,12 @@
 * Takes from: https://stackoverflow.com/questions/39312107/implementing-the-page-segmented-sieve-of-eratosthenes-in-javascript/57108107#57108107
 */
 
+/*
+@vitaly-t, (cont'd) For instance, it you wanted to sum the actual primes over a range rather than just count the number of them,
+one would use a function as follows: function sumSieveBuffer(lwi, bitndxlmt, cmpsts) { let sum = 0; const whlfctr = WHLODDCRC + WHLODDCRC; for (let i = 0; i <= bitndxlmt; ++i) for (let ri = 0; ri < WHLHITS; ++ri) if ((cmpsts[ri][i >> 3] & (1 << (i & 7))) == 0) { sum += ((lwi + i) * whlfctr + RESIDUES[ri]; } return sum; }
+with the above function called in place of countSieveBuffer with the addititional prefix argument of lwi.
+  */
+
 const FRSTSVPRM = 23;
 const WHLODDCRC = 105 | 0;
 const WHLHITS = 48 | 0;
@@ -164,26 +170,15 @@ const CLUT = function () {
     return arr;
 }();
 
-function countSieveBuffer(bitlmt, sb) {
-    let lstwi = (bitlmt / WHLODDCRC) | 0;
-    let lstri = WHLNDXS[(bitlmt - lstwi * WHLODDCRC) | 0];
-    let lst = lstwi >> 5;
-    let lstm = lstwi & 31;
-    let count = (lst * 32 + 32) * WHLHITS;
-    for (let ri = 0; ri < WHLHITS; ++ri) {
-        let pln = new Uint32Array(sb[ri].buffer);
-        for (let i = 0; i < lst; ++i) {
-            let v = pln[i];
-            count -= CLUT[v & 0xFFFF];
-            count -= CLUT[v >>> 16];
+function sumSieveBuffer(lwi, bitndxlmt, cmpsts) {
+    const whlfctr = WHLODDCRC + WHLODDCRC;
+    for (let i = 0; i <= bitndxlmt; ++i) for (let ri = 0; ri < WHLHITS; ++ri) if ((cmpsts[ri][i >> 3] & (1 << (i & 7))) == 0) {
+        const prime = ((lwi + i) * whlfctr + RESIDUES[ri];
+        if (prime) {
+            // yield prime;
+            console.log(prime);
         }
-        let msk = 0xFFFFFFFF << lstm;
-        if (ri <= lstri) msk <<= 1;
-        let v = pln[lst] | msk;
-        count -= CLUT[v & 0xFFFF];
-        count -= CLUT[v >>> 16];
     }
-    return count;
 }
 
 function fillSieveBuffer(lwi, sb) {
@@ -221,7 +216,8 @@ function doit(LIMIT, bufferSize) {
             for (let i = 0; i < ndxdrsds.length; ++i)
                 ndxdrsds[i] = ((i < WHLHITS ? 0 : 64) + (i % WHLHITS)) >>> 0;
             cullSieveBuffer(0, ndxdrsds, new Uint32Array(ndxdrsds.length), cmpsts);
-            let len = countSieveBuffer(szbits * WHLODDCRC - 1, cmpsts);
+            // let len = countSieveBuffer(szbits * WHLODDCRC - 1, cmpsts);
+            let len = sumSieveBuffer(lwi, szbits * WHLODDCRC - 1, cmpsts); // lwi, bitndxlmt, cmpsts
             let ndxdprms = new Uint32Array(len);
             let j = 0;
             for (let i = 0; i < szbits; ++i)
@@ -241,8 +237,10 @@ function doit(LIMIT, bufferSize) {
                 const nxti = lwi + SIEVEBUFFERSZ;
                 fillSieveBuffer(lwi, cmpsts);
                 cullSieveBuffer(lwi, bparr, strts, cmpsts);
-                if (nxti <= lwilmt) count += countSieveBuffer(SIEVEBUFFERSZ * WHLODDCRC - 1, cmpsts);
-                else count += countSieveBuffer((LIMIT - FRSTSVPRM) / 2 - lwi * WHLODDCRC, cmpsts);
+                if (nxti <= lwilmt) // count += countSieveBuffer(SIEVEBUFFERSZ * WHLODDCRC - 1, cmpsts);
+                    count += sumSieveBuffer(lwi, SIEVEBUFFERSZ * WHLODDCRC - 1, cmpsts); // lwi, bitndxlmt, cmpsts
+                else // count += countSieveBuffer((LIMIT - FRSTSVPRM) / 2 - lwi * WHLODDCRC, cmpsts);
+                    count += sumSieveBuffer(lwi, (LIMIT - FRSTSVPRM) / 2 - lwi * WHLODDCRC, cmpsts); // lwi, bitndxlmt, cmpsts
             }
             if (lwi <= lwilmt) {
                 setTimeout(pgfnc, 7);
@@ -263,4 +261,4 @@ function doit(LIMIT, bufferSize) {
 </select>
 */
 
-doit(100, 1048576);
+doit(1000, 1048576);
