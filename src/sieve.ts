@@ -9,7 +9,7 @@
  */
 
 /**
- * Highly optimized, postponed Sieve of Eratosthenes algorithm.
+ * Optimized, postponed Sieve of Eratosthenes algorithm.
  */
 export function* sieveInt(): IterableIterator<number> {
     yield 2;
