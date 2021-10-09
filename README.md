@@ -31,7 +31,7 @@ Follow the simple usage examples below, based on your development environment.
 
 ### JavaScript
 
-Example of generating an array with first 10 primes as `number`-s:
+Example of generating an array with the first 10 primes:
 
 ```js
 const {generatePrimes, stopOnCount} = require('primes-generator');
@@ -44,31 +44,27 @@ const values = [...s]; // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
 
 ### TypeScript
 
-Example of generating an array of all primes up to 17 as `bigint`-s:
+Example of generating an array of all primes up to 17:
 
 ```js
-import {generateBigPrimes, stopOnValue} from 'primes-generator';
+import {generatePrimes, stopOnValue} from 'primes-generator';
 
-const i = generateBigPrimes(); // create infinite prime iterator
-const s = stopOnValue(i, 17n); // stop-iterator when value reaches 17
+const i = generatePrimes(); // create infinite prime iterator
+const s = stopOnValue(i, 17); // stop-iterator when value reaches 17
 
-const values = [...s]; // 2n, 3n, 5n, 7n, 11n, 13n, 17n
+const values = [...s]; // 2, 3, 5, 7, 11, 13, 17
 ```
 
 ### RXJS
 
-Adding reusable RXJS wrappers from start is a good practice:
+Adding a reusable RXJS wrapper from start is a good practice:
 
 ```ts
 import {Observable, from} from 'rxjs';
-import {generatePrimes, generateBigPrimes} from 'primes-generator';
+import {generatePrimes} from 'primes-generator';
 
 export function primes(start?: number): Observable<number> {
     return from(generatePrimes(start));
-}
-
-export function bigPrimes(start?: bigint): Observable<bigint> {
-    return from(generateBigPrimes(start));
 }
 ```
 

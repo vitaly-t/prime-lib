@@ -1,5 +1,5 @@
 const {cpus, version} = require('os');
-import {sieveInt, sieveIntStart, sieveBigInt, sieveBigIntStart} from '../src/sieve';
+import {sieveInt, sieveIntStart} from '../src/sieve';
 import {isPrime} from '../src';
 
 interface ITestInput {
@@ -93,111 +93,6 @@ function testSieveIntStart(): ITestResult {
     return result;
 }
 
-function testSieveBigInt(): ITestResult {
-    const tests: ITestInput = {
-        '10^6': {
-            max: 1_000_000,
-            desc: 'Time in ms, to generate the first million primes'
-        },
-        '10^7': {
-            max: 10_000_000,
-            desc: 'Time in ms, to generate the first 10 million primes'
-        },
-        '10^8': {
-            max: 100_000_000,
-            desc: 'Time in ms, to generate the first 100 million primes'
-        }
-    };
-    const result: any = {};
-    for (const t in tests) {
-        const i = sieveBigInt();
-        const maxPrimes = tests[t].max;
-        const start = Date.now();
-        let count = 0, p;
-        do {
-            p = i.next();
-        } while (++count < maxPrimes);
-        result[t] = {
-            'ms': Date.now() - start,
-            'Last Prime': p.value,
-            'Description': tests[t].desc
-        };
-    }
-    return result;
-}
-
-function testSieveBigIntStart(): ITestResult {
-    const tests: ITestInput = {
-        '10^9 -> 10^6': {
-            start: 1_000_000_000n,
-            limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes, after 1 billion'
-        },
-        '10^10 -> 10^6': {
-            start: 10_000_000_000n,
-            limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes, after 10 billions'
-        },
-        '10^11 -> 10^6': {
-            start: 100_000_000_000n,
-            limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes, after 100 billions'
-        },
-        '10^12 -> 10^6': {
-            start: 1_000_000_000_000n,
-            limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes, after 1 trillion'
-        },
-        '10^13 -> 10^6': {
-            start: 10_000_000_000_000n,
-            limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes, after 10 trillions'
-        },
-        '10^14 -> 10^6': {
-            start: 100_000_000_000_000n,
-            limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes, after 100 trillions'
-        },
-        '10^15 -> 10^6': {
-            start: 1_000_000_000_000_000n,
-            limit: 1_000_000,
-            desc: 'Time in ms, to generate 1 million primes, after 1 quadrillion'
-        },
-        /*
-        TODO: takes less than after 1 quadrillion, means values are not good.
-        '10^16 -> 1000': {
-            start: 10_000_000_000_000_000n,
-            limit: 1_000,
-            desc: 'Time in ms, to generate 1000 primes, after 10 quadrillions'
-        },*/
-
-        /*
-        TODO: Fails with 'out of range' error, need to fix it.
-        '10^17 -> 1000': {
-            start: 100_000_000_000_000_000n,
-            limit: 1_000,
-            desc: 'Time in ms, to generate 1000 primes, after 100 quadrillions'
-        }*/
-    };
-    const result: any = {};
-    for (const t in tests) {
-        const i = sieveBigIntStart(tests[t].start);
-        const {limit} = tests[t];
-        const start = Date.now();
-        let count = 0, p, f;
-        do {
-            p = i.next();
-            f = f || p;
-        } while (++count < limit);
-        result[t] = {
-            'ms': Date.now() - start,
-            'First Prime': f.value,
-            'Description': tests[t].desc
-        };
-    }
-    return result;
-}
-
 function testIsPrime(): ITestResult {
     const tests: ITestInput = {
         '0 -> 10^6': {
@@ -278,12 +173,6 @@ function testIsPrime(): ITestResult {
         },
         sieveIntStart() {
             return testSieveIntStart();
-        },
-        sieveBigInt() {
-            return testSieveBigInt();
-        },
-        sieveBigIntStart() {
-            return testSieveBigIntStart();
         },
         isPrime() {
             return testIsPrime();

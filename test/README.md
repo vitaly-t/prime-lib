@@ -22,8 +22,6 @@ $ npm run bench
 ```shell
 $ npm run bench sieveInt
 $ npm run bench sieveIntStart
-$ npm run bench sieveBigInt
-$ npm run bench sieveBigIntStart
 $ npm run bench isPrime
 ```
 
@@ -36,6 +34,3 @@ $ npm run bench sieveInt sieveIntStart
 **Most recent benchmark run:**
 
 ![image](https://user-images.githubusercontent.com/5108906/136051857-109cfaad-910f-4fa3-a406-980fc049a812.png)
-
-
-

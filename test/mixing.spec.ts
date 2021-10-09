@@ -1,5 +1,5 @@
 import {expect} from './header';
-import {isPrime, stopOnCount, generatePrimes, generateBigPrimes} from '../src';
+import {isPrime, stopOnCount, generatePrimes} from '../src';
 
 describe('mixing', () => {
     describe('for start values', () => {
@@ -29,12 +29,4 @@ describe('mixing', () => {
         });
     });
 
-    describe('for bigint offset values', () => {
-        it('must pass prime test', () => {
-            const i = stopOnCount(generateBigPrimes(100_000n), 10_000);
-            [...i].forEach(a => {
-                expect(isPrime(a), `Failed for ${a}`).to.be.true;
-            });
-        });
-    });
 });
