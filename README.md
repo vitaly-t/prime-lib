@@ -12,10 +12,10 @@ primes-generator
 
 This set of [prime number] generators combines performance of [Sieve of Eratosthenes] algorithm
 with the maximum memory efficiency. It is best suited for infinite generators offered here,
-to run in lite clients, like web apps, and to be stream-compatible and RXJS-friendly.
+to run in lite clients, like web apps, to be stream-compatible and RXJS-friendly.
 
-Further performance optimizations require use of pre-allocated buffers, which compromises
-on the memory consumption, and thus out of scope here.
+Further performance optimizations require use of pre-allocated buffers, which increases
+memory consumption, and thus out of scope here.
 
 For tests and benchmarks, see [./test](./test) folder.
 
@@ -27,11 +27,11 @@ $ npm i primes-generator
 
 ## Usage
 
-Follow the simple usage examples below, based on your development environment.
+Follow the usage examples below, based on your development environment.
 
 ### JavaScript
 
-Example of generating an array with the first 10 primes:
+Generating an array with the first 10 primes:
 
 ```js
 const {generatePrimes, stopOnCount} = require('primes-generator');
@@ -44,7 +44,7 @@ const values = [...s]; // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
 
 ### TypeScript
 
-Example of generating an array of all primes up to 17:
+Generating an array of all primes up to 17:
 
 ```js
 import {generatePrimes, stopOnValue} from 'primes-generator';
@@ -68,7 +68,7 @@ export function primes(start?: number): Observable<number> {
 }
 ```
 
-Example of generating 5 primes from 7 and upward:
+Generating 5 primes from 7 and upward:
 
 ```ts
 import {take} from 'rxjs';
@@ -79,7 +79,7 @@ primes(7).pipe(take(5))
     });
 ```
 
-Example of detecting primes in another sequence:
+Detecting primes in another sequence:
 
 ```ts
 import {from, filter} from 'rxjs';

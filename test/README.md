@@ -11,7 +11,7 @@ $ npm test
 
 All benchmarks are inside [./benchmarks.ts](./benchmarks.ts) file.
 
-* To run all available benchmarks (takes about 10 min to complete):
+* To run all available benchmarks (takes about 5 min to complete):
 
 ```shell
 $ npm run bench
@@ -34,4 +34,3 @@ $ npm run bench sieveInt sieveIntStart
 **Most recent benchmark run:**
 
 ![image](https://user-images.githubusercontent.com/5108906/136663346-f070a46b-4a09-4d44-add7-869b394cbdd4.png)
-
