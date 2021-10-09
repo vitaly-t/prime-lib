@@ -113,7 +113,7 @@ const RESIDUES = new Uint32Array([
 function* sumSieveBuffer(lwi, bitndxlmt, cmpsts) {
     const whlfctr = WHLODDCRC + WHLODDCRC;
     for (let i = 0; i <= bitndxlmt; ++i) for (let ri = 0; ri < WHLHITS; ++ri) if ((cmpsts[ri][i >> 3] & (1 << (i & 7))) == 0) {
-        const prime = ((lwi + i) * whlfctr + RESIDUES[ri];
+        const prime = (lwi + i) * whlfctr + RESIDUES[ri];
         if (prime) {
             yield prime;
             // console.log(prime);

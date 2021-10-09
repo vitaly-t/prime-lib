@@ -1,5 +1,3 @@
-'use strict';
-
 /*
 * TODO: This deserves a good look into, because it is mighty fast!
 * Takes from: https://stackoverflow.com/questions/39312107/implementing-the-page-segmented-sieve-of-eratosthenes-in-javascript/57108107#57108107
@@ -156,27 +154,12 @@ const WHLPTRN = function () {
     return sb;
 }();
 
-const CLUT = function () {
-    let arr = new Uint8Array(65536);
-    for (let i = 0; i < 65536; ++i) {
-        let nmbts = 0 | 0;
-        let v = i;
-        while (v > 0) {
-            ++nmbts;
-            v &= (v - 1) | 0;
-        }
-        arr[i] = nmbts | 0;
-    }
-    return arr;
-}();
-
-function sumSieveBuffer(lwi, bitndxlmt, cmpsts) {
+function* sumSieveBuffer(lwi, bitndxlmt, cmpsts) {
     const whlfctr = WHLODDCRC + WHLODDCRC;
     for (let i = 0; i <= bitndxlmt; ++i) for (let ri = 0; ri < WHLHITS; ++ri) if ((cmpsts[ri][i >> 3] & (1 << (i & 7))) == 0) {
-        const prime = ((lwi + i) * whlfctr + RESIDUES[ri];
+        const prime = (lwi + i) * whlfctr + RESIDUES[ri];
         if (prime) {
-            // yield prime;
-            console.log(prime);
+            yield prime;
         }
     }
 }
@@ -217,7 +200,7 @@ function doit(LIMIT, bufferSize) {
                 ndxdrsds[i] = ((i < WHLHITS ? 0 : 64) + (i % WHLHITS)) >>> 0;
             cullSieveBuffer(0, ndxdrsds, new Uint32Array(ndxdrsds.length), cmpsts);
             // let len = countSieveBuffer(szbits * WHLODDCRC - 1, cmpsts);
-            let len = sumSieveBuffer(lwi, szbits * WHLODDCRC - 1, cmpsts); // lwi, bitndxlmt, cmpsts
+            let len = 0;//sumSieveBuffer(0, szbits * WHLODDCRC - 1, cmpsts); // lwi, bitndxlmt, cmpsts
             let ndxdprms = new Uint32Array(len);
             let j = 0;
             for (let i = 0; i < szbits; ++i)
@@ -230,26 +213,36 @@ function doit(LIMIT, bufferSize) {
         let lwilmt = (LIMIT - FRSTSVPRM) / 2 / WHLODDCRC;
         let strts = new Uint32Array(bparr.length);
         let lwi = 0;
-        const pgfnc = function () {
+        const pgfnc = function* () {
             const smlllmt = lwi + 4194304;
             const lmt = (smlllmt < lwilmt) ? smlllmt : lwilmt;
             for (; lwi <= lmt; lwi += SIEVEBUFFERSZ) {
                 const nxti = lwi + SIEVEBUFFERSZ;
                 fillSieveBuffer(lwi, cmpsts);
                 cullSieveBuffer(lwi, bparr, strts, cmpsts);
+                let i;
                 if (nxti <= lwilmt) // count += countSieveBuffer(SIEVEBUFFERSZ * WHLODDCRC - 1, cmpsts);
-                    count += sumSieveBuffer(lwi, SIEVEBUFFERSZ * WHLODDCRC - 1, cmpsts); // lwi, bitndxlmt, cmpsts
+                    i = sumSieveBuffer(lwi, SIEVEBUFFERSZ * WHLODDCRC - 1, cmpsts); // lwi, bitndxlmt, cmpsts
                 else // count += countSieveBuffer((LIMIT - FRSTSVPRM) / 2 - lwi * WHLODDCRC, cmpsts);
-                    count += sumSieveBuffer(lwi, (LIMIT - FRSTSVPRM) / 2 - lwi * WHLODDCRC, cmpsts); // lwi, bitndxlmt, cmpsts
+                {
+                    i = sumSieveBuffer(lwi, (LIMIT - FRSTSVPRM) / 2 - lwi * WHLODDCRC, cmpsts); // lwi, bitndxlmt, cmpsts
+                }
+                let w;
+                do {
+                    w = i.next();
+                    if (!w.done) {
+                        yield w.value;
+                    }
+                } while (!w.done);
             }
             if (lwi <= lwilmt) {
                 setTimeout(pgfnc, 7);
             } else {
                 const elpsdx = +Date.now() - startx;
-                console.log(`Found ${count} primes up to ${LIMIT} in ${elpsdx}ms`);
+                // console.log(`Found ${count} primes up to ${LIMIT} in ${elpsdx}ms`);
             }
         };
-        pgfnc();
+        return pgfnc();
     }
 }
 
@@ -261,4 +254,17 @@ function doit(LIMIT, bufferSize) {
 </select>
 */
 
-doit(1000, 1048576);
+const i: IterableIterator<any> = doit(100_000_000, 1048576);
+
+const maxCount = 1_000_000_000;
+let r, counter = 0;
+const start = Date.now();
+do {
+    r = i.next();
+    if (!r.done) {
+        // console.log(r.value);
+        counter++;
+    }
+} while (!r.done && counter < maxCount);
+
+console.log(`Produced ${counter} primes in ${Date.now() - start}ms`);
