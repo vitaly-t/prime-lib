@@ -10,12 +10,8 @@ primes-generator
 
 ## About
 
-This set of [prime number] generators combines performance of [Sieve of Eratosthenes] algorithm
-with the maximum memory efficiency. It is best suited for infinite generators offered here,
-to run in lite clients, like web apps, to be stream-compatible and RXJS-friendly.
-
-Further performance optimizations require use of pre-allocated buffers, which increases
-memory consumption, and thus out of scope here.
+This [prime number] generator combines performance of [Sieve of Eratosthenes] algorithm
+with the maximum memory efficiency. It is RXJS-friendly, and well suited for web app-s.
 
 For tests and benchmarks, see [./test](./test) folder.
 
@@ -57,7 +53,7 @@ const values = [...s]; // 2, 3, 5, 7, 11, 13, 17
 
 ### RXJS
 
-Adding a reusable RXJS wrapper from start is a good practice:
+Adding a reusable RXJS wrapper first:
 
 ```ts
 import {Observable, from} from 'rxjs';
