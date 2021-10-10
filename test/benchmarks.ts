@@ -1,5 +1,4 @@
-import {sieveInt, sieveIntBoost, sieveIntStart} from '../src/sieve';
-import {isPrime} from '../src';
+import {generatePrimes, isPrime} from '../dist';
 
 const {cpus, version} = require('os');
 const {exec} = require('child_process');
@@ -37,7 +36,7 @@ function testSieveInt(): ITestResult {
     };
     const result: any = {};
     for (const t in tests) {
-        const i = sieveInt();
+        const i = generatePrimes();
         const maxPrimes = tests[t].max;
         const start = Date.now();
         let count = 0, p;
@@ -80,7 +79,7 @@ function testSieveIntBoost(): ITestResult {
     for (const t in tests) {
         const maxPrimes = tests[t].max;
         const start = Date.now();
-        const i = sieveIntBoost(maxPrimes);
+        const i = generatePrimes({boost: maxPrimes});
         let count = 0, p;
         do {
             p = i.next();
@@ -128,7 +127,7 @@ function testSieveIntStart(): ITestResult {
     };
     const result: any = {};
     for (const t in tests) {
-        const i = sieveIntStart(tests[t].start);
+        const i = generatePrimes({start: tests[t].start});
         const start = Date.now();
         let count = 0, p, f;
         do {
