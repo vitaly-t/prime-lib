@@ -1,54 +1,84 @@
-function soeOddPrimesTo(limit) {
-    var lmti = (limit - 3) >> 1; // bit index for limit value
-    var sz = (lmti >> 3) + 1; // size in bytes
-    var cmpsts = new Uint16Array(sz); // index 0 represents 3
-    // no need to zero above composites array; zeroed on creation...
-    for (var i = 0; ; ++i) {
-        var p = i + i + 3; // the square index is (p * p - 3) / 2 but we
-        var sqri = (i << 1) * (i + 3) + 3; // calculate start index directly
-        if (sqri > lmti) break; // while p is < square root of limit -> cull...
-        // following does bit unpacking to test the prime bit...
-        // 0/1 is false/true; false means prime...
-        // use asm.js with the shifts to make uint8's for some extra efficiency...
-        if ((cmpsts[i >> 3] & ((1 >>> 0) << (i & 7))) == 0 >>> 0)
-            for (var c = sqri; c <= lmti; c += p) // set true for composites...
-                cmpsts[c >> 3] |= (1 >>> 0) << (c & 7); // masking in the bit
+function soeOddPrimesTo(bufferLimit: number) {
+    const lmti = (bufferLimit - 3) >> 1;
+    const sz = (lmti >> 3) + 1;
+    const cmpSts = new Uint8Array(sz);
+    for (let i = 0; ; ++i) {
+        const p = i + i + 3;
+        const sqri = (i << 1) * (i + 3) + 3;
+        if (sqri > lmti) {
+            break;
+        }
+        if ((cmpSts[i >> 3] & ((1 >>> 0) << (i & 7))) == 0 >>> 0) {
+            for (let c = sqri; c <= lmti; c += p) {
+                cmpSts[c >> 3] |= (1 >>> 0) << (c & 7);
+            }
+        }
     }
-    var bi = -1;
-    return function () { // return function to return successive primes per call...
+    let bi = -1;
+    return function () {
         if (bi < 0) {
             ++bi;
-        } // the only even prime is a special case
-        while (bi <= lmti && (cmpsts[bi >> 3] & ((1 >>> 0) << (bi & 7))) != 0 >>> 0) ++bi;
-        if (bi > lmti) return null; // return null following the last prime
-        return (bi++ << 1) + 3; // else calculate the prime from the index
+        }
+        while (bi <= lmti && (cmpSts[bi >> 3] & ((1 >>> 0) << (bi & 7))) != 0 >>> 0) {
+            ++bi;
+        }
+        if (bi > lmti) {
+            return null;
+        }
+        return (bi++ << 1) + 3;
     };
 }
 
-function* generate1(limit: number): IterableIterator<number> {
-    const gen = soeOddPrimesTo(limit);
-    let a;
-    do {
-        a = gen();
-        if (a) {
-            yield a;
-        }
-    } while (a !== null);
+/**
+ * Maximum number of primes for which we can allocate memory to boost performance.
+ *
+ * To generate quickly 100mln primes we will be allocating about 130MB of RAM.
+ * Going beyond that will overload any browser or NodeJS.
+ */
+const maxLimit = 100_000_000;
+
+function* generateSieveBoost(limit: number): IterableIterator<number> {
+    if (limit < 1) {
+        return;
+    }
+    const maxCount = limit > maxLimit ? maxLimit : limit;
+    const bufferLimit = Math.floor(2.3 * maxCount * (Math.log10(maxCount) + 1));
+    yield 2;
+    const gen = soeOddPrimesTo(bufferLimit);
+    let p, count = 0;
+    while (++count < maxCount && (p = gen())) {
+        yield p;
+    }
 }
 
+// number of zeros, multiplied by 2 plus 0.5: 2.5, 4.5, 6.5, 9, 11,
+
+// 10: 4, 2.5
+// 100: 25, 4
+// 1_000: 168, 5.95
+// 10_000: 1229, 8.14
+// 100_000: 9592, 10.4
+// 1mln: 78498, 12.7
+// 10mln: 664_579, 15
+// 100mln: 5_761_455, 17.3
+// 1bln: 50_747_534, 19.7
+// 2.1bln: 103mln, 20.4
+
+// 10bln: 70_462_980, then stops working (21)
+
 const start = Date.now();
-const g = generate1(2_000_000_000);
-const maxCount = 1000;
+const g = generateSieveBoost(1_000_000_00);
 
 let count = 0;
 let a, last;
 do {
     a = g.next();
     if (!a.done) {
+        // console.log(a.value);
         last = a.value;
         count++;
     }
-} while (!a.done && count < maxCount);
+} while (!a.done);
 
 /*
 * It works, but not great, as it pre-allocates full-length array memory, which is bad!!!
