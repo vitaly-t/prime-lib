@@ -1,6 +1,8 @@
-const {cpus, version} = require('os');
 import {sieveInt, sieveIntBoost, sieveIntStart} from '../src/sieve';
 import {isPrime} from '../src';
+
+const {cpus, version} = require('os');
+const {exec} = require('child_process');
 
 interface ITestInput {
     [name: string]: { [value: string]: any };
@@ -215,6 +217,9 @@ function testIsPrime(): ITestResult {
 
 (function () {
     // tslint:disable:no-console
+
+    // Set high execution priority:
+    exec(`wmic process where "ProcessId=${process.pid}" CALL setpriority 256`);
 
     const commands: { [name: string]: any } = {
         sieveInt() {
