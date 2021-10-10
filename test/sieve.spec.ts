@@ -1,4 +1,4 @@
-import {expect} from './header';
+import {countItems, expect} from './header';
 import {maxPrime, stopOnValue} from '../src';
 import {generatePrimes} from '../src';
 
@@ -7,6 +7,21 @@ describe('sieveInt', () => {
         const i = stopOnValue(generatePrimes(), 17);
         expect([...i]).to.eql([2, 3, 5, 7, 11, 13, 17]);
     });
+});
+
+describe('sieveIntBoost', () => {
+    it('must generate correct values', () => {
+        const i = generatePrimes({boost: 7});
+        expect([...i]).to.eql([2, 3, 5, 7, 11, 13, 17]);
+    });
+    it('must allow the minimum of primes', () => {
+        const i = generatePrimes({boost: 1});
+        expect([...i]).to.eql([2]);
+    });
+    it('must not generate more than 100mln primes', () => {
+        const n = countItems(generatePrimes({boost: 100_000_005}));
+        expect(n).to.eql(100_000_000);
+    }).timeout(20000);
 });
 
 describe('sieveIntStart', () => {

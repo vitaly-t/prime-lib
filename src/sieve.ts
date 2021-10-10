@@ -110,9 +110,6 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
 const maxLimit = 100_000_000;
 
 export function* sieveIntBoost(limit: number): IterableIterator<number> {
-    if (limit < 1) {
-        return;
-    }
     const maxCount = limit > maxLimit ? maxLimit : limit;
     const bufferLimit = Math.floor(2.3 * maxCount * (Math.log10(maxCount) + 1));
     yield 2;
@@ -148,6 +145,8 @@ function sieveOddPrimesTo(bufferLimit: number) {
             ++bi;
         }
         if (bi > lmti) {
+            // this can only happen when the number of pre-generated primes
+            // matches the number of requested primes exactly.
             return null;
         }
         return (bi++ << 1) + 3;
