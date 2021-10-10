@@ -21,6 +21,7 @@ $ npm run bench
 
 ```shell
 $ npm run bench sieveInt
+$ npm run bench sieveIntBoost
 $ npm run bench sieveIntStart
 $ npm run bench isPrime
 ```

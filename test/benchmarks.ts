@@ -1,5 +1,5 @@
 const {cpus, version} = require('os');
-import {sieveInt, sieveIntStart} from '../src/sieve';
+import {sieveInt, sieveIntBoost, sieveIntStart} from '../src/sieve';
 import {isPrime} from '../src';
 
 interface ITestInput {
@@ -12,6 +12,14 @@ interface ITestResult {
 
 function testSieveInt(): ITestResult {
     const tests: ITestInput = {
+        '10^4': {
+            max: 10_000,
+            desc: 'Time in ms, to generate the first 10,000 primes'
+        },
+        '10^5': {
+            max: 100_000,
+            desc: 'Time in ms, to generate the first 100,000 primes'
+        },
         '10^6': {
             max: 1_000_000,
             desc: 'Time in ms, to generate the first million primes'
@@ -30,6 +38,47 @@ function testSieveInt(): ITestResult {
         const i = sieveInt();
         const maxPrimes = tests[t].max;
         const start = Date.now();
+        let count = 0, p;
+        do {
+            p = i.next();
+        } while (++count < maxPrimes);
+        result[t] = {
+            'ms': Date.now() - start,
+            'Last Prime': p.value,
+            'Description': tests[t].desc
+        };
+    }
+    return result;
+}
+
+function testSieveIntBoost(): ITestResult {
+    const tests: ITestInput = {
+        '10^4': {
+            max: 10_000,
+            desc: 'Time in ms, to generate the first 10,000 primes'
+        },
+        '10^5': {
+            max: 100_000,
+            desc: 'Time in ms, to generate the first 100,000 primes'
+        },
+        '10^6': {
+            max: 1_000_000,
+            desc: 'Time in ms, to generate the first million primes'
+        },
+        '10^7': {
+            max: 10_000_000,
+            desc: 'Time in ms, to generate the first 10 million primes'
+        },
+        '10^8': {
+            max: 100_000_000,
+            desc: 'Time in ms, to generate the first 100 million primes'
+        }
+    };
+    const result: any = {};
+    for (const t in tests) {
+        const maxPrimes = tests[t].max;
+        const start = Date.now();
+        const i = sieveIntBoost(maxPrimes);
         let count = 0, p;
         do {
             p = i.next();
@@ -170,6 +219,9 @@ function testIsPrime(): ITestResult {
     const commands: { [name: string]: any } = {
         sieveInt() {
             return testSieveInt();
+        },
+        sieveIntBoost() {
+            return testSieveIntBoost();
         },
         sieveIntStart() {
             return testSieveIntStart();
