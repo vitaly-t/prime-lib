@@ -1,7 +1,7 @@
 /**
  * CREDITS
  *
- * Many thanks to Will Ness, who implemented most of the algorithms used in this file.
+ * Many thanks to Will Ness, who helped with implementations here.
  *
  * See:
  *   - https://stackoverflow.com/users/849891/will-ness
@@ -42,8 +42,7 @@ export function* sieveInt(): IterableIterator<number> {
 }
 
 /**
- * Optimized, postponed Sieve of Eratosthenes algorithm,
- * extended for 'start' logic.
+ * Optimized, postponed Sieve of Eratosthenes algorithm, extended for 'start' logic.
  */
 export function* sieveIntStart(start: number): IterableIterator<number> {
     if (start <= 2) {

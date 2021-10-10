@@ -5,7 +5,7 @@ const primeDividers = [
     102, 110, 116, 120, 126, 128, 132, 138, 140, 146, 152, 156, 158, 162, 168, 170, 176, 180, 182, 186, 188, 198, 200];
 
 /**
- * Optimized prime-number verification.
+ * Optimized prime verification.
  */
 export function isPrime(n: number): boolean {
     if (isNaN(n) || n < 2 || n > maxPrime || n % 1) {
