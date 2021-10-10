@@ -13,7 +13,7 @@ describe('mixing', () => {
 
     describe('for offset values', () => {
         it('must pass prime test', () => {
-            const i = stopOnCount(generatePrimes(100_000), 1000);
+            const i = stopOnCount(generatePrimes({start: 100_000}), 1000);
             [...i].forEach(a => {
                 expect(isPrime(a), `Failed for ${a}`).to.be.true;
             });

@@ -57,10 +57,10 @@ Adding a reusable RXJS wrapper first:
 
 ```ts
 import {Observable, from} from 'rxjs';
-import {generatePrimes} from 'primes-generator';
+import {generatePrimes, IPrimeOptions} from 'primes-generator';
 
-export function primes(start?: number): Observable<number> {
-    return from(generatePrimes(start));
+export function primes(options?: IPrimeOptions): Observable<number> {
+    return from(generatePrimes(options));
 }
 ```
 
