@@ -25,10 +25,11 @@ export function* sieveInt(): IterableIterator<number> {
         let s = sieve.get(i);
         if (s !== undefined) {
             sieve.delete(i);
-        } else if (i < p * p) {
-            yield i;
-            continue;
         } else {
+            if (i < p * p) {
+                yield i;
+                continue;
+            }
             s = 2 * p;
             p = ps.next().value;
         }
@@ -41,7 +42,7 @@ export function* sieveInt(): IterableIterator<number> {
 }
 
 /**
- * Highly optimized, postponed Sieve of Eratosthenes algorithm,
+ * Optimized, postponed Sieve of Eratosthenes algorithm,
  * extended for 'start' logic.
  */
 export function* sieveIntStart(start: number): IterableIterator<number> {
@@ -74,7 +75,9 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
     while (pSqr < start) {
         s = 2 * p;
         let m = p + s * Math.ceil((start - p) / s);
-        while (sieve.has(m)) m += s;
+        while (sieve.has(m)) {
+            m += s;
+        }
         sieve.set(m, s);
         p = ps.next().value;
         pSqr = p * p;
@@ -89,20 +92,22 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
         s = sieve.get(c);
         if (s !== undefined) {
             sieve.delete(c);
-        } else if (c < pSqr) {
-            if (c === maxPrime) {
-                yield maxPrime;
-                return;
-            }
-            yield c;
-            continue;
         } else {
+            if (c < pSqr) {
+                yield c;
+                if (c === maxPrime) {
+                    return;
+                }
+                continue;
+            }
             s = 2 * p;
             p = ps.next().value;
             pSqr = p * p;
         }
         let m = c + s;
-        while (sieve.has(m)) m += s;
+        while (sieve.has(m)) {
+            m += s;
+        }
         sieve.set(m, s);
     }
 }
