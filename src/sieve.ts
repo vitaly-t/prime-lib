@@ -1,13 +1,3 @@
-/**
- * CREDITS
- *
- * Many thanks to Will Ness, who helped with implementations here.
- *
- * See:
- *   - https://stackoverflow.com/users/849891/will-ness
- *   - https://stackoverflow.com/questions/69336435/postponed-sieve-algorithm-with-start-logic
- */
-
 import {maxPrime} from './utils';
 
 /**
@@ -109,4 +99,57 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
         }
         sieve.set(m, s);
     }
+}
+
+/**
+ * Maximum number of primes for which we can allocate memory to boost performance.
+ *
+ * To generate quickly 100mln primes we will be allocating about 130MB of RAM.
+ * Going beyond that will overload any browser or NodeJS.
+ */
+const maxLimit = 100_000_000;
+
+export function* sieveIntBoost(limit: number): IterableIterator<number> {
+    if (limit < 1) {
+        return;
+    }
+    const maxCount = limit > maxLimit ? maxLimit : limit;
+    const bufferLimit = Math.floor(2.3 * maxCount * (Math.log10(maxCount) + 1));
+    yield 2;
+    const gen = sieveOddPrimesTo(bufferLimit);
+    let p, count = 0;
+    while (++count < maxCount && (p = gen())) {
+        yield p;
+    }
+}
+
+function sieveOddPrimesTo(bufferLimit: number) {
+    const lmti = (bufferLimit - 3) >> 1;
+    const sz = (lmti >> 3) + 1;
+    const cmpSts = new Uint8Array(sz);
+    for (let i = 0; ; ++i) {
+        const p = i + i + 3;
+        const sqri = (i << 1) * (i + 3) + 3;
+        if (sqri > lmti) {
+            break;
+        }
+        if ((cmpSts[i >> 3] & ((1 >>> 0) << (i & 7))) == 0 >>> 0) {
+            for (let c = sqri; c <= lmti; c += p) {
+                cmpSts[c >> 3] |= (1 >>> 0) << (c & 7);
+            }
+        }
+    }
+    let bi = -1;
+    return function () {
+        if (bi < 0) {
+            ++bi;
+        }
+        while (bi <= lmti && (cmpSts[bi >> 3] & ((1 >>> 0) << (bi & 7))) != 0 >>> 0) {
+            ++bi;
+        }
+        if (bi > lmti) {
+            return null;
+        }
+        return (bi++ << 1) + 3;
+    };
 }
