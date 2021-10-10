@@ -8,6 +8,8 @@
  *   - https://stackoverflow.com/questions/69336435/postponed-sieve-algorithm-with-start-logic
  */
 
+import {maxPrime} from './utils';
+
 /**
  * Optimized, postponed Sieve of Eratosthenes algorithm.
  */
@@ -55,18 +57,23 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
     if (start <= 7) {
         yield 7;
     }
+    if (start >= maxPrime) {
+        if (start === maxPrime) {
+            yield maxPrime;
+        }
+        return;
+    }
     const sieve = new Map();
     const ps = sieveIntStart(2);
-    ps.next();                 // skip the 2
-    let p = ps.next().value;   // p === 3
-    let pSqr = p * p;          // p^2, 9
-    let c = pSqr;              // first candidate, 9
-    let s = 6;                 // step value
+    ps.next();
+    let p = ps.next().value;
+    let pSqr = p * p;
+    let c = pSqr;
+    let s = 6;
 
-    while (pSqr < start)      // must adjust initial state
-    {
+    while (pSqr < start) {
         s = 2 * p;
-        let m = p + s * Math.ceil((start - p) / s);  // multiple of p
+        let m = p + s * Math.ceil((start - p) / s);
         while (sieve.has(m)) m += s;
         sieve.set(m, s);
         p = ps.next().value;
@@ -78,15 +85,18 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
     if (c % 2 === 0) {
         c += 1;
     }
-    for (; true; c += 2)     // main loop
-    {
+    for (; true; c += 2) {
         s = sieve.get(c);
         if (s !== undefined) {
-            sieve.delete(c);      // c composite
+            sieve.delete(c);
         } else if (c < pSqr) {
-            yield c;              // c prime
+            if (c === maxPrime) {
+                yield maxPrime;
+                return;
+            }
+            yield c;
             continue;
-        } else {                  // c == p^2
+        } else {
             s = 2 * p;
             p = ps.next().value;
             pSqr = p * p;

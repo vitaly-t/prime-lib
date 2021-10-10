@@ -64,14 +64,14 @@ export function primes(start?: number): Observable<number> {
 }
 ```
 
-Generating 5 primes from 7 and upward:
+Generating the first 10 primes:
 
 ```ts
 import {take} from 'rxjs';
 
-primes(7).pipe(take(5))
+primes().pipe(take(10))
     .subscribe(a => {
-        // 7, 11, 13, 17, 19
+        // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
     });
 ```
 
