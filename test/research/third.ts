@@ -38,6 +38,7 @@ function* generate1(limit: number): IterableIterator<number> {
 
 const start = Date.now();
 const g = generate1(2_000_000_000);
+const maxCount = 1000;
 
 let count = 0;
 let a, last;
@@ -47,7 +48,7 @@ do {
         last = a.value;
         count++;
     }
-} while (!a.done);
+} while (!a.done && count < maxCount);
 
 /*
 * It works, but not great, as it pre-allocates full-length array memory, which is bad!!!
