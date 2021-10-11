@@ -120,7 +120,7 @@ export function* sieveIntBoost(limit: number): IterableIterator<number> {
     }
 }
 
-function sieveOddPrimesTo(bufferLimit: number) {
+function sieveOddPrimesTo(bufferLimit: number): (() => number | void) {
     const lmti = (bufferLimit - 3) >> 1;
     const sz = (lmti >> 3) + 1;
     const cmpSts = new Uint8Array(sz);
@@ -145,9 +145,9 @@ function sieveOddPrimesTo(bufferLimit: number) {
             ++bi;
         }
         if (bi > lmti) {
-            // this can only happen when the number of pre-generated primes
-            // matches the number of requested primes exactly.
-            return null;
+            // when the number of pre-generated primes
+            // matches the number of requested primes
+            return;
         }
         return (bi++ << 1) + 3;
     };
