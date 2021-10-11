@@ -64,7 +64,7 @@ export function primes(options?: IPrimeOptions): Observable<number> {
 }
 ```
 
-Generating the first 10 primes:
+* Generating the first 10 primes:
 
 ```ts
 import {take} from 'rxjs';
@@ -75,7 +75,27 @@ primes().pipe(take(10))
     });
 ```
 
-Detecting primes in another sequence:
+* Generating 10 primes after 100:
+
+```ts
+import {take} from 'rxjs';
+
+primes({start: 100}).pipe(take(10))
+    .subscribe(a => {
+        // 101, 103, 107, 109, 113, 127, 131, 137, 139, 149
+    });
+```
+
+* Maximum-performance, buffered prime generation: 
+
+```ts
+primes({boost: 10})
+    .subscribe(a => {
+      // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
+    });
+```
+
+* Detecting primes in another sequence:
 
 ```ts
 import {from, filter} from 'rxjs';
