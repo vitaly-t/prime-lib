@@ -7,13 +7,14 @@ primes-generator
     * [JavaScript](#javascript)
     * [TypeScript](#typescript)
     * [RXJS](#rxjs)
-
+  
 ## About
 
 This [prime number] generator combines performance of [Sieve of Eratosthenes] algorithm with the maximum memory
 efficiency. It is RXJS-friendly, and well suited for web app-s.
 
-For tests and benchmarks, see [./test](./test) folder.
+* For tests and benchmarks, see [./test](./test) folder.
+* See [WiKi] to help decide which generator to use. 
 
 ## Installation
 
@@ -112,3 +113,5 @@ from(sequence).pipe(filter(isPrime))
 [prime number]:https://en.wikipedia.org/wiki/Prime_number
 
 [Sieve of Eratosthenes]:https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+
+[WiKi]:https://github.com/vitaly-t/primes-generator/wiki
