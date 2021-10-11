@@ -1,7 +1,7 @@
 {
   "name": "primes-generator",
   "version": "0.1.6",
-  "description": "Primes generator",
+  "description": "Prime-number generators, using Sieve of Eratosthenes",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -25,7 +25,8 @@
   "keywords": [
     "prime",
     "generator",
-    "sieve"
+    "sieve",
+    "eratosthenes"
   ],
   "author": {
     "name": "Vitaly Tomilov",
