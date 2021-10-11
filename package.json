@@ -1,6 +1,6 @@
 {
   "name": "primes-generator",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Prime-number generators, using Sieve of Eratosthenes",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
