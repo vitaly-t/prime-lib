@@ -20,14 +20,14 @@ export function* stopWhen<T>(iterator: IterableIterator<T>, cb: (value: T, index
 }
 
 /**
- * Stops a number/bigint iterator, after producing 'total' number of values.
+ * Stops an iterator, after producing 'total' number of values.
  */
 export function stopOnCount<T>(iterator: IterableIterator<T>, total: number): IterableIterator<T> {
     return stopWhen(iterator, (value: T, index: number) => index === total);
 }
 
 /**
- * Stops a number/bigint iterator, upon exceeding a maximum value.
+ * Stops an iterator, upon exceeding a maximum value.
  */
 export function stopOnValue<T>(iterator: IterableIterator<T>, maxValue: T): IterableIterator<T> {
     return stopWhen(iterator, (value: T) => value > maxValue);
