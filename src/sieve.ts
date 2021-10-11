@@ -144,11 +144,8 @@ function sieveOddPrimesTo(bufferLimit: number): (() => number | void) {
         while (bi <= lmti && (cmpSts[bi >> 3] & ((1 >>> 0) << (bi & 7))) != 0 >>> 0) {
             ++bi;
         }
-        if (bi > lmti) {
-            // when the number of pre-generated primes
-            // matches the number of requested primes
-            return;
+        if (bi <= lmti) {
+            return (bi++ << 1) + 3;
         }
-        return (bi++ << 1) + 3;
     };
 }
