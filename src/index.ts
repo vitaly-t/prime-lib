@@ -4,7 +4,7 @@ export {stopWhen, stopOnCount, stopOnValue, maxPrime} from './utils';
 export {isPrime} from './is-prime';
 
 /**
- * Options that can be passed into the primes generator.
+ * Options that can be passed into generatePrimes function.
  */
 export interface IPrimeOptions {
     /**
@@ -21,7 +21,7 @@ export interface IPrimeOptions {
      *
      * The more primes you want generated at boost speed, the more memory
      * is required to calculate those. At maximum, this option can be set to
-     * 100mln, which will use about 130MB of memory.
+     * 100mln, which at peak will use about 130MB of memory.
      *
      * If you pass in more than 100mln, only 100mln will be generated.
      *
@@ -32,8 +32,7 @@ export interface IPrimeOptions {
 }
 
 /**
- * Infinite generator of prime numbers, based on Sieve of Eratosthenes algorithm,
- * extended to support optional start prime.
+ * Prime numbers generator, based on Sieve of Eratosthenes algorithm.
  */
 export function generatePrimes(options?: IPrimeOptions): IterableIterator<number> {
     const {boost = 0, start = 0} = options ?? {};

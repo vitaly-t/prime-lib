@@ -6,6 +6,8 @@ const primeDividers = [
 
 /**
  * Optimized prime verification.
+ *
+ * Works up to maxPrime.
  */
 export function isPrime(n: number): boolean {
     if (isNaN(n) || n < 2 || n > maxPrime || n % 1) {
