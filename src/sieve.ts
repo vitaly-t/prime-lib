@@ -2,6 +2,9 @@ import {maxPrime} from './utils';
 
 /**
  * Optimized, postponed Sieve of Eratosthenes algorithm.
+ *
+ * This implementation is based on the answer by Will Ness:
+ * https://stackoverflow.com/questions/2211990/how-to-implement-an-efficient-infinite-generator-of-prime-numbers-in-python/10733621
  */
 export function* sieveInt(): IterableIterator<number> {
     yield 2;
@@ -33,6 +36,9 @@ export function* sieveInt(): IterableIterator<number> {
 
 /**
  * Optimized, postponed Sieve of Eratosthenes algorithm, extended for 'start' logic.
+ *
+ * This implementation is based on the answer by Will Ness:
+ * https://stackoverflow.com/questions/69336435/postponed-sieve-algorithm-with-start-logic/69345662
  */
 export function* sieveIntStart(start: number): IterableIterator<number> {
     if (start <= 2) {
@@ -105,7 +111,7 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
  * Maximum number of primes for which we can allocate memory to boost performance.
  *
  * To generate quickly 100mln primes we will be allocating about 130MB of RAM.
- * Going beyond that will overload any browser or NodeJS.
+ * Going beyond that will overload any browser or NodeJS client.
  */
 const maxLimit = 100_000_000;
 
@@ -120,6 +126,14 @@ export function* sieveIntBoost(limit: number): IterableIterator<number> {
     }
 }
 
+/**
+ * The following SoE implementation is based on work by GordonBGood:
+ *  - https://stackoverflow.com/users/549617/gordonbgood
+ *  - https://github.com/GordonBGood
+ *
+ * See "Chapter 2 - Bit Packing and Odds Only Wheel Factorization" in his answer here:
+ * https://stackoverflow.com/questions/39312107/implementing-the-page-segmented-sieve-of-eratosthenes-in-javascript/55761023
+ */
 function sieveOddPrimesTo(bufferLimit: number): (() => number | void) {
     const lmti = (bufferLimit - 3) >> 1;
     const sz = (lmti >> 3) + 1;
