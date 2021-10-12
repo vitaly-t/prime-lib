@@ -7,14 +7,14 @@ primes-generator
     * [JavaScript](#javascript)
     * [TypeScript](#typescript)
     * [RXJS](#rxjs)
-  
+
 ## About
 
 This [prime number] generator combines performance of [Sieve of Eratosthenes] algorithm with the maximum memory
 efficiency. It is RXJS-friendly, and well suited for web app-s.
 
 * For tests and benchmarks, see [./test](./test) folder.
-* See [WiKi] to help decide which generator to use. 
+* See [WiKi] to help decide which generator to use.
 
 ## Installation
 
@@ -99,14 +99,12 @@ primes({boost: 10})
 * Detecting primes in another sequence:
 
 ```ts
-import {from, filter} from 'rxjs';
+import {range, filter} from 'rxjs';
 import {isPrime} from 'primes-generator';
 
-const sequence = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-from(sequence).pipe(filter(isPrime))
+range(0, 20).pipe(filter(a => isPrime(a)))
     .subscribe(a => {
-        // 2, 3, 5, 7
+        // 2, 3, 5, 7, 11, 13, 17, 19
     });
 ```
 
