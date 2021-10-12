@@ -130,18 +130,18 @@ function sieveOddPrimesTo(bufferLimit: number): (() => number | void) {
         if (sqri > lmti) {
             break;
         }
-        if ((cmpSts[i >> 3] & ((1 >>> 0) << (i & 7))) == 0 >>> 0) {
+        if ((cmpSts[i >> 3] & ((1 >>> 0) << (i & 7))) === 0 >>> 0) {
             for (let c = sqri; c <= lmti; c += p) {
                 cmpSts[c >> 3] |= (1 >>> 0) << (c & 7);
             }
         }
     }
     let bi = -1;
-    return function () {
+    return () => {
         if (bi < 0) {
             ++bi;
         }
-        while (bi <= lmti && (cmpSts[bi >> 3] & ((1 >>> 0) << (bi & 7))) != 0 >>> 0) {
+        while (bi <= lmti && (cmpSts[bi >> 3] & ((1 >>> 0) << (bi & 7))) !== 0 >>> 0) {
             ++bi;
         }
         if (bi <= lmti) {
