@@ -13,8 +13,8 @@ primes-generator
 This [prime number] generator combines performance of [Sieve of Eratosthenes] algorithm with the maximum memory
 efficiency. It is RXJS-friendly, and well suited for web app-s.
 
-* For tests and benchmarks, see [./test](./test) folder.
 * See [WiKi] to help decide which generator to use.
+* For tests and benchmarks, see [./test](./test) folder.
 
 ## Installation
 
