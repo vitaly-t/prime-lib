@@ -87,7 +87,7 @@ primes({start: 100}).pipe(take(10))
     });
 ```
 
-* Maximum-performance, buffered prime generation:
+* Maximum-performance, buffered primes generation:
 
 ```ts
 primes({boost: 10})
