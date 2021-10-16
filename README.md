@@ -71,7 +71,7 @@ export function primes(options?: IPrimeOptions): Observable<number> {
 import {take} from 'rxjs';
 
 primes().pipe(take(10))
-    .subscribe(a => {
+    .subscribe(prime => {
         // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
     });
 ```
@@ -82,7 +82,7 @@ primes().pipe(take(10))
 import {take} from 'rxjs';
 
 primes({start: 100}).pipe(take(10))
-    .subscribe(a => {
+    .subscribe(prime => {
         // 101, 103, 107, 109, 113, 127, 131, 137, 139, 149
     });
 ```
@@ -91,7 +91,7 @@ primes({start: 100}).pipe(take(10))
 
 ```ts
 primes({boost: 10})
-    .subscribe(a => {
+    .subscribe(prime => {
         // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
     });
 ```
@@ -103,7 +103,7 @@ import {range, filter} from 'rxjs';
 import {isPrime} from 'primes-generator';
 
 range(0, 20).pipe(filter(a => isPrime(a)))
-    .subscribe(a => {
+    .subscribe(prime => {
         // 2, 3, 5, 7, 11, 13, 17, 19
     });
 ```
