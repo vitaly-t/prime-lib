@@ -115,12 +115,15 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
  * Maximum number of primes for which we can allocate memory to boost performance.
  *
  * To generate quickly 100mln primes we will be allocating about 130MB of RAM.
- * Going beyond that will overload any browser or NodeJS client.
+ * Going beyond that will likely overload any browser or NodeJS client.
+ *
+ * Also, the current implementation is limited by 32-bit range, which at most can
+ * produce about 103mln primes, which we round down to 100mln, for simplicity.
  */
 const maxLimit = 100_000_000;
 
-export function* sieveIntBoost(limit: number): IterableIterator<number> {
-    const maxCount = limit > maxLimit ? maxLimit : limit;
+export function* sieveIntBoost(n: number): IterableIterator<number> {
+    const maxCount = n > maxLimit ? maxLimit : n;
     const bufferLimit = Math.floor(2.3 * maxCount * (Math.log10(maxCount) + 1));
     yield 2;
     const gen = sieveOddPrimesTo(bufferLimit);
@@ -137,6 +140,10 @@ export function* sieveIntBoost(limit: number): IterableIterator<number> {
  *
  * See "Chapter 2 - Bit Packing and Odds Only Wheel Factorization" in his answer here:
  * https://stackoverflow.com/questions/39312107/implementing-the-page-segmented-sieve-of-eratosthenes-in-javascript/55761023
+ *
+ * Primes range is limited by 32 bits here, which is about 103mln primes in total.
+ * And simple extension of bits range here would be pointless, as it will eat too
+ * much memory (for a JavaScript client).
  */
 function sieveOddPrimesTo(bufferLimit: number): (() => number | void) {
     const lmti = (bufferLimit - 3) >> 1;
