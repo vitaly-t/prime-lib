@@ -33,7 +33,7 @@ Generating an array with the first 10 primes:
 ```js
 const {generatePrimes, stopOnCount} = require('primes-generator');
 
-const i = generatePrimes(); // create infinite prime iterator 
+const i = generatePrimes(); // create infinite primes iterator 
 const s = stopOnCount(i, 10); // stop-iterator after 10 values
 
 const values = [...s]; // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
@@ -46,7 +46,7 @@ Generating an array of all primes up to 17:
 ```js
 import {generatePrimes, stopOnValue} from 'primes-generator';
 
-const i = generatePrimes(); // create infinite prime iterator
+const i = generatePrimes(); // create infinite primes iterator
 const s = stopOnValue(i, 17); // stop-iterator when value reaches 17
 
 const values = [...s]; // 2, 3, 5, 7, 11, 13, 17
