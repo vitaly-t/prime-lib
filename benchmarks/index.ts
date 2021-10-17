@@ -94,6 +94,14 @@ function testSieveIntBoost(): ITestResult {
 
 function testSieveIntStart(): ITestResult {
     const tests: ITestInput = {
+        '3 -> 10^6': {
+            start: 3,
+            desc: 'Time in ms, to generate 1 million primes, after 3'
+        },
+        '10^6 -> 10^6': {
+            start: 1_000_000,
+            desc: 'Time in ms, to generate 1 million primes, after 1 million'
+        },
         '10^9 -> 10^6': {
             start: 1_000_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 1 billion'
@@ -122,7 +130,6 @@ function testSieveIntStart(): ITestResult {
             start: 1_000_000_000_000_000,
             desc: 'Time in ms, to generate 1 million primes, after 1 quadrillion'
         }
-        // NOTE: Maximum prime is 9_007_199_254_740_881, i.e. less then 10^16
     };
     const result: any = {};
     for (const t in tests) {
