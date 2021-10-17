@@ -1,13 +1,13 @@
 {
   "name": "primes-generator",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Prime-number generators, using Sieve of Eratosthenes",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "del .\\test\\*.js && del .\\src\\*.js && rd /s/q .\\dist",
     "build": "tsc -p src",
-    "lint": "tslint --fix ./src/*.ts ./test/*.spec.ts",
+    "lint": "tslint --fix ./src/*.ts ./test/*.ts",
     "test": "nyc mocha -r ts-node/register test/*.spec.ts",
     "bench": "tsc test/benchmarks.ts && node test/benchmarks.js"
   },
@@ -42,7 +42,7 @@
   "devDependencies": {
     "@types/chai": "4.2.22",
     "@types/mocha": "9.0.0",
-    "@types/node": "16.11.0",
+    "@types/node": "16.11.1",
     "chai": "4.3.4",
     "coveralls": "3.1.1",
     "mocha": "9.1.3",
