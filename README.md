@@ -14,7 +14,7 @@ This [prime number] generator combines performance of [Sieve of Eratosthenes] al
 efficiency. It was designed to be [RXJS]-friendly, and well suited for web app-s.
 
 * See [WiKi] to help decide which generator to use.
-* For tests and benchmarks, see [./test](./test) folder.
+* Other resources: [tests](./test) and [benchmarks](./benchmarks).
 
 ## Installation
 

@@ -5,11 +5,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "clean": "del .\\test\\*.js && del .\\src\\*.js && rd /s/q .\\dist",
+    "clean": "del .\\test\\*.js && del .\\src\\*.js && del .\\benchmarks\\*.js && rd /s/q .\\dist",
     "build": "tsc -p src",
     "lint": "tslint --fix ./src/*.ts ./test/*.ts",
     "test": "nyc mocha -r ts-node/register test/*.spec.ts",
-    "bench": "tsc test/benchmarks.ts && node test/benchmarks.js"
+    "bench": "tsc -p ./benchmarks && node ./benchmarks/index.js"
   },
   "files": [
     "dist"
