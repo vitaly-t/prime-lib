@@ -169,8 +169,11 @@ function sieveOddPrimesTo(bufferLimit: number): (() => number | void) {
         while (bi <= lmti && (cmpSts[bi >> 3] & ((1 >>> 0) << (bi & 7))) !== 0 >>> 0) {
             ++bi;
         }
+        /* istanbul ignore else */
         if (bi <= lmti) {
             return (bi++ << 1) + 3;
         }
+        // else may occur only if the last prime sits at the very end of the buffer,
+        // which is hypothetically possible, but we exclude this from test coverage.
     };
 }
