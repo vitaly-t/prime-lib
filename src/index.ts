@@ -21,7 +21,7 @@ export interface IPrimeOptions {
      *
      * The more primes you want generated at boost speed, the more memory
      * is required to calculate those. At maximum, this option can be set to
-     * 100mln, which at peak will use about 130MB of memory.
+     * 100mln, which at peak will use about 127MB of memory.
      *
      * If you pass in more than 100mln, only 100mln will be generated.
      *

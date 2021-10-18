@@ -11,6 +11,12 @@ describe('sieveInt', () => {
 });
 
 describe('sieveIntBoost', () => {
+    it('must support small range', () => {
+        for (let i = 3; i <= 10; i++) {
+            const res = [...generatePrimes({boost: i})];
+            expect(res.length).to.eql(i);
+        }
+    });
     it('must generate correct values', () => {
         const i = generatePrimes({boost: primes.length});
         expect([...i]).to.eql(primes);

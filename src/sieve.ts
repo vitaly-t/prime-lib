@@ -114,7 +114,7 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
 /**
  * Maximum number of primes for which we can allocate memory to boost performance.
  *
- * To generate quickly 100mln primes we will be allocating about 130MB of RAM.
+ * To generate quickly 100mln primes we will be allocating about 127MB of RAM.
  * Going beyond that will likely overload any browser or NodeJS client.
  *
  * Also, the current implementation is limited by a sub-32-bit range, capable of
@@ -124,7 +124,7 @@ const maxLimit = 100_000_000;
 
 export function* sieveIntBoost(n: number): IterableIterator<number> {
     const maxCount = n > maxLimit ? maxLimit : n;
-    const bufferLimit = Math.floor(2.3 * maxCount * (Math.log10(maxCount) + 1));
+    const bufferLimit = Math.floor(2.265 * maxCount * (Math.log10(maxCount) + 1));
     yield 2;
     const gen = sieveOddPrimesTo(bufferLimit);
     let p, count = 0;
