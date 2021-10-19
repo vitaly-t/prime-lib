@@ -1,11 +1,11 @@
 import {maxPrime} from './utils';
 
-const primeDividers = [
+const dividers = [
     0, 2, 6, 8, 12, 18, 20, 26, 30, 32, 36, 42, 48, 50, 56, 60, 62, 68, 72, 78, 86, 90, 92, 96, 98,
     102, 110, 116, 120, 126, 128, 132, 138, 140, 146, 152, 156, 158, 162, 168, 170, 176, 180, 182, 186, 188, 198, 200];
 
 /**
- * Optimized prime verification.
+ * Deterministic prime verification.
  *
  * Works up to maxPrime.
  */
@@ -19,7 +19,7 @@ export function isPrime(n: number): boolean {
     if (n % 7 === 0) return n === 7;
     const m = Math.sqrt(n);
     for (let i = 11; i <= m; i += 210) {
-        for (const a of primeDividers) {
+        for (const a of dividers) {
             if (n % (i + a) === 0) {
                 return i + a === n;
             }

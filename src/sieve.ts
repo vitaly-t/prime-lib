@@ -5,7 +5,7 @@
 import {maxPrime} from './utils';
 
 /**
- * Optimized, Postponed SoE algorithm.
+ * Postponed SoE algorithm.
  *
  * This implementation is based on the answer by Will Ness:
  * https://stackoverflow.com/questions/2211990/how-to-implement-an-efficient-infinite-generator-of-prime-numbers-in-python/10733621
@@ -39,7 +39,7 @@ export function* sieveInt(): IterableIterator<number> {
 }
 
 /**
- * Optimized, Postponed SoE algorithm, extended for 'start' logic.
+ * Postponed SoE algorithm, extended for 'start' logic.
  *
  * This implementation is based on the answer by Will Ness:
  * https://stackoverflow.com/questions/69336435/postponed-sieve-algorithm-with-start-logic/69345662
