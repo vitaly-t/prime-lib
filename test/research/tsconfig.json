@@ -6,6 +6,7 @@
     "noUnusedLocals": false
   },
   "include": [
-    "./simple.ts"
+    "./approx-count.ts",
+    "./fast-count.ts"
   ]
 }

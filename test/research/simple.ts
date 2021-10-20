@@ -48,7 +48,7 @@ export function* soe_compressed(n): IterableIterator<number> {
     const arr = new Uint32Array(top);
 
     for (let i = 0; i < top; i++) {
-        arr[i] = 4_294_967_295;
+        arr[i] = 0xFFFF_FFFF;
     }
 
     for (let i = 2; i <= upperLimit; i++) {
@@ -66,40 +66,71 @@ export function* soe_compressed(n): IterableIterator<number> {
     }
 }
 
+function count1s32(i) {
+    i = i - ((i >> 1) & 0x55555555);
+    i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
+    i = (i + (i >> 4)) & 0x0f0f0f0f;
+    i = i + (i >> 8);
+    i = i + (i >> 16);
+    return i & 0x3f;
+}
+
+function bitCount(n) {
+    n = n - ((n >> 1) & 0x55555555);
+    n = (n & 0x33333333) + ((n >> 2) & 0x33333333);
+    return ((n + (n >> 4) & 0xF0F0F0F) * 0x1010101) >> 24;
+}
+
+function countSet3(n) {
+    // 0xff is hexadecimal representation of 8 set bits.
+    let res = n & 0xff;
+    n = n >> 8;
+    res = res + n & 0xff;
+    n = n >> 8;
+    res = res + n & 0xff;
+    n = n >> 8;
+    res = res + n & 0xff;
+    return res;
+}
+
+function NumberOfSetBits(i) {
+    i = i - ((i >> 1) & 0x55555555);
+    i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
+    return (((i + (i >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
+}
+
 export function soe_compressed_count(n): number {
     const top = Math.ceil(n / 32);
-    console.log(`${(4 * top / 1024).toFixed(1)}KB`);
 
     const upperLimit = Math.sqrt(n);
     const arr = new Uint32Array(top);
-    let count = 0;
+    let count = n;
 
     for (let i = 0; i < top; i++) {
-        arr[i] = 4_294_967_295;
+        arr[i] = 0xFFFF_FFFF;
     }
 
     for (let i = 2; i <= upperLimit; i++) {
-        if ((arr[i >>> 5] as any) & 1 << i % 32) {
+        if (arr[i >>> 5] & 1 << i % 32) {
             for (let j = i * i; j < n; j += i) {
-                (arr[j >>> 5] as any) &= ~(1 << j % 32);
+                arr[j >>> 5] &= ~(1 << j % 32);
             }
         }
     }
 
     for (let i = 2; i < n; i++) {
-        if ((arr[i >>> 5] as any) & 1 << i % 32) {
-            count++;
+        if (arr[i >>> 5] & 1 << i % 32) {
+            count ++;
         }
     }
 
     return count;
 }
 
-
 const start = Date.now();
 
 /*
-// 100_000_000 => 5761455
+// 100_000_000 => 5_761_455
 // 100 => 25
 // 10 => 4
 const i = soe_compressed(4_100_000_000);
@@ -113,7 +144,8 @@ do {
 
 console.log(`Duration: ${Date.now() - start}, count: ${count.toLocaleString()}`); // test 1
 */
-const result = soe_compressed_count(2_000_000_000);
+
+const result = soe_compressed_count(2_100_000_000);
 
 console.log(`Duration: ${Date.now() - start}, count: ${result.toLocaleString()}`); // test 1
 
