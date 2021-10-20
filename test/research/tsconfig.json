@@ -6,6 +6,6 @@
     "noUnusedLocals": false
   },
   "include": [
-    "./super-fast.ts"
+    "./simple.ts"
   ]
 }
