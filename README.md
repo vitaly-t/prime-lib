@@ -52,14 +52,14 @@ const s = stopOnValue(i, 17); // stop-iterator when value reaches 17
 const values = [...s]; // 2, 3, 5, 7, 11, 13, 17
 ```
 
-* Counting approximate number of primes up to 1 million:
+* Approximate primes count up to 1 million:
 
 ```ts
 import {countPrimesApprox} from 'primes-generator';
 
 const r = countPrimesApprox(1_000_000);
 //=> { average: 78324, min: 77580, max: 79068 }
-//=> Actual is 78498, so 0.2% margin
+//=> Actual count is 78498 => 0.2% margin
 ```
 
 Calculation above is instant, and `average` is always within 1% margin.
