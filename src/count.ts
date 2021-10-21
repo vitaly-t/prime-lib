@@ -2,7 +2,7 @@
 
 // TODO: This is all work in progress.
 
-function eratosthenesWithPi(n: number) {
+function eratosthenesWithPi(n: number): { primes: Uint32Array, pi: Uint32Array } {
     const array = [], upperLimit = Math.sqrt(n), output = [];
     const pi = [0, 0];
 
@@ -59,15 +59,12 @@ export function countPrimes(x: number): number {
         }
         return smallValues[x - 2];
     }
-
     const root2 = Math.floor(Math.sqrt(x));
     const root3 = Math.floor(x ** (1 / 3));
-
     const top = Math.floor(x / root3) + 1;
 
     if (root2 + 1 >= primes.length) {
         const res = eratosthenesWithPi(top + 2);
-
         primes = res.primes;
         piValues = res.pi;
     }
@@ -78,15 +75,11 @@ export function countPrimes(x: number): number {
 
     for (let i = a; i < b; ++i) {
         const p = primes[i];
-
         sum += piValues[Math.floor(x / p)] - piValues[p] + 1;
     }
 
-    const phi = Phi(x, a);
-
-    return phi + a - 1 - sum;
+    return Phi(x, a) + a - 1 - sum;
 }
-
 
 /*
 {x: 1e9, count: 50_847_534},
