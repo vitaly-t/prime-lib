@@ -123,23 +123,19 @@ range(0, 20).pipe(filter(a => isPrime(a)))
 
 ## API
 
-### Primary
-
-Prime generators:
+#### <i>Prime generators:</i>
 
 * `generatePrimes()` - efficiency-focused, infinite prime generator
 * `generatePrimes({start: x})` - efficiency-focused, infinite prime generator, starting from `x`
 * `generatePrimes({boost: n})` - performance-focused prime generator, for up to `n` primes
 
-Popular prime functions:
+#### <i>Popular prime functions:</i>
 
 * `isPrime(x)` - verifies if `x` is a prime number
 * `countPrimesApprox(x)` - instant primes counter, up to `x`, with error margin < 1%
 * `countPrimes(x)` - precise primes counter, up to `x`
 
-### Secondary
-
-A few helpers for limiting infinite iterators:
+#### <i>Helpers for iterators:</i>
 
 * `stopOnCount(iterator, count)` - stops the iterator, once `count` has been reached
 * `stopOnValue(iterator, maxValue)` - stops the iterator when `maxValue` is exceeded
