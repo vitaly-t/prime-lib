@@ -7,6 +7,7 @@ primes-generator
     * [JavaScript](#javascript)
     * [TypeScript](#typescript)
     * [RXJS](#rxjs)
+* [API](#api)
 
 ## About
 
@@ -119,6 +120,23 @@ range(0, 20).pipe(filter(a => isPrime(a)))
         // 2, 3, 5, 7, 11, 13, 17, 19
     });
 ```
+
+## API
+
+### Primary
+
+* `generatePrimes()` - efficiency-focused, infinite prime generator
+* `generatePrimes({start: x})` - efficiency-focused, infinite prime generator, starting from `x`
+* `generatePrimes({boost: n})` - performance-focused prime generator, of up to `n` primes
+* `isPrimary(x)` - checks if `x` is a prime
+* `countPrimesApprox(x)` - instant primes counter, up to `x`, with error margin < 1%
+* `countPrimes(x)` - precise primes counter, up to `x`
+
+### Secondary
+
+* `stopOnCount(i, count)` - stops iterator `i` once `count` is reached
+* `stopOnValue(i, value)` - stops iterator `i` when maximum `value` is exceeded
+* `stopWhen(i, cb)` - stops iterator `i` when `cb` callback returns `true`
 
 [prime number]:https://en.wikipedia.org/wiki/Prime_number
 
