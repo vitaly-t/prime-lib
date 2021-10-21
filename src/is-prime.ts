@@ -7,21 +7,21 @@ const dividers = [
 /**
  * Deterministic prime verification.
  *
- * Works up to maxPrime.
+ * Works for up to maxPrime.
  */
-export function isPrime(n: number): boolean {
-    if (isNaN(n) || n < 2 || n > maxPrime || n % 1) {
+export function isPrime(x: number): boolean {
+    if (isNaN(x) || x < 2 || x > maxPrime || x % 1) {
         return false;
     }
-    if (n % 2 === 0) return n === 2;
-    if (n % 3 === 0) return n === 3;
-    if (n % 5 === 0) return n === 5;
-    if (n % 7 === 0) return n === 7;
-    const m = Math.sqrt(n);
+    if (x % 2 === 0) return x === 2;
+    if (x % 3 === 0) return x === 3;
+    if (x % 5 === 0) return x === 5;
+    if (x % 7 === 0) return x === 7;
+    const m = Math.sqrt(x);
     for (let i = 11; i <= m; i += 210) {
         for (const a of dividers) {
-            if (n % (i + a) === 0) {
-                return i + a === n;
+            if (x % (i + a) === 0) {
+                return i + a === x;
             }
         }
     }

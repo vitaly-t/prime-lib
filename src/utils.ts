@@ -5,7 +5,7 @@
 export const maxPrime = 9_007_199_254_740_881;
 
 /**
- * Stops an iterator when a callback condition is met.
+ * Stops an iterator when the callback returns a truthy value.
  */
 export function* stopWhen<T>(iterator: IterableIterator<T>, cb: (value: T, index: number) => boolean): IterableIterator<T> {
     let i, index = 0;
@@ -20,10 +20,10 @@ export function* stopWhen<T>(iterator: IterableIterator<T>, cb: (value: T, index
 }
 
 /**
- * Stops an iterator, after producing 'total' number of values.
+ * Stops an iterator, once the count is reached.
  */
-export function stopOnCount<T>(iterator: IterableIterator<T>, total: number): IterableIterator<T> {
-    return stopWhen(iterator, (value: T, index: number) => index === total);
+export function stopOnCount<T>(iterator: IterableIterator<T>, count: number): IterableIterator<T> {
+    return stopWhen(iterator, (value: T, index: number) => index === count);
 }
 
 /**

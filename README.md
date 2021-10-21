@@ -125,18 +125,25 @@ range(0, 20).pipe(filter(a => isPrime(a)))
 
 ### Primary
 
+Prime generators:
+
 * `generatePrimes()` - efficiency-focused, infinite prime generator
 * `generatePrimes({start: x})` - efficiency-focused, infinite prime generator, starting from `x`
-* `generatePrimes({boost: n})` - performance-focused prime generator, of up to `n` primes
-* `isPrimary(x)` - checks if `x` is a prime
+* `generatePrimes({boost: n})` - performance-focused prime generator, for up to `n` primes
+
+Popular prime functions:
+
+* `isPrime(x)` - verifies if `x` is a prime number
 * `countPrimesApprox(x)` - instant primes counter, up to `x`, with error margin < 1%
 * `countPrimes(x)` - precise primes counter, up to `x`
 
 ### Secondary
 
-* `stopOnCount(i, count)` - stops iterator `i` once `count` is reached
-* `stopOnValue(i, value)` - stops iterator `i` when maximum `value` is exceeded
-* `stopWhen(i, cb)` - stops iterator `i` when `cb` callback returns `true`
+A few helpers for limiting infinite iterators:
+
+* `stopOnCount(iterator, count)` - stops the iterator, once `count` has been reached
+* `stopOnValue(iterator, maxValue)` - stops the iterator when `maxValue` is exceeded
+* `stopWhen(iterator, cb)` - stops the iterator when the callback returns a truthy value
 
 [prime number]:https://en.wikipedia.org/wiki/Prime_number
 
