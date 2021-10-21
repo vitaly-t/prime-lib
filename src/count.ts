@@ -34,24 +34,22 @@ function eratosthenesWithPi(n: number): { primes: Uint32Array, pi: Uint32Array }
 }
 
 const phiMemo: number[] = [];
-let primes = new Uint32Array();
 
-function Phi(m: number, b: number): number {
+function Phi(m: number, b: number, p: Uint32Array): number {
     if (b === 0 || m === 0) {
         return m;
     }
     if (m >= 800) {
-        return Phi(m, b - 1) - Phi(Math.floor(m / primes[b - 1]), b - 1);
+        return Phi(m, b - 1, p) - Phi(Math.floor(m / p[b - 1]), b - 1, p);
     }
     const t = b * 800 + m;
     if (!phiMemo[t]) {
-        phiMemo[t] = Phi(m, b - 1) - Phi(Math.floor(m / primes[b - 1]), b - 1);
+        phiMemo[t] = Phi(m, b - 1, p) - Phi(Math.floor(m / p[b - 1]), b - 1, p);
     }
     return phiMemo[t];
 }
 
 const smallValues = [1, 2, 2, 3];
-let piValues = new Uint32Array();
 
 export function countPrimes(x: number): number {
     if (x < 6) {
@@ -63,23 +61,14 @@ export function countPrimes(x: number): number {
     const root2 = Math.floor(Math.sqrt(x));
     const root3 = Math.floor(x ** (1 / 3));
     const top = Math.floor(x / root3) + 1;
-
-    if (root2 + 1 >= primes.length) {
-        const res = eratosthenesWithPi(top + 2);
-        primes = res.primes;
-        piValues = res.pi;
-    }
-
-    const a = piValues[root3 + 1], b = piValues[root2 + 1];
-
+    const {primes, pi} = eratosthenesWithPi(top + 2);
+    const a = pi[root3 + 1], b = pi[root2 + 1];
     let sum = 0;
-
     for (let i = a; i < b; ++i) {
         const p = primes[i];
-        sum += piValues[Math.floor(x / p)] - piValues[p] + 1;
+        sum += pi[Math.floor(x / p)] - pi[p] + 1;
     }
-
-    return Phi(x, a) + a - 1 - sum;
+    return Phi(x, a, primes) + a - 1 - sum;
 }
 
 /*
@@ -90,6 +79,7 @@ export function countPrimes(x: number): number {
 
 /*
 const start = Date.now();
-const result = countPrimes(1.999);
+const result = countPrimes(1e11);
 console.log(`Duration: ${Date.now() - start}, result: ${result.toLocaleString()}`);
+
 */
