@@ -99,12 +99,12 @@ function NumberOfSetBits(i) {
     return (((i + (i >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
 }
 
-export function soe_compressed_count(n): number {
+export function soe_compressed_count(n: number): number {
     const top = Math.ceil(n / 32);
 
     const upperLimit = Math.sqrt(n);
     const arr = new Uint32Array(top);
-    let count = n;
+    let count = 0;
 
     for (let i = 0; i < top; i++) {
         arr[i] = 0xFFFF_FFFF;
@@ -120,7 +120,7 @@ export function soe_compressed_count(n): number {
 
     for (let i = 2; i < n; i++) {
         if (arr[i >>> 5] & 1 << i % 32) {
-            count ++;
+            count++;
         }
     }
 
@@ -145,7 +145,7 @@ do {
 console.log(`Duration: ${Date.now() - start}, count: ${count.toLocaleString()}`); // test 1
 */
 
-const result = soe_compressed_count(2_100_000_000);
+const result = soe_compressed_count(210_000_000);
 
 console.log(`Duration: ${Date.now() - start}, count: ${result.toLocaleString()}`); // test 1
 
