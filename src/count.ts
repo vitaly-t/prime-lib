@@ -4,33 +4,32 @@
 // TODO: This is all work in progress.
 
 function eratosthenesWithPi(n: number): { primes: Uint32Array, pi: Uint32Array } {
-    const arr = new Uint8Array(n), upperLimit = Math.sqrt(n), output = [];
-    const pi = [0, 0];
-
-    // TODO: move to Uint32 bitmask here
-    for (let i = 0; i < n; i++) {
-        arr[i] = 1;
+    const upperLimit = Math.sqrt(n);
+    const output = [];
+    const top = Math.ceil(n / 32);
+    const arr = new Uint32Array(top);
+    const pi = new Uint32Array(n);
+    pi[0] = 0;
+    pi[1] = 0;
+    for (let i = 0; i < top; i++) {
+        arr[i] = 0xFFFF_FFFF;
     }
-
     for (let i = 2; i <= upperLimit; i++) {
-        if (arr[i]) {
+        if (arr[i >>> 5] & 1 << i % 32) {
             for (let j = i * i; j < n; j += i) {
-                arr[j] = 0;
+                arr[j >>> 5] &= ~(1 << j % 32);
             }
         }
     }
-
-    let cnt = 0;
-
+    let count = 0;
     for (let i = 2; i < n; i++) {
-        if (arr[i]) {
+        if (arr[i >>> 5] & 1 << i % 32) {
             output.push(i);
-            cnt++;
+            count++;
         }
-        pi.push(cnt);
+        pi[i] = count;
     }
-
-    return {primes: new Uint32Array(output), pi: new Uint32Array(pi)};
+    return {primes: new Uint32Array(output), pi};
 }
 
 function Phi(m1: number, b1: number, p: Uint32Array): number {
@@ -80,7 +79,7 @@ export function countPrimes(x: number): number {
 
 // 2370ms is a fantastic result for 1e11! :)
 // dropped to 1934ms, after stared using Uint8Array
-
+// dropped to 1530ms, after changing pi to pre-allocated array
 const start = Date.now();
 const result = countPrimes(1e11);
 console.log(`Duration: ${Date.now() - start}, result: ${result.toLocaleString()}`);
