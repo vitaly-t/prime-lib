@@ -58,11 +58,11 @@ const values = [...s]; // 2, 3, 5, 7, 11, 13, 17
 import {countPrimesApprox} from 'primes-generator';
 
 const r = countPrimesApprox(1_000_000);
-//=> { average: 78324, min: 77580, max: 79068 }
+//=> { avg: 78324, min: 77580, max: 79068 }
 //=> Actual count is 78498 => 0.2% margin
 ```
 
-Calculation above is instant, and `average` is always within 1% margin.
+Calculation above is instant, and `avg` is always within 1% margin.
 
 ### RXJS
 

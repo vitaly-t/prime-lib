@@ -1,25 +1,27 @@
 /**
- * Result of approximate primes count calculation.
+ * Result of approximate primes count calculation,
+ * based on Pierre Dusart's formula
  */
 export interface IPrimesCountApprox {
     /**
      * Average (best-guess) number of primes.
      */
-    average: number;
+    avg: number;
 
     /**
-     * Minimum number of primes.
+     * Minimum possible number of primes.
      */
     min: number;
 
     /**
-     * Maximum number of primes.
+     * Maximum possible number of primes.
      */
     max: number;
 }
 
 /**
- Pierre Dusart's formula works when x > 598, so we need pre-calculated primes up to 593
+ Pierre Dusart's formula works when x > 598,
+ so we need pre-calculated first 108 primes, up to 593:
  */
 const primes = [
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37,
@@ -47,14 +49,15 @@ export function countPrimesApprox(x: number): IPrimesCountApprox {
         const a = x / ln * (1 + 0.992 / ln);
         const b = x / ln * (1 + 1.2762 / ln);
         return {
-            average: Math.round((a + b) / 2),
+            avg: Math.round((a + b) / 2),
             min: Math.ceil(a),
             max: Math.floor(b)
         };
     }
-    let i = 0, count = 0;
-    while (primes[i++] <= x) {
-        count++;
+    let i = 0;
+    if (x >= 2) {
+        i = -1;
+        while (primes[++i] <= x);
     }
-    return {average: count, min: count, max: count};
+    return {avg: i, min: i, max: i};
 }
