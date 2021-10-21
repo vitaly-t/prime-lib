@@ -4,18 +4,18 @@
 // TODO: This is all work in progress.
 
 function eratosthenesWithPi(n: number): { primes: Uint32Array, pi: Uint32Array } {
-    const array = [], upperLimit = Math.sqrt(n), output = [];
+    const arr = new Uint8Array(n), upperLimit = Math.sqrt(n), output = [];
     const pi = [0, 0];
 
     // TODO: move to Uint32 bitmask here
     for (let i = 0; i < n; i++) {
-        array.push(true);
+        arr[i] = 1;
     }
 
     for (let i = 2; i <= upperLimit; i++) {
-        if (array[i]) {
+        if (arr[i]) {
             for (let j = i * i; j < n; j += i) {
-                array[j] = false;
+                arr[j] = 0;
             }
         }
     }
@@ -23,7 +23,7 @@ function eratosthenesWithPi(n: number): { primes: Uint32Array, pi: Uint32Array }
     let cnt = 0;
 
     for (let i = 2; i < n; i++) {
-        if (array[i]) {
+        if (arr[i]) {
             output.push(i);
             cnt++;
         }
@@ -33,20 +33,21 @@ function eratosthenesWithPi(n: number): { primes: Uint32Array, pi: Uint32Array }
     return {primes: new Uint32Array(output), pi: new Uint32Array(pi)};
 }
 
-const phiMemo: number[] = [];
-
-function Phi(m: number, b: number, p: Uint32Array): number {
-    if (b === 0 || m === 0) {
-        return m;
-    }
-    if (m >= 800) {
-        return Phi(m, b - 1, p) - Phi(Math.floor(m / p[b - 1]), b - 1, p);
-    }
-    const t = b * 800 + m;
-    if (!phiMemo[t]) {
-        phiMemo[t] = Phi(m, b - 1, p) - Phi(Math.floor(m / p[b - 1]), b - 1, p);
-    }
-    return phiMemo[t];
+function Phi(m1: number, b1: number, p: Uint32Array): number {
+    const memo: number[] = [];
+    return function loop(m: number, b: number): number {
+        if (b === 0 || m === 0) {
+            return m;
+        }
+        if (m >= 800) {
+            return loop(m, b - 1) - loop(Math.floor(m / p[b - 1]), b - 1);
+        }
+        const t = b * 800 + m;
+        if (!memo[t]) {
+            memo[t] = loop(m, b - 1) - loop(Math.floor(m / p[b - 1]), b - 1);
+        }
+        return memo[t];
+    }(m1, b1);
 }
 
 const smallValues = [1, 2, 2, 3];
@@ -77,9 +78,9 @@ export function countPrimes(x: number): number {
 {x: 1e11, count: 4_118_054_813}
 */
 
-/*
+// 2370ms is a fantastic result for 1e11! :)
+// dropped to 1934ms, after stared using Uint8Array
+
 const start = Date.now();
 const result = countPrimes(1e11);
 console.log(`Duration: ${Date.now() - start}, result: ${result.toLocaleString()}`);
-
-*/
