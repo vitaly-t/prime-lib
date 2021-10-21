@@ -1,6 +1,7 @@
 import {sieveInt, sieveIntBoost, sieveIntStart} from './sieve';
 
 export {stopWhen, stopOnCount, stopOnValue, maxPrime} from './utils';
+export {IPrimesCountApprox, countPrimesApprox} from './count-approx';
 export {isPrime} from './is-prime';
 
 /**

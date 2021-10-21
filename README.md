@@ -7,7 +7,7 @@ primes-generator
     * [JavaScript](#javascript)
     * [TypeScript](#typescript)
     * [RXJS](#rxjs)
-  
+
 ## About
 
 This [prime number] generator combines performance of [Sieve of Eratosthenes] algorithm with the maximum memory
@@ -41,7 +41,7 @@ const values = [...s]; // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
 
 ### TypeScript
 
-Generating an array of all primes up to 17:
+* Generating an array of all primes up to 17:
 
 ```js
 import {generatePrimes, stopOnValue} from 'primes-generator';
@@ -51,6 +51,18 @@ const s = stopOnValue(i, 17); // stop-iterator when value reaches 17
 
 const values = [...s]; // 2, 3, 5, 7, 11, 13, 17
 ```
+
+* Counting approximate number of primes up to 1 million:
+
+```ts
+import {countPrimesApprox} from 'primes-generator';
+
+const r = countPrimesApprox(1_000_000);
+//=> { average: 78324, min: 77580, max: 79068 }
+//=> Actual is 78498, so 0.2% margin
+```
+
+Calculation above is instant, and `average` is always within 1% margin.
 
 ### RXJS
 
