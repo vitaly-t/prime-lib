@@ -1,8 +1,11 @@
 import {sieveInt, sieveIntBoost, sieveIntStart} from './sieve';
 
 export {stopWhen, stopOnCount, stopOnValue, maxPrime} from './utils';
-export {IPrimesCountApprox, countPrimesApprox} from './count-approx';
+export {IPrimeApprox} from './common';
+export {countPrimesApprox} from './count-approx';
+export {nthPrimeApprox} from './nth-prime-approx';
 export {countPrimes} from './count';
+export {nthPrime} from './nth-prime';
 export {isPrime} from './is-prime';
 
 /**

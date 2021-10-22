@@ -123,6 +123,11 @@ range(0, 20).pipe(filter(a => isPrime(a)))
 * `countPrimes(x)` - precise primes counter, up to `x`, using [Meissel Lehmer algorithm]
 * `countPrimesApprox(x)` - instant primes counter, up to `x`, with error margin < 1%
 
+Work-in-progress:
+
+* `nthPrime(n)` - returns prime from index (_**not implemented yet**_)
+* `nthPrimeApprox` - returns approximate prime from index (_**not implemented yet**_)
+
 #### <i>Helpers for iterators:</i>
 
 * `stopOnCount(iterator, count)` - stops the iterator, once `count` has been reached
