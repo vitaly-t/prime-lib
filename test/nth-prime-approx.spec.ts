@@ -1,8 +1,17 @@
 import {expect} from './header';
 import {nthPrimeApprox} from '../src';
+import {primes} from './primes';
 
 describe('nthPrimeApprox', () => {
-    it('must work', () => {
-        expect(nthPrimeApprox(0)).to.eql({avg: 0, min: 0, max: 0});
+    describe('for initial primes', () => {
+        it('must produce margin < 1', () => {
+            for (let i = 0; i < primes.length; i++) {
+                const p = primes[i];
+                const {avg} = nthPrimeApprox(i);
+                const margin = 100 * Math.abs(p - avg) / Math.max(p, avg);
+                const errMsg = `Failed for ${i}, with margin ${margin}`;
+                expect(margin, errMsg).to.be.lessThan(1);
+            }
+        });
     });
 });
