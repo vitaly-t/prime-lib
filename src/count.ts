@@ -11,7 +11,7 @@ export function countPrimes(x: number): number {
         return [1, 2, 2, 3][x - 2];
     }
     const root2 = Math.floor(Math.sqrt(x));
-    const root3 = Math.floor(x ** 1 / 3);
+    const root3 = Math.floor(x ** 0.33333);
     const top = Math.floor(x / root3) + 1;
     const {primes, pi} = soeCalc(top + 2);
     const a = pi[root3 + 1], b = pi[root2 + 1];
