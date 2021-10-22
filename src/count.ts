@@ -1,10 +1,7 @@
-// by Ovinus Real
-// from: https://stackoverflow.com/questions/43432760/looking-for-a-fast-prime-counting-function
-
 import {countPrimesApprox} from './count-approx';
 
 /**
- * Counts primes, using a hybrid approach of Meissel–Lehmer + compressed Sieve of Eratosthenes algorithms.
+ * Counts primes, using a hybrid approach of Meissel Lehmer + compressed Sieve of Eratosthenes algorithms.
  */
 export function countPrimes(x: number): number {
     if (x < 6) {
@@ -58,7 +55,7 @@ function Phi(m1: number, b1: number, p: Uint32Array): number {
     const fts = 800; // factorial table size
     const maxMem = b1 * fts + Math.min(m1, fts) + 1;
     const memo = new Uint16Array(maxMem);
-    return function loop(m: number, b: number): number {
+    const res = function loop(m: number, b: number): number {
         if (b === 0 || m === 0) {
             return m;
         }
@@ -71,6 +68,7 @@ function Phi(m1: number, b1: number, p: Uint32Array): number {
         }
         return memo[t];
     }(m1, b1);
+    return res;
 }
 
 /*

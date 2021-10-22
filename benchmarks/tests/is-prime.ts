@@ -3,55 +3,55 @@ import {ITestInput, ITestResult} from './common';
 
 export function testIsPrime(): ITestResult {
     const tests: ITestInput = {
-        '0 -> 10^6': {
+        '0 -> 1e6': {
             start: 0,
-            limit: 1_000_000,
-            desc: 'Time in ms, to verify the first million numbers'
+            limit: 1e6,
+            desc: 'Verify the first million numbers'
         },
-        '0 -> 10^7': {
+        '0 -> 1e7': {
             start: 0,
-            limit: 10_000_000,
-            desc: 'Time in ms, to verify the first 10 million numbers'
+            limit: 1e7,
+            desc: 'Verify the first 10 million numbers'
         },
-        '0 -> 10^8': {
+        '0 -> 1e8': {
             start: 0,
-            limit: 100_000_000,
-            desc: 'Time in ms, to verify the first 100 million numbers'
+            limit: 1e8,
+            desc: 'Verify the first 100 million numbers'
         },
-        '10^9 -> 10^6': {
-            start: 1_000_000_000,
-            limit: 1_000_000,
-            desc: 'Time in ms, to verify 1 million numbers, after 1 billion'
+        '1e9 -> 1e6': {
+            start: 1e9,
+            limit: 1e6,
+            desc: 'Verify 1 million numbers, after 1 billion'
         },
-        '10^10 -> 10^6': {
-            start: 10_000_000_000,
-            limit: 1_000_000,
-            desc: 'Time in ms, to verify 1 million numbers, after 10 billions'
+        '1e10 -> 1e6': {
+            start: 1e10,
+            limit: 1e6,
+            desc: 'Verify 1 million numbers, after 10 billions'
         },
-        '10^11 -> 1000': {
-            start: 100_000_000_000,
-            limit: 1_000,
-            desc: 'Time in ms, to verify 1000 numbers, after 100 billions'
+        '1e11 -> 1e3': {
+            start: 1e11,
+            limit: 1e3,
+            desc: 'Verify 1000 numbers, after 100 billions'
         },
-        '10^12 -> 1000': {
-            start: 1_000_000_000_000,
-            limit: 1_000,
-            desc: 'Time in ms, to verify 1000 numbers, after 1 trillion'
+        '1e12 -> 1e3': {
+            start: 1e12,
+            limit: 1e3,
+            desc: 'Verify 1000 numbers, after 1 trillion'
         },
-        '10^13 -> 1000': {
-            start: 10_000_000_000_000,
-            limit: 1_000,
-            desc: 'Time in ms, to verify 1000 numbers, after 10 trillions'
+        '1e13 -> 1e3': {
+            start: 1e13,
+            limit: 1e3,
+            desc: 'Verify 1000 numbers, after 10 trillions'
         },
-        '10^14 -> 1000': {
-            start: 100_000_000_000_000,
-            limit: 1_000,
-            desc: 'Time in ms, to verify 1000 numbers, after 100 trillions'
+        '1e14 -> 1e3': {
+            start: 1e14,
+            limit: 1e3,
+            desc: 'Verify 1000 numbers, after 100 trillions'
         },
-        '10^15 -> 1000': {
-            start: 1_000_000_000_000_000,
-            limit: 1_000,
-            desc: 'Time in ms, to verify 1000 numbers, after 1 quadrillion'
+        '1e15 -> 1e3': {
+            start: 1e15,
+            limit: 1e3,
+            desc: 'Verify 1000 numbers, after 1 quadrillion'
         }
     };
 
@@ -64,8 +64,8 @@ export function testIsPrime(): ITestResult {
             isPrime(i);
         }
         result[t] = {
-            'ms': Date.now() - begin,
-            'Description': desc
+            'description': desc,
+            'ms': Date.now() - begin
         };
     }
     return result;
