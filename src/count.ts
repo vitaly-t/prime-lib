@@ -70,15 +70,3 @@ function Phi(m1: number, b1: number, p: Uint32Array): number {
     }(m1, b1);
     return res;
 }
-
-/*
-{x: 1e9, count: 50_847_534},
-{x: 1e10, count: 455_052_511},
-{x: 1e11, count: 4_118_054_813}
-*/
-
-/*
-const start = Date.now();
-const result = countPrimes(1e11);
-console.log(`Duration: ${Date.now() - start}, result: ${result.toLocaleString()}`);
-*/

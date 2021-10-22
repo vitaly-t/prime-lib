@@ -43,9 +43,8 @@ const colors = {
         } while (++i < argv.length);
     } else {
         // run all benchmarks
-        const l = Object.keys(commands).length;
         for (const c in commands) {
-            const isLast = c === commands[l - 1];
+            const isLast = c === commands.countPrimes;
             runTest(c, isLast);
         }
     }
