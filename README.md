@@ -42,7 +42,7 @@ const values = [...s]; // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
 
 ### TypeScript
 
-* Generating an array of all primes up to 17:
+Generating an array of all primes up to 17:
 
 ```js
 import {generatePrimes, stopOnValue} from 'primes-generator';
@@ -52,18 +52,6 @@ const s = stopOnValue(i, 17); // stop-iterator when value reaches 17
 
 const values = [...s]; // 2, 3, 5, 7, 11, 13, 17
 ```
-
-* Approximate primes count up to 1 million:
-
-```ts
-import {countPrimesApprox} from 'primes-generator';
-
-const r = countPrimesApprox(1_000_000);
-//=> { avg: 78324, min: 77580, max: 79068 }
-//=> Actual count is 78498 => 0.2% margin
-```
-
-Calculation above is instant, and `avg` is always within 1% margin.
 
 ### RXJS
 
@@ -132,8 +120,8 @@ range(0, 20).pipe(filter(a => isPrime(a)))
 #### <i>Popular prime functions:</i>
 
 * `isPrime(x)` - verifies if `x` is a prime number
+* `countPrimes(x)` - precise primes counter, up to `x`, using [Meissel Lehmer algorithm]
 * `countPrimesApprox(x)` - instant primes counter, up to `x`, with error margin < 1%
-* `countPrimes(x)` - precise primes counter, up to `x`
 
 #### <i>Helpers for iterators:</i>
 
@@ -148,3 +136,5 @@ range(0, 20).pipe(filter(a => isPrime(a)))
 [WiKi]:https://github.com/vitaly-t/primes-generator/wiki
 
 [RXJS]:https://github.com/ReactiveX/rxjs
+
+[Meissel Lehmer algorithm]:https://en.wikipedia.org/wiki/Meissel%E2%80%93Lehmer_algorithm
