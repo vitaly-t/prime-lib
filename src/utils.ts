@@ -1,10 +1,4 @@
 /**
- * Maximum prime number that can be generated in JavaScript,
- * using the standard 'number' type (53-bit of integer range).
- */
-export const maxPrime = 9_007_199_254_740_881;
-
-/**
  * Stops an iterator when the callback returns a truthy value.
  */
 export function* stopWhen<T>(iterator: IterableIterator<T>, cb: (value: T, index: number) => boolean): IterableIterator<T> {

@@ -2,7 +2,7 @@
  * Sieve of Eratosthenes (SoE) generators.
  */
 
-import {maxPrime} from './utils';
+import {maxPrime} from './common';
 
 /**
  * Postponed SoE algorithm.

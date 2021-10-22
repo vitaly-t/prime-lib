@@ -1,4 +1,4 @@
-import {maxPrime} from './utils';
+import {maxPrime} from './common';
 
 const dividers = [
     0, 2, 6, 8, 12, 18, 20, 26, 30, 32, 36, 42, 48, 50, 56, 60, 62, 68, 72, 78, 86, 90, 92, 96, 98,
