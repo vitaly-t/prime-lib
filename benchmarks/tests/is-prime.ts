@@ -1,5 +1,5 @@
-import {isPrime} from '../../src';
 import {ITestInput, ITestResult} from './common';
+import {isPrime} from '../../src';
 
 export function testIsPrime(): ITestResult {
     const tests: ITestInput = {

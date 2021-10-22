@@ -6,6 +6,12 @@ import {testCountPrimes} from './tests/count-primes';
 
 const {cpus, version} = require('os');
 
+const colors = {
+    reset: '\x1b[0m',
+    cyan: '\x1b[36m',
+    red: '\x1b[31m'
+};
+
 (function () {
     // tslint:disable:no-console
 
@@ -32,12 +38,15 @@ const {cpus, version} = require('os');
     if (argv.length > 2) {
         let i = 2;
         do {
-            runTest(argv[i]);
+            const isLast = i === argv.length - 1;
+            runTest(argv[i], isLast);
         } while (++i < argv.length);
     } else {
         // run all benchmarks
+        const l = Object.keys(commands).length;
         for (const c in commands) {
-            runTest(c);
+            const isLast = c === commands[l - 1];
+            runTest(c, isLast);
         }
     }
 
@@ -45,20 +54,22 @@ const {cpus, version} = require('os');
 
     const {model, speed} = cpus()[0];
     const cpu = `${model.trim()}, ${speed}Mhz`;
-    console.log(`Duration: ${duration}s\nNodeJS: ${process.version}\nCPU: ${cpu}\nOS: ${version()}\n`);
+    console.log(colors.cyan, `\nDuration: ${duration}s\nNodeJS: ${process.version}\nCPU: ${cpu}\nOS: ${version()}\n`, colors.reset);
 
-    function runTest(testName: string): void {
+    function runTest(testName: string, isLast: boolean): void {
         if (testName in commands) {
-            console.log(`*** Benchmarking ${JSON.stringify(testName)}...`);
+            console.log(colors.cyan, `Benchmarking ${JSON.stringify(testName)}...`, colors.reset);
             const result = commands[testName]();
             if (Object.keys(result).length) {
                 console.table(result);
-                console.log();
+                if (!isLast) {
+                    console.log();
+                }
             } else {
                 console.log('Nothing :(\n');
             }
         } else {
-            console.error(`Unknown test ${JSON.stringify(testName)}\n`);
+            console.error(colors.red, `Unknown test ${JSON.stringify(testName)}\n`, colors.reset);
             process.exit(0);
         }
     }

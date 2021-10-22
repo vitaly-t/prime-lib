@@ -30,11 +30,11 @@ export function testCountPrimes(): ITestResult {
         '1e12': {
             x: 1e12,
             desc: 'Count primes in 1 trillion'
-        },/*
+        },
         '1e13': {
             x: 1e13,
             desc: 'Count primes in 10 trillions'
-        }*/
+        }
     };
 
     const result: any = {};
