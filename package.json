@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "clean": "del .\\test\\*.js && del .\\src\\*.js && del .\\benchmarks\\*.js && rd /s/q .\\dist",
+    "clean": "del /s/q .\\test\\*.js && del /s/q .\\src\\*.js && del /s/q .\\benchmarks\\*.js && rd /s/q .\\dist",
     "build": "tsc -p src",
     "lint": "tslint --fix ./src/*.ts ./test/*.ts",
     "test": "nyc mocha -r ts-node/register test/*.spec.ts",
