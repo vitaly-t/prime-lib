@@ -11,7 +11,7 @@ export function countPrimes(x: number): number {
         return [1, 2, 2, 3][x - 2];
     }
     const root2 = Math.floor(Math.sqrt(x));
-    const root3 = Math.floor(x ** (1 / 3));
+    const root3 = Math.floor(x ** 1 / 3);
     const top = Math.floor(x / root3) + 1;
     const {primes, pi} = soeCalc(top + 2);
     const a = pi[root3 + 1], b = pi[root2 + 1];
@@ -60,11 +60,11 @@ function Phi(m1: number, b1: number, p: Uint32Array): number {
             return m;
         }
         if (m >= fts) {
-            return loop(m, b - 1) - loop(Math.floor(m / p[b - 1]), b - 1);
+            return loop(m, --b) - loop(Math.floor(m / p[b]), b);
         }
         const t = b * fts + m;
         if (!memo[t]) {
-            memo[t] = loop(m, b - 1) - loop(Math.floor(m / p[b - 1]), b - 1);
+            memo[t] = loop(m, --b) - loop(Math.floor(m / p[b]), b);
         }
         return memo[t];
     }(m1, b1);
