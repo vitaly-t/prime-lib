@@ -26,7 +26,7 @@ describe('countPrimesApprox', () => {
 
     describe('x > 598', () => {
         it('must calculate with margin < 1%', () => {
-            // actual counts taken from: https://primes.utm.edu/howmany.html
+            // actual counts taken from: https://en.m.wikipedia.org/wiki/Prime-counting_function
             const tests = [
                 {x: 599, count: 109},
                 {x: 1e3, count: 168},
@@ -51,7 +51,9 @@ describe('countPrimesApprox', () => {
                 {x: 1e22, count: 201_467_286_689_315_906_290},
                 {x: 1e23, count: 1_925_320_391_606_803_968_923},
                 {x: 1e24, count: 18_435_599_767_349_200_867_866},
-                {x: 1e25, count: 176_846_309_399_143_769_411_680}
+                {x: 1e25, count: 176_846_309_399_143_769_411_680},
+                {x: 1e26, count: 1_699_246_750_872_437_141_327_603},
+                {x: 1e27, count: 16_352_460_426_841_680_446_427_399}
             ];
             for (const t of tests) {
                 const r = calc(t.x);

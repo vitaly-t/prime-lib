@@ -26,11 +26,11 @@ export function testCountPrimes(): ITestResult {
         '1e11': {
             x: 1e11,
             desc: 'Time to count primes in 100 billions'
-        },
+        },/*
         '1e12': {
             x: 1e12,
             desc: 'Time to count primes in 1 trillion'
-        },/*
+        },
         '1e13': {
             x: 1e13,
             desc: 'Time to count primes in 10 trillions'
