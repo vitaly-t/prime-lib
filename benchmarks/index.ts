@@ -43,10 +43,11 @@ const colors = {
         } while (++i < argv.length);
     } else {
         // run all benchmarks
-        for (const c in commands) {
-            const isLast = c === commands.countPrimes;
-            runTest(c, isLast);
-        }
+        const keys = Object.keys(commands);
+        keys.forEach((k, idx) => {
+            const isLast = idx === keys.length - 1;
+            runTest(k, isLast);
+        });
     }
 
     const duration = Math.ceil((Date.now() - start) / 1000);
