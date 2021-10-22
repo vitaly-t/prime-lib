@@ -12,10 +12,18 @@ describe('countPrimes', () => {
     });
 
     describe('x >= 2', () => {
-        it('must produce precise count', () => {
+        it('must produce a precise count', () => {
             const tests = [
                 {x: 2, count: 1},
+                {x: 3, count: 2},
+                {x: 4, count: 2},
+                {x: 5, count: 3},
+                {x: 6, count: 3},
+                {x: 7, count: 4},
+                {x: 8, count: 4},
+                {x: 9, count: 4},
                 {x: 10, count: 4},
+                {x: 11, count: 5},
                 {x: 1e2, count: 25},
                 {x: 1e3, count: 168},
                 {x: 1e4, count: 1_229},
