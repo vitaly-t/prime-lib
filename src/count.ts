@@ -1,5 +1,3 @@
-import {countPrimesApprox} from './count-approx';
-
 /**
  * Counts primes, using a hybrid approach of Meissel Lehmer + compressed Sieve of Eratosthenes algorithms.
  */
@@ -27,7 +25,9 @@ export function countPrimes(x: number): number {
  * Compressed SoE calculator for primes + counters.
  */
 function soeCalc(x: number): { primes: Uint32Array, pi: Uint32Array } {
-    const primes = new Uint32Array(countPrimesApprox(x).max);
+    // Pierre Dusart's maximum primes: π(x) < (x/ln x)(1 + 1.2762/ln x)
+    const maxPrimes = Math.ceil(x / Math.log(x) * (1 + 1.2762 / Math.log(x)));
+    const primes = new Uint32Array(maxPrimes);
     const upperLimit = Math.sqrt(x);
     const bmc = Math.ceil(x / 32); // bitmask compression
     const pi = new Uint32Array(x);
