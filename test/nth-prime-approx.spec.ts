@@ -3,6 +3,7 @@ import {nthPrimeApprox} from '../src';
 // import {primes} from './primes';
 
 describe('nthPrimeApprox', () => {
+    // TODO: also test min and max values.
     describe('for initial primes', () => {
         it('must produce margin < 1', () => {
             // const values = primes;
