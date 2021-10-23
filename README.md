@@ -1,5 +1,5 @@
-primes-generator
-----------------
+prime-lib
+---------
 
 * [About](#about)
 * [Installation](#installation)
@@ -20,7 +20,7 @@ efficiency. It was designed to be [RXJS]-friendly, and well suited for web app-s
 ## Installation
 
 ```
-$ npm i primes-generator
+$ npm i prime-lib
 ```
 
 ## Usage

@@ -28,4 +28,3 @@ $ npm run bench sieveInt sieveIntStart
 ![image](https://user-images.githubusercontent.com/5108906/138408902-dfa4fbf0-d9e7-419b-a33d-2e3bb83c274a.png)
 
 
-

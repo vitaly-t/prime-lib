@@ -1,7 +1,7 @@
 {
-  "name": "primes-generator",
-  "version": "0.2.11",
-  "description": "Prime-number generators, using Sieve of Eratosthenes",
+  "name": "prime-lib",
+  "version": "0.2.12",
+  "description": "Prime number library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -14,13 +14,13 @@
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/vitaly-t/primes-generator",
+  "homepage": "https://github.com/vitaly-t/prime-lib",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vitaly-t/primes-generator.git"
+    "url": "https://github.com/vitaly-t/prime-lib.git"
   },
   "bugs": {
-    "url": "https://github.com/vitaly-t/primes-generator/issues",
+    "url": "https://github.com/vitaly-t/prime-lib/issues",
     "email": "vitaly.tomilov@gmail.com"
   },
   "keywords": [
