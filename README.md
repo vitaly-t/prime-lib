@@ -32,7 +32,7 @@ Follow the usage examples below, based on your development environment.
 Generating an array with the first 10 primes:
 
 ```js
-const {generatePrimes, stopOnCount} = require('primes-generator');
+const {generatePrimes, stopOnCount} = require('prime-lib');
 
 const i = generatePrimes(); // create infinite primes iterator 
 const s = stopOnCount(i, 10); // stop-iterator after 10 values
@@ -45,7 +45,7 @@ const values = [...s]; // 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
 Generating an array of all primes up to 17:
 
 ```js
-import {generatePrimes, stopOnValue} from 'primes-generator';
+import {generatePrimes, stopOnValue} from 'prime-lib';
 
 const i = generatePrimes(); // create infinite primes iterator
 const s = stopOnValue(i, 17); // stop-iterator when value reaches 17
@@ -59,7 +59,7 @@ Adding a reusable [RXJS] wrapper first:
 
 ```ts
 import {Observable, from} from 'rxjs';
-import {generatePrimes, IPrimeOptions} from 'primes-generator';
+import {generatePrimes, IPrimeOptions} from 'prime-lib';
 
 export function primes(options?: IPrimeOptions): Observable<number> {
     return from(generatePrimes(options));
@@ -101,7 +101,7 @@ primes({boost: 10})
 
 ```ts
 import {range, filter} from 'rxjs';
-import {isPrime} from 'primes-generator';
+import {isPrime} from 'prime-lib';
 
 range(0, 20).pipe(filter(a => isPrime(a)))
     .subscribe(prime => {
@@ -138,7 +138,7 @@ Work-in-progress:
 
 [Sieve of Eratosthenes]:https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
 
-[WiKi]:https://github.com/vitaly-t/primes-generator/wiki
+[WiKi]:https://github.com/vitaly-t/prime-lib/wiki
 
 [RXJS]:https://github.com/ReactiveX/rxjs
 

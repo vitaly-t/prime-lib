@@ -18,6 +18,6 @@ assignees: vitaly-t
 
 ### Environment
 
-* Version of primes-generator:
+* Version of prime-lib:
 * OS type (Linux/Windows/Mac):
 * Version of Node.js:
