@@ -11,11 +11,16 @@ prime-lib
 
 ## About
 
-This [prime number] generator combines performance of [Sieve of Eratosthenes] algorithm with the maximum memory
-efficiency. It was designed to be [RXJS]-friendly, and well suited for web app-s.
+Popular [prime number] functions, implemented in TypeScript, with focus on memory efficiency and performance,
+to be friendly for Web apps, and [RXJS] in particular. 
 
-* See [WiKi] to help decide which generator to use.
-* Other resources: [tests](./test) and [benchmarks](./benchmarks).
+It features many well-known optimization methods, such as [Sieve of Eratosthenes], [Meissel Lehmer], etc.
+
+See the following resources:
+
+* [API](#api) - all available functions
+* [WiKi] - to help choose a prime generator
+* [Benchmarks](./benchmarks) - to see the performance
 
 ## Installation
 
@@ -142,4 +147,4 @@ Work-in-progress:
 
 [RXJS]:https://github.com/ReactiveX/rxjs
 
-[Meissel Lehmer algorithm]:https://en.wikipedia.org/wiki/Meissel%E2%80%93Lehmer_algorithm
+[Meissel Lehmer]:https://en.wikipedia.org/wiki/Meissel%E2%80%93Lehmer_algorithm
