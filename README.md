@@ -148,3 +148,4 @@ Work-in-progress:
 [RXJS]:https://github.com/ReactiveX/rxjs
 
 [Meissel Lehmer]:https://en.wikipedia.org/wiki/Meissel%E2%80%93Lehmer_algorithm
+[Meissel Lehmer algorithm]:https://en.wikipedia.org/wiki/Meissel%E2%80%93Lehmer_algorithm
