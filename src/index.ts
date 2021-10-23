@@ -1,10 +1,10 @@
-import {sieveInt, sieveIntBoost, sieveIntStart} from './sieve';
+import {sieveInt, sieveIntBoost, sieveIntStart} from './soe-generators';
 
 export {stopWhen, stopOnCount, stopOnValue} from './utils';
 export {IPrimeApprox, maxPrime} from './common';
-export {countPrimesApprox} from './count-approx';
+export {countPrimesApprox} from './count-primes-approx';
 export {nthPrimeApprox} from './nth-prime-approx';
-export {countPrimes} from './count';
+export {countPrimes} from './count-primes';
 export {nthPrime} from './nth-prime';
 export {isPrime} from './is-prime';
 
