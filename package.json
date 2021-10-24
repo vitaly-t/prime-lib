@@ -8,7 +8,8 @@
     "clean": "del /s/q .\\test\\*.js && del /s/q .\\src\\*.js && del /s/q .\\benchmarks\\*.js && rd /s/q .\\dist",
     "build": "tsc -p src",
     "lint": "tslint --fix ./src/*.ts ./test/*.ts",
-    "test": "nyc mocha -r ts-node/register test/*.spec.ts",
+    "test-file": "nyc mocha -r ts-node/register",
+    "test": "npm run test-file -- test/*.spec.ts",
     "bench": "tsc -p ./benchmarks && node ./benchmarks/index.js"
   },
   "files": [
