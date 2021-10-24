@@ -23,14 +23,33 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
         return {avg: p, min: p, max: p};
     }
 
+    n++; // since we are 0-based
+
     const ln = Math.log(n);
-    const a = n * ln + n * (Math.log(ln) - 1);
-    const b = n * ln + n * Math.log(ln);
+    const lnln = Math.log(ln);
+
+    const min = n * (ln + lnln - 1) + (n * lnln - 2.1 * n) / ln;
+
+    let max;
+
+    if (n >= 688_383) {
+        // Dusart 2010 page 2
+        max = n * (ln + lnln - 1 + ((lnln - 2) / ln));
+    } else if (n >= 178_974) {
+        // Dusart 2010 page 7
+        max = n * (ln + lnln - 1 + ((lnln - 1.95) / ln));
+    } else if (n >= 39_017) {
+        // Dusart 1999 page 14
+        max = n * (ln + lnln - 0.9484);
+    } else {
+        // Modified from Robin 1983 for 6-39016 _only_
+        max = n * (ln + 0.6 * lnln);
+    }
 
     return {
-        avg: Math.round((a + b) / 2),
-        min: Math.ceil(a),
-        max: Math.floor(b)
+        avg: Math.round((min + max) / 2),
+        min: Math.ceil(min),
+        max: Math.floor(max)
     };
 }
 
