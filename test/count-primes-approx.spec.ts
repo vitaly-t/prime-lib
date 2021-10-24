@@ -38,7 +38,7 @@ describe('countPrimesApprox', () => {
                 expect(margin, `Failed for ${res}`).to.be.lessThan(1);
             }
         });
-        it('must calculate correct limits', () => {
+        it('must produce valid limits', () => {
             for (const t of knownCounts) {
                 const r = calc(t.x);
                 expect(r.min, `Min failed for ${t.x}`).to.be.lessThanOrEqual(t.count);

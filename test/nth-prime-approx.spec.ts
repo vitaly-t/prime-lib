@@ -1,6 +1,6 @@
 import {expect} from './header';
 import {nthPrimeApprox} from '../src';
-import {primeFromIndex, primes} from './primes';
+import {knownCounts, primeFromIndex, primes} from './primes';
 
 const calcMargin = (a: number, b: number) => 100 * Math.abs(a - b) / Math.max(a, b);
 
@@ -16,7 +16,17 @@ describe('nthPrimeApprox', () => {
                 expect(margin, errMsg).to.be.lessThan(1);
             }
         });
+        it('must produce valid limits', () => {
+            const values = primes;
+            for (let i = 0; i < values.length; i++) {
+                const p = values[i];
+                const r = nthPrimeApprox(i);
+                expect(r.min, `Min failed for ${i}`).to.be.lessThanOrEqual(p);
+                expect(r.max, `Max failed for ${i}`).to.be.greaterThanOrEqual(p);
+            }
+        });
     });
+
     /*
     describe('for wide-range indexes', () => {
         it('must produce margin < 1', () => {
@@ -28,4 +38,5 @@ describe('nthPrimeApprox', () => {
             }
         });
     });*/
+
 });

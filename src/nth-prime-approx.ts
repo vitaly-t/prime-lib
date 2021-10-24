@@ -18,8 +18,8 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
     // https://math.stackexchange.com/questions/1257/is-there-a-known-mathematical-equation-to-find-the-nth-prime
     // for n ≥ 6: n ln n + n(ln ln n − 1) < p(n) < n ln n + n * ln ln n
 
-    if (n < 6) {
-        const p = [2, 3, 5, 7, 11, 13][n];
+    if (n < 7) {
+        const p = [2, 3, 5, 7, 11, 13, 17][n];
         return {avg: p, min: p, max: p};
     }
 
@@ -28,10 +28,12 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
     const ln = Math.log(n);
     const lnln = Math.log(ln);
 
+    // from: https://math.stackexchange.com/questions/2741997/approximation-for-nth-prime-number
     const min = n * (ln + lnln - 1) + (n * lnln - 2.1 * n) / ln;
 
     let max;
 
+    // from: https://stackoverflow.com/questions/1042717/is-there-a-way-to-find-the-approximate-value-of-the-nth-prime
     if (n >= 688_383) {
         // Dusart 2010 page 2
         max = n * (ln + lnln - 1 + ((lnln - 2) / ln));
