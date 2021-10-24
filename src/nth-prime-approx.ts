@@ -19,7 +19,7 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
     // for n ≥ 6: n ln n + n(ln ln n − 1) < p(n) < n ln n + n * ln ln n
 
     if (n < 6) {
-        const p = [2, 3, 5, 7, 11, 13][n];
+        const p = [2, 3, 5, 7, 11][n];
         return {avg: p, min: p, max: p};
     }
 
