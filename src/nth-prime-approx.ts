@@ -1,7 +1,5 @@
 import {IPrimeApprox} from './common';
 
-// import {sieveIntBoost} from './soe-generators';
-
 /**
  * Returns approximate prime from index.
  */
@@ -20,7 +18,6 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
     // https://math.stackexchange.com/questions/1257/is-there-a-known-mathematical-equation-to-find-the-nth-prime
     // for n ≥ 6: n ln n + n(ln ln n − 1) < p(n) < n ln n + n * ln ln n
 
-    /*
     if (n < 6) {
         const p = [2, 3, 5, 7, 11, 13][n];
         return {avg: p, min: p, max: p};
@@ -34,18 +31,8 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
         avg: Math.round((a + b) / 2),
         min: Math.ceil(a),
         max: Math.floor(b)
-    };*/
-
-    // temporary, to pass current tests:
-    const p = [2, 3, 5, 7, 11][n];
-    return {avg: p, min: p, max: p};
+    };
 }
 
-/*
-// Local test:
-[...sieveIntBoost(100)].forEach((p, i) => {
-    const approx = nthPrimeApprox(i);
-    const margin = 100 * Math.abs(p - approx) / Math.max(p, approx);
-    console.log(`margin(${i})=${margin}, p = ${p}, approx = ${approx}`);
-});
-*/
+// for testing:
+// npm run test-file test/nth-prime-approx.spec.ts
