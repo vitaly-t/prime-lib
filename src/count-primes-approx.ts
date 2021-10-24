@@ -30,7 +30,7 @@ export function countPrimesApprox(x: number): IPrimeApprox {
         const a = x / ln * (1 + 0.992 / ln);
         const b = x / ln * (1 + 1.2762 / ln);
         return {
-            avg: Math.round((a + b) / 2),
+            avg: Math.round((a + b) / 2), // best-guess value, with error margin < 1%
             min: Math.ceil(a),
             max: Math.floor(b)
         };
