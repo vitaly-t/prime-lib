@@ -25,7 +25,7 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
         return {avg: p, min: p, max: p};
     }
 
-    n++; // since we are 0-based
+    n++; // since we are 0-based, and all formulas are 1-based
 
     const ln = Math.log(n);
     const lnLn = Math.log(ln);
@@ -52,8 +52,20 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
             // Dusart 1999, page 14
             max = n * (ln + lnLn - 0.9484);
         } else {
-            // Modified from Robin 1983 for 6-39016 only
-            max = n * (ln + 0.6 * lnLn); // TODO: this formula is no good, failing many tests
+            if (n > 408) {
+                // Modified from Robin 1983 for 6-39016 only
+                max = n * (ln + 0.6 * lnLn); // TODO: this formula is no good, failing many tests
+            } else {
+                // my own computations for small primes;
+                // Note that tests still fail here, because I need to calc the same
+                // for min here. Max here is perfect ;)
+                const maxBound = (r: number) => n * (ln + lnLn * (1 - r));
+                if (n >= 49) {
+                    max = maxBound(0.4426);
+                } else {
+                    max = maxBound(0.2837);
+                }
+            }
         }
     }
 
