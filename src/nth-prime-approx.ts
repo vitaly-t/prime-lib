@@ -54,11 +54,11 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
         } else {
             if (n > 408) {
                 // Modified from Robin 1983 for 6-39016 only
-                max = n * (ln + 0.6 * lnLn); // TODO: this formula is no good, failing many tests
+                max = n * (ln + 0.6 * lnLn); // TODO: this formula is no good below 408
             } else {
                 // my own computations for small primes;
                 // Note that tests still fail here, because I need to calc the same
-                // for min here. Max here is perfect ;)
+                // for min here. Max here is perfect, min is way off
                 const maxBound = (r: number) => n * (ln + lnLn * (1 - r));
                 if (n >= 49) {
                     max = maxBound(0.4426);
