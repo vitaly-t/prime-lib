@@ -27,12 +27,13 @@ const primes = [
 export function countPrimesApprox(x: number): IPrimeApprox {
     if (x > 598) {
         const ln = Math.log(x);
-        const a = x / ln * (1 + 0.992 / ln);
-        const b = x / ln * (1 + 1.2762 / ln);
+        const primeBound = (offset: number) => x / ln * (1 + offset / ln);
+        const min = primeBound(0.992);
+        const max = primeBound(1.2762);
         return {
-            avg: Math.round((a + b) / 2), // best-guess value, with error margin < 1%
-            min: Math.ceil(a),
-            max: Math.floor(b)
+            avg: Math.round((min + max) / 2), // best-guess value, with error margin < 1%
+            min: Math.ceil(min),
+            max: Math.floor(max)
         };
     }
     let i = 0;

@@ -58,7 +58,7 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
     }
 
     return {
-        avg: Math.round((min + max) / 2),
+        avg: Math.round((min + max) / 2), // best-guess value, with error margin < 1%
         min: Math.ceil(min),
         max: Math.floor(max)
     };
