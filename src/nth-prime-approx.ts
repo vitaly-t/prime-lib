@@ -17,6 +17,8 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
     // Initial attempt was based on:
     // https://math.stackexchange.com/questions/1257/is-there-a-known-mathematical-equation-to-find-the-nth-prime
     // for n ≥ 6: n ln n + n(ln ln n − 1) < p(n) < n ln n + n * ln ln n
+    //
+    // https://math.stackexchange.com/questions/2870327/upper-and-lower-bounds-on-the-nth-prime-number
 
     if (n < 6) {
         const p = [2, 3, 5, 7, 11][n];
@@ -26,26 +28,33 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
     n++; // since we are 0-based
 
     const ln = Math.log(n);
-    const lnln = Math.log(ln);
+    const lnLn = Math.log(ln);
 
-    // from: https://math.stackexchange.com/questions/2741997/approximation-for-nth-prime-number
-    const min = n * (ln + lnln - 1) + (n * lnln - 2.1 * n) / ln;
+    let min, max;
 
-    let max;
-
-    // from: https://stackoverflow.com/questions/1042717/is-there-a-way-to-find-the-approximate-value-of-the-nth-prime
-    if (n >= 688_383) {
-        // Dusart 2010 page 2
-        max = n * (ln + lnln - 1 + ((lnln - 2) / ln));
-    } else if (n >= 178_974) {
-        // Dusart 2010 page 7
-        max = n * (ln + lnln - 1 + ((lnln - 1.95) / ln));
-    } else if (n >= 39_017) {
-        // Dusart 1999 page 14
-        max = n * (ln + lnln - 0.9484);
+    if (n >= 46_254_381) {
+        // According to Christian Axler (https://arxiv.org/pdf/1706.03651v2.pdf):
+        const primeBound = (offset: number) => n * (ln + lnLn - 1 + (lnLn - 2) / ln - (lnLn ** 2 - 6 * lnLn + offset) / (2 * ln ** 2));
+        min = primeBound(11.508);
+        max = primeBound(10.667);
     } else {
-        // Modified from Robin 1983 for 6-39016 only
-        max = n * (ln + 0.6 * lnln);
+        // from: https://math.stackexchange.com/questions/2741997/approximation-for-nth-prime-number
+        min = n * (ln + lnLn - 1) + (n * lnLn - 2.1 * n) / ln;
+
+        // from: https://stackoverflow.com/questions/1042717/is-there-a-way-to-find-the-approximate-value-of-the-nth-prime
+        if (n >= 688_383) {
+            // Dusart 2010, page 2
+            max = n * (ln + lnLn - 1 + ((lnLn - 2) / ln));
+        } else if (n >= 178_974) {
+            // Dusart 2010, page 7
+            max = n * (ln + lnLn - 1 + ((lnLn - 1.95) / ln));
+        } else if (n >= 39_017) {
+            // Dusart 1999, page 14
+            max = n * (ln + lnLn - 0.9484);
+        } else {
+            // Modified from Robin 1983 for 6-39016 only
+            max = n * (ln + 0.6 * lnLn); // TODO: this formula is no good, failing many tests
+        }
     }
 
     return {
@@ -55,5 +64,5 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
     };
 }
 
-// for testing:
+// to run tests:
 // npm run test-file test/nth-prime-approx.spec.ts
