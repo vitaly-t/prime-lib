@@ -17,7 +17,7 @@ export interface IPrimesArray extends Iterable<number> {
  * and accessed, while consuming only 1/8th of memory, compared to number-s.
  */
 export function cachePrimes(n: number): IPrimesArray {
-    const step = 100; // segment size
+    const step = Math.floor(7 * Math.log(n)); // page/segment size
     const length = Math.min(n, maxCacheSize);
     const segmentLength = Math.floor(length / step);
     const gaps = new Uint8Array(length - segmentLength);
@@ -56,7 +56,7 @@ export function cachePrimes(n: number): IPrimesArray {
     };
     return new Proxy<IPrimesArray>(obj, {
         get: (target: IPrimesArray, prop: any) => {
-            const idx = parseInt(prop);
+            const idx = typeof prop === 'string' ? Number(prop) : -1;
             if (idx >= 0) {
                 let a = 0, start = 0, end = idx + 1;
                 if (idx >= step - 1) {
