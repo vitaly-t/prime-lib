@@ -16,9 +16,9 @@ export interface IPrimesArray extends Iterable<number> {
  * Creates a compressed cache of prime gaps, so primes can be quickly calculated
  * and accessed, while consuming only 1/8th of memory, compared to number-s.
  */
-export function cachePrimes(size: number): IPrimesArray {
-    const step = 100; // segment step
-    const length = Math.min(size, maxCacheSize);
+export function cachePrimes(n: number): IPrimesArray {
+    const step = 100; // segment size
+    const length = Math.min(n, maxCacheSize);
     const segmentLength = Math.floor(length / step);
     const gaps = new Uint8Array(length - segmentLength);
     const segments = new Uint32Array(segmentLength);
