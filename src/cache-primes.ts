@@ -1,10 +1,10 @@
-/**
- * Maximum number of primes for which the gap is less or equal 255,
- * to be stored as a single byte.
- */
 import {sieveIntBoost} from './soe-generators';
 
-const maxCacheSize = 23_163_298;
+/**
+ * Maximum cache size that can be specified. It is equal to the
+ * maximum number of primes with gap <= 255, to fit into a byte.
+ */
+export const maxCacheSize = 23_163_298;
 
 export interface IPrimesArray extends Iterable<number> {
     readonly [index: number]: number;
@@ -13,48 +13,64 @@ export interface IPrimesArray extends Iterable<number> {
 }
 
 export function cachePrimes(size: number): IPrimesArray {
+    const step = 5; // segment step: 4 elements + 1 segment
     const length = Math.min(size, maxCacheSize);
-    const cache = new Uint8Array(length);
-    const i = sieveIntBoost(length);
-    let a, k = 0;
-    while (!(a = i.next()).done) {
-        cache[k++] = a.value;
+    const segmentLength = Math.floor(length / step);
+    const gaps = new Uint8Array(length - segmentLength);
+    const segments = new Uint32Array(segmentLength);
+    const t = sieveIntBoost(length);
+    let a = 0, i = 0, g = 0, k = 0, s = 1;
+    while (i++ < length) {
+        const v = t.next().value;
+        if (s++ === step) {
+            segments[k++] = v;
+            s = 1;
+        } else {
+            gaps[g++] = v - a;
+        }
+        a = v;
     }
-    const scope = {
+    const obj = {
         length,
         [Symbol.iterator](): Iterator<number> {
-            let i = 0;
+            a = 0;
+            i = 0;
+            g = 0;
+            k = 0;
+            s = 1;
             return {
                 next(): IteratorResult<number> {
-                    if (i++ < length) {
-                        return {value: cache[i - 1], done: false};
+                    if (i++ === length) {
+                        return {value: undefined, done: true};
                     }
-                    return {value: undefined, done: true};
+                    if (s++ === step) {
+                        a = segments[k++];
+                        s = 1;
+                    } else {
+                        a += gaps[g++];
+                    }
+                    return {value: a, done: false};
                 }
             };
         }
     };
-    return new Proxy<IPrimesArray>(scope, {
+    return new Proxy<IPrimesArray>(obj, {
         get: (target: IPrimesArray, prop: any) => {
             if (typeof prop === 'symbol') {
                 return target[Symbol.iterator];
             }
             if (prop >= 0) {
-                return cache[prop];
+                return gaps[prop]; // TODO: temporary
             }
             if (prop === 'length') {
-                return cache.length;
+                return length;
             }
             throw new TypeError(`Invalid property ${JSON.stringify(prop)}`);
         }
     });
 }
 
-const c = cachePrimes(5);
-
-// const r: number = c[2];
-console.log(c.length);
-
-for (const a of c) {
+const r = cachePrimes(100);
+for (const a of r) {
     console.log(a);
 }
