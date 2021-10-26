@@ -60,7 +60,22 @@ export function cachePrimes(size: number): IPrimesArray {
                 return target[Symbol.iterator];
             }
             if (prop >= 0) {
-                return gaps[prop]; // TODO: temporary
+                prop = Number(prop);
+                let a = 0, k = 0;
+                if (prop >= step - 1) {
+                    k = Math.floor((prop - 1) / (step - 1)); //4-8:=>0
+                    // k = prop / (step - 1);
+                    a = segments[k];
+                }
+                if (!prop) {
+                    return gaps[0];
+                }
+                const start = k * (step - 1);
+                const end = prop - k;
+                for (let i = start; i <= end; i++) {
+                    a += gaps[i];
+                }
+                return a;
             }
             if (prop === 'length') {
                 return length;
@@ -70,7 +85,11 @@ export function cachePrimes(size: number): IPrimesArray {
     });
 }
 
-const r = cachePrimes(100);
-for (const a of r) {
-    console.log(a);
-}
+const r = cachePrimes(10);
+
+console.log(r[8]);
+
+/*
+for (let i = 0; i < r.length; i++) {
+    console.log(r[i]);
+}*/
