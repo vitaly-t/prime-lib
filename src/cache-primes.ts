@@ -62,13 +62,17 @@ export function cachePrimes(n: number): IPrimesArray {
     };
     return new Proxy<IPrimesArray>(obj, {
         get: (target: any, prop: string | symbol) => {
-            const idx = typeof prop === 'string' ? Number(prop) : -1;
+            const idx = typeof prop === 'string' ? Number(prop) : NaN;
+            if (idx < 0 || idx >= length) {
+                return;
+            }
             if (idx >= 0) {
+                const s = step - 1;
                 let a = 0, start = 0, end = idx + 1;
-                if (idx >= step - 1) {
-                    const k = Math.floor((idx + 1 - step) / step);
+                if (idx >= s) {
+                    const k = Math.floor((idx - s) / step);
                     a = segments[k];
-                    start = (k + 1) * (step - 1);
+                    start = (k + 1) * s;
                     end = idx - k;
                 }
                 for (let i = start; i < end; i++) {
