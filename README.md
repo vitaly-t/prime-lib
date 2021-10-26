@@ -135,7 +135,7 @@ Work-in-progress:
 
 #### <i>Extra helpers:</i>
 
-* `cachePrimes(n)` - creates a gap-compressed cache of `n` primes 
+* `cachePrimes(n)` - creates a gap-compressed cache of `n` primes (see [WiKi]) 
 * `stopOnCount(iterator, count)` - stops the iterator, once `count` has been reached
 * `stopOnValue(iterator, maxValue)` - stops the iterator when `maxValue` is exceeded
 * `stopWhen(iterator, cb)` - stops the iterator when the callback returns a truthy value
