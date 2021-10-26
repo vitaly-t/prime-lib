@@ -56,27 +56,21 @@ export function cachePrimes(n: number): IPrimesArray {
     };
     return new Proxy<IPrimesArray>(obj, {
         get: (target: IPrimesArray, prop: any) => {
-            if (typeof prop === 'symbol') {
-                return target[Symbol.iterator];
-            }
-            if (prop >= 0) {
-                prop = Number(prop);
-                let a = 0, start = 0, end = prop + 1;
-                if (prop >= step - 1) {
-                    const k = Math.floor((prop + 1 - step) / step);
+            const idx = parseInt(prop);
+            if (idx >= 0) {
+                let a = 0, start = 0, end = idx + 1;
+                if (idx >= step - 1) {
+                    const k = Math.floor((idx + 1 - step) / step);
                     a = segments[k];
                     start = (k + 1) * (step - 1);
-                    end = prop - k;
+                    end = idx - k;
                 }
                 for (let i = start; i < end; i++) {
                     a += gaps[i];
                 }
                 return a;
             }
-            if (prop === 'length') {
-                return length;
-            }
-            throw new TypeError(`Invalid property ${JSON.stringify(prop)}`);
+            return target[prop];
         }
     });
 }
