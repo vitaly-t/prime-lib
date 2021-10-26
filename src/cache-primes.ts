@@ -33,11 +33,7 @@ export function cachePrimes(size: number): IPrimesArray {
     const obj = {
         length,
         [Symbol.iterator](): Iterator<number> {
-            a = 0;
-            i = 0;
-            g = 0;
-            k = 0;
-            s = 1;
+            let a = 0, i = 0, g = 0, k = 0, s = 1;
             return {
                 next(): IteratorResult<number> {
                     if (i++ === length) {
@@ -63,10 +59,10 @@ export function cachePrimes(size: number): IPrimesArray {
                 prop = Number(prop);
                 let a = 0, start = 0, end = prop + 1;
                 if (prop >= step - 1) {
-                    // TODO: do the magic here
-                    a = 123;
-                    start = 123;
-                    end = 123;
+                    const k = Math.floor((prop + 1 - step) / step);
+                    a = segments[k];
+                    start = (k + 1) * (step - 1);
+                    end = prop - k;
                 }
                 for (let i = start; i < end; i++) {
                     a += gaps[i];
@@ -81,9 +77,9 @@ export function cachePrimes(size: number): IPrimesArray {
     });
 }
 
-const r = cachePrimes(4);
+const r = cachePrimes(10);
 
-// console.log(r[1]);
+//console.log(r[8]);
 
 for (let i = 0; i < r.length; i++) {
     console.log(r[i]);
