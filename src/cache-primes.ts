@@ -34,23 +34,27 @@ export function cachePrimes(size: number): IPrimesArray {
             };
         }
     };
-    // return scope;
     return new Proxy<IPrimesArray>(scope, {
         get: (target: IPrimesArray, prop: any) => {
             if (typeof prop === 'symbol') {
-                return scope[Symbol.iterator];
+                return target[Symbol.iterator];
             }
-            return cache[prop];
+            if (prop >= 0) {
+                return cache[prop];
+            }
+            if (prop === 'length') {
+                return cache.length;
+            }
+            throw new TypeError(`Invalid property ${JSON.stringify(prop)}`);
         }
     });
 }
 
 const c = cachePrimes(5);
 
-const r: number = c[2];
-// console.log(r);
-
+// const r: number = c[2];
+console.log(c.length);
 
 for (const a of c) {
-    console.log(r, a);
+    console.log(a);
 }
