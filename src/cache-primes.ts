@@ -61,18 +61,14 @@ export function cachePrimes(size: number): IPrimesArray {
             }
             if (prop >= 0) {
                 prop = Number(prop);
-                let a = 0, k = 0;
+                let a = 0, start = 0, end = prop + 1;
                 if (prop >= step - 1) {
-                    k = Math.floor((prop - 1) / (step - 1)); //4-8:=>0
-                    // k = prop / (step - 1);
-                    a = segments[k];
+                    // TODO: do the magic here
+                    a = 123;
+                    start = 123;
+                    end = 123;
                 }
-                if (!prop) {
-                    return gaps[0];
-                }
-                const start = k * (step - 1);
-                const end = prop - k;
-                for (let i = start; i <= end; i++) {
+                for (let i = start; i < end; i++) {
                     a += gaps[i];
                 }
                 return a;
@@ -85,11 +81,10 @@ export function cachePrimes(size: number): IPrimesArray {
     });
 }
 
-const r = cachePrimes(10);
+const r = cachePrimes(4);
 
-console.log(r[8]);
+// console.log(r[1]);
 
-/*
 for (let i = 0; i < r.length; i++) {
     console.log(r[i]);
-}*/
+}
