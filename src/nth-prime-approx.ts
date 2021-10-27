@@ -20,6 +20,9 @@ export function nthPrimeApprox(n: number): IPrimeApprox {
     //
     // https://math.stackexchange.com/questions/2870327/upper-and-lower-bounds-on-the-nth-prime-number
 
+    // New interesting one by Charles:
+    // https://stackoverflow.com/questions/4709828/given-a-number-x-estimate-where-in-an-ordered-list-of-primes-that-number-may-fa
+
     if (n < 6) {
         const p = [2, 3, 5, 7, 11][n];
         return {avg: p, min: p, max: p};
