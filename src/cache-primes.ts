@@ -7,22 +7,13 @@ import {sieveIntBoost} from './soe-generators';
 export const maxCacheSize = 23_163_298;
 
 /**
- * Primes cache array, returned from cacheArray function.
- */
-export interface IPrimesArray extends Iterable<number> {
-    readonly [index: number]: number;
-
-    readonly length: number;
-}
-
-/**
  * Creates a compressed cache of prime gaps, so primes can be quickly calculated
  * and accessed, while consuming only 1/8th of memory, compared to number-s.
  *
  * Access to primes is very fast, especially with for-of iteration. For index-based
  * access it uses an optimized list of segments, for faster value calculation.
  */
-export function cachePrimes(n: number): IPrimesArray {
+export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
     const step = Math.floor(7 * Math.log(n)); // optimum segment size
     const length = Math.min(n, maxCacheSize);
     const segmentLength = Math.floor(length / step);
@@ -60,7 +51,7 @@ export function cachePrimes(n: number): IPrimesArray {
             };
         }
     };
-    return new Proxy<IPrimesArray>(obj, {
+    return new Proxy(obj, {
         get: (target: any, prop: string | symbol) => {
             const idx = typeof prop === 'string' ? Number(prop) : NaN;
             if (idx < 0 || idx >= length) {

@@ -2,7 +2,7 @@ import {sieveInt, sieveIntBoost, sieveIntStart} from './soe-generators';
 
 export {stopWhen, stopOnCount, stopOnValue} from './utils';
 export {IPrimeApprox, maxPrime} from './common';
-export {cachePrimes, IPrimesArray, maxCacheSize} from './cache-primes';
+export {cachePrimes, maxCacheSize} from './cache-primes';
 export {countPrimesApprox} from './count-primes-approx';
 export {nthPrimeApprox} from './nth-prime-approx';
 export {countPrimes} from './count-primes';
