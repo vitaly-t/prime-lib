@@ -58,7 +58,7 @@ export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
                     } else {
                         value += huge ? decompress(gaps[g++]) : gaps[g++];
                     }
-                    return {value};
+                    return {value, done: false};
                 }
             };
         }
@@ -71,7 +71,7 @@ export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
                 const s = step - 1;
                 let a = 0, start = 0, end = idx + 1;
                 if (idx >= s) {
-                    const k = Math.floor((idx - s) / step);
+                    const k = ~~((idx - s) / step);
                     a = segments[k];
                     start = (k + 1) * s;
                     end = idx - k;
