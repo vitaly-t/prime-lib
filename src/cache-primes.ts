@@ -30,7 +30,7 @@ export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
 
     // compression is for when gaps can exceed 255:
     const compress = (z: number) => z & 1 ? z : z & 254 | z >>> 8;
-    const decompress = (z: number) => z | 254 ? z & 254 | (z & 1) << 8 : z;
+    const decompress = (z: number) => z & 254 ? z & 254 | (z & 1) << 8 : z;
 
     while (i++ < length) {
         const v = t.next().value;
