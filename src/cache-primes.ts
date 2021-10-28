@@ -1,6 +1,13 @@
 import {sieveIntBoost, maxBoostLimit} from './soe-generators';
 
 /**
+ * Maximum number of primes for which gap <= 255, i.e. can fit into 1 byte.
+ * After that, we have to compress gaps, by storing bit 8 in bit 0,
+ * using the fact that all gaps (except between 2 and 3) are even.
+ */
+export const maxSmallGaps = 23_163_298;
+
+/**
  * Creates a compressed cache of prime gaps, so primes can be quickly calculated
  * and accessed, while consuming only 1/8th of memory, compared to number-s.
  *
@@ -17,7 +24,7 @@ export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
     let a = 0, i = 0, g = 0, k = 0, s = 1;
     let compress = (z: number) => z;
     let decompress = (z: number) => z;
-    if (length > 23_163_298) {
+    if (length > maxSmallGaps) {
         // gaps can exceed 255, need extra compression:
         compress = (z: number) => z & 1 ? z : z & 254 | z >>> 8;
         decompress = (z: number) => z | 254 ? z & 254 | (z & 1) << 8 : z;
