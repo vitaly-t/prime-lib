@@ -120,10 +120,10 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
  * Also, the current implementation is limited by a sub-32-bit range, capable of
  * producing about 103mln primes, which we round down to 100mln, for simplicity.
  */
-const maxLimit = 100_000_000;
+export const maxBoostLimit = 100_000_000;
 
 export function* sieveIntBoost(n: number): IterableIterator<number> {
-    const maxCount = n > maxLimit ? maxLimit : n;
+    const maxCount = Math.min(n, maxBoostLimit);
     const bufferLimit = Math.floor(2.265 * maxCount * (Math.log10(maxCount) + 1));
     yield 2;
     const gen = sieveOddPrimesTo(bufferLimit);

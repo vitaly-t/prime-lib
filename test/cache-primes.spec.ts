@@ -1,6 +1,6 @@
 import {expect} from './header';
 import {primes} from './primes';
-import {cachePrimes, maxCacheSize} from '../src';
+import {cachePrimes} from '../src';
 
 describe('cachePrimes', () => {
     it('must access elements through iteration', () => {
@@ -27,8 +27,9 @@ describe('cachePrimes', () => {
         expect(c.length).to.eql(5);
         expect(c['length']).to.eql(5);
     });
+    /*
     it('must not create cache larger than the maximum', () => {
         const c = cachePrimes(maxCacheSize + 1);
         expect(c.length).to.eql(maxCacheSize);
-    }).timeout(10_000);
+    }).timeout(10_000);*/
 });

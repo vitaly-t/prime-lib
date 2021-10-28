@@ -1,10 +1,4 @@
-import {sieveIntBoost} from './soe-generators';
-
-/**
- * Maximum cache size that can be specified. It equals to the
- * maximum number of primes with gap <= 255, to fit into a byte.
- */
-export const maxCacheSize = 23_163_298;
+import {sieveIntBoost, maxBoostLimit} from './soe-generators';
 
 /**
  * Creates a compressed cache of prime gaps, so primes can be quickly calculated
@@ -14,20 +8,27 @@ export const maxCacheSize = 23_163_298;
  * access it uses an optimized list of segments, for faster value calculation.
  */
 export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
-    const step = Math.floor(7 * Math.log(n)); // optimum segment size
-    const length = Math.min(n, maxCacheSize);
+    const length = Math.min(n, maxBoostLimit);
+    const step = Math.floor(7 * Math.log(length)); // optimum segment size
     const segmentLength = Math.floor(length / step);
     const gaps = new Uint8Array(length - segmentLength);
     const segments = new Uint32Array(segmentLength);
     const t = sieveIntBoost(length);
     let a = 0, i = 0, g = 0, k = 0, s = 1;
+    let compress = (z: number) => z;
+    let decompress = (z: number) => z;
+    if (length > 23_163_298) {
+        // gaps can exceed 255, need extra compression:
+        compress = (z: number) => z & 1 ? z : z & 254 | z >>> 8;
+        decompress = (z: number) => z | 254 ? z & 254 | (z & 1) << 8 : z;
+    }
     while (i++ < length) {
         const v = t.next().value;
         if (s++ === step) {
             segments[k++] = v;
             s = 1;
         } else {
-            gaps[g++] = v - a;
+            gaps[g++] = compress(v - a);
         }
         a = v;
     }
@@ -44,7 +45,7 @@ export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
                         value = segments[k++];
                         s = 1;
                     } else {
-                        value += gaps[g++];
+                        value += decompress(gaps[g++]);
                     }
                     return {value};
                 }
@@ -67,7 +68,7 @@ export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
                     end = idx - k;
                 }
                 for (let i = start; i < end; i++) {
-                    a += gaps[i];
+                    a += decompress(gaps[i]);
                 }
                 return a;
             }
