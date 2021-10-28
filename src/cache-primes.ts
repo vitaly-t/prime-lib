@@ -66,11 +66,8 @@ export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
 
     return new Proxy(obj, {
         get: (target: any, prop: string | symbol) => {
-            const idx = typeof prop === 'string' ? Number(prop) : NaN;
-            if (idx < 0 || idx >= length) {
-                return;
-            }
-            if (idx >= 0) {
+            const idx = typeof prop === 'string' ? +prop : NaN;
+            if (idx >= 0 && idx < length) {
                 const s = step - 1;
                 let a = 0, start = 0, end = idx + 1;
                 if (idx >= s) {
@@ -83,6 +80,9 @@ export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
                     a += huge ? decompress(gaps[i]) : gaps[i];
                 }
                 return a;
+            }
+            if (idx < 0 || idx >= length) {
+                return;
             }
             return target[prop];
         }
