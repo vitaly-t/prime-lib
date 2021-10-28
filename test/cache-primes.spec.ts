@@ -1,6 +1,7 @@
 import {expect} from './header';
 import {primes} from './primes';
-import {cachePrimes, maxCacheSize} from '../src';
+import {isPrime} from '../src';
+import {cachePrimes, maxSmallGaps} from '../src';
 
 describe('cachePrimes', () => {
     it('must access elements through iteration', () => {
@@ -27,8 +28,19 @@ describe('cachePrimes', () => {
         expect(c.length).to.eql(5);
         expect(c['length']).to.eql(5);
     });
-    it('must not create cache larger than the maximum', () => {
-        const c = cachePrimes(maxCacheSize + 1);
-        expect(c.length).to.eql(maxCacheSize);
+    it('must create primes from compressed gaps', () => {
+        const size = maxSmallGaps + 1000;
+        const c = cachePrimes(size);
+        expect(c.length).to.eql(size);
+        for (let i = maxSmallGaps; i < size; i++) {
+            expect(isPrime(c[i])).to.be.true;
+        }
+        let p;
+        for (const a of c) {
+            p = a;
+        }
+        expect(c[0]).to.eql(2);
+        expect(c[1]).to.eql(3);
+        expect(p).to.eql(c[size - 1]);
     }).timeout(10_000);
 });
