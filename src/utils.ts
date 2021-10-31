@@ -22,7 +22,7 @@ export function stopWhen<T>(iterator: Iterator<T>, cb: (value: T, index: number)
  * Stops an iterator, once the count is reached.
  */
 export function stopOnCount<T>(iterator: Iterator<T>, count: number): Iterable<T> {
-    return stopWhen(iterator, (value: T, index: number) => index === count);
+    return stopWhen(iterator, (value: T, index: number) => index >= count);
 }
 
 /**

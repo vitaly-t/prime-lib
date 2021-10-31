@@ -5,10 +5,10 @@ const expect = chai.expect;
 
 export {chai, describe, expect};
 
-export function countItems(iterator: Iterable<any>): number {
-    const r = iterator[Symbol.iterator]();
+export function countItems(i: Iterable<any>): number {
+    const a = i[Symbol.iterator]();
     let count = 0;
-    while (!r.next().done) {
+    while (!a.next().done) {
         count++;
     }
     return count;
