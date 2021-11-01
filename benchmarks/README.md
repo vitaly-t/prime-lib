@@ -25,7 +25,8 @@ $ npm run bench sieveInt sieveIntStart
 
 **Most recent benchmark run:**
 
-![image](https://user-images.githubusercontent.com/5108906/138574643-d0f032ba-c8fb-4530-a7e7-3862756806c6.png)
+![image](https://user-images.githubusercontent.com/5108906/139617619-30e00ff7-86f6-4c26-b0b7-f9a7aab0347b.png)
+
 
 
 
