@@ -3,13 +3,21 @@ import {sieveIntBoost, maxBoostLimit} from './soe-generators';
 /**
  * Return type from cachePrimes function.
  */
-export interface IPrimesCache extends IterableIterator<number>, ArrayLike<number> {
+export interface IPrimesCache extends Iterable<number>, ArrayLike<number> {
     /**
-     * Returns prime from index, if the latter is within the range.
-     *
-     * It is about 4 times faster than [] syntax, which works through proxy.
+     * Fast prime accessor from index. It is 100 times faster than via Proxy.
      */
-    get(index: number): number | undefined;
+    readonly fastIndex: {
+        /**
+         * Returns prime from index, if the latter is within the range.
+         */
+        get(index: number): number | undefined;
+
+        /**
+         * Number of primes in the cache.
+         */
+        readonly length: number;
+    };
 }
 
 /**
@@ -55,52 +63,67 @@ export function cachePrimes(n: number): IPrimesCache {
         a = v;
     }
 
-    i = 0;
-    g = 0;
-    k = 0;
-    s = 1;
-    let value = 0;
+    const last = {
+        index: 0,
+        value: 0
+    };
 
     const obj: IPrimesCache = {
         length,
-        [Symbol.iterator](): IterableIterator<number> {
-            return this;
-        },
-        next(): IteratorResult<number> {
-            if (i++ === length) {
-                return {value: undefined, done: true};
-            }
-            if (s++ === step) {
-                value = segments[k++];
-                s = 1;
-            } else {
-                value += huge ? decompress(gaps[g++]) : gaps[g++];
-            }
-            return {value, done: false};
-        },
-        get(index: number): number | undefined {
-            if (index >= 0 && index < length) {
-                const s = step - 1;
-                let a = 0, start = 0, end = index + 1;
-                if (index >= s) {
-                    const k = ~~((index - s) / step);
-                    a = segments[k];
-                    start = (k + 1) * s;
-                    end = index - k;
+        [Symbol.iterator](): Iterator<number> {
+            let i = 0, g = 0, k = 0, s = 1, value = 0;
+            return {
+                next(): IteratorResult<number> {
+                    if (i++ === length) {
+                        return {value: undefined, done: true};
+                    }
+                    if (s++ === step) {
+                        value = segments[k++];
+                        s = 1;
+                    } else {
+                        value += huge ? decompress(gaps[g++]) : gaps[g++];
+                    }
+                    return {value, done: false};
                 }
-                for (let i = start; i < end; i++) {
-                    a += huge ? decompress(gaps[i]) : gaps[i];
+            };
+        },
+        fastIndex: {
+            length,
+            get(index: number): number | undefined {
+                if (index >= 0 && index < length) {
+                    const s = step - 1;
+                    let a = 0, start = 0, end = index + 1;
+                    if (index >= s) {
+                        const k = ~~((index - s) / step);
+                        a = segments[k];
+                        start = (k + 1) * s;
+                        end = index - k;
+                    }
+                    if (index === last.index + 1) {
+                        if (end > start) {
+                            last.value += huge ? decompress(gaps[end - 1]) : gaps[end - 1];
+                        } else {
+                            last.value = a;
+                        }
+                        last.index++;
+                        return last.value;
+                    }
+                    for (let i = start; i < end; i++) {
+                        a += huge ? decompress(gaps[i]) : gaps[i];
+                    }
+                    last.value = a;
+                    last.index = index;
+                    return a;
                 }
-                return a;
             }
         }
     };
 
-    return new Proxy(obj, {
+    return new Proxy<IPrimesCache>(obj, {
         get: (target: any, prop: string | symbol) => {
             const idx = typeof prop === 'string' ? +prop : NaN;
             if (Number.isInteger(idx)) {
-                return obj.get(idx);
+                return obj.fastIndex.get(idx);
             }
             return target[prop];
         }
