@@ -40,7 +40,7 @@ export interface IPrimeOptions {
 /**
  * Prime numbers generator, based on Sieve of Eratosthenes algorithm.
  */
-export function generatePrimes(options?: IPrimeOptions): IterableIterator<number> {
+export function generatePrimes(options?: IPrimeOptions): IterableIterator<number> & { length?: number } {
     const {boost = 0, start = 0} = options ?? {};
     if (start > 2) {
         return sieveIntStart(start);

@@ -122,15 +122,26 @@ export function* sieveIntStart(start: number): IterableIterator<number> {
  */
 export const maxBoostLimit = 100_000_000;
 
-export function* sieveIntBoost(n: number): IterableIterator<number> {
-    const maxCount = Math.min(n, maxBoostLimit);
-    const bufferLimit = Math.floor(2.265 * maxCount * (Math.log10(maxCount) + 1));
-    yield 2;
+export function sieveIntBoost(n: number): IterableIterator<number> & { length: number } {
+    const length = Math.min(n, maxBoostLimit);
+    const bufferLimit = Math.floor(2.265 * length * (Math.log10(length) + 1));
     const gen = sieveOddPrimesTo(bufferLimit);
-    let p, count = 0;
-    while (++count < maxCount && (p = gen())) {
-        yield p;
-    }
+    let value, count = 0;
+    return {
+        length,
+        [Symbol.iterator]() {
+            return this;
+        },
+        next() {
+            if (++count === 1 && length) {
+                return {value: 2};
+            }
+            if (count <= length && (value = gen())) {
+                return {value};
+            }
+            return {value: undefined, done: true};
+        }
+    };
 }
 
 /**
