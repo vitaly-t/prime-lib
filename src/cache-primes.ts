@@ -1,6 +1,18 @@
 import {sieveIntBoost, maxBoostLimit} from './soe-generators';
 
 /**
+ * Return type from cachePrimes function.
+ */
+export interface IPrimesCache extends IterableIterator<number>, ArrayLike<number> {
+    /**
+     * Returns prime from index, if the latter is within the range.
+     *
+     * It is about 4 times faster than [] syntax, which works through proxy.
+     */
+    get(index: number): number | undefined;
+}
+
+/**
  * Maximum number of primes for which gap <= 255, i.e. can fit into 1 byte.
  * After that, we have to compress gaps, by storing bit 8 in bit 0,
  * using the fact that all gaps (except between 2 and 3) are even.
@@ -18,7 +30,7 @@ export const maxSmallGaps = 23_163_298;
  *
  * Maximum cache size is for 100mln primes.
  */
-export function cachePrimes(n: number): IterableIterator<number> & ArrayLike<number> {
+export function cachePrimes(n: number): IPrimesCache {
     const length = Math.min(n, maxBoostLimit);
     const huge = length > maxSmallGaps;
     const step = Math.floor(7 * Math.log(length)); // optimum segment size
@@ -49,7 +61,7 @@ export function cachePrimes(n: number): IterableIterator<number> & ArrayLike<num
     s = 1;
     let value = 0;
 
-    const obj: IterableIterator<number> & ArrayLike<number> = {
+    const obj: IPrimesCache = {
         length,
         [Symbol.iterator](): IterableIterator<number> {
             return this;
@@ -65,28 +77,30 @@ export function cachePrimes(n: number): IterableIterator<number> & ArrayLike<num
                 value += huge ? decompress(gaps[g++]) : gaps[g++];
             }
             return {value, done: false};
-        }
-    };
-
-    return new Proxy(obj, {
-        get: (target: any, prop: string | symbol) => {
-            const idx = typeof prop === 'string' ? +prop : NaN;
-            if (idx >= 0 && idx < length) {
+        },
+        get(index: number): number | undefined {
+            if (index >= 0 && index < length) {
                 const s = step - 1;
-                let a = 0, start = 0, end = idx + 1;
-                if (idx >= s) {
-                    const k = ~~((idx - s) / step);
+                let a = 0, start = 0, end = index + 1;
+                if (index >= s) {
+                    const k = ~~((index - s) / step);
                     a = segments[k];
                     start = (k + 1) * s;
-                    end = idx - k;
+                    end = index - k;
                 }
                 for (let i = start; i < end; i++) {
                     a += huge ? decompress(gaps[i]) : gaps[i];
                 }
                 return a;
             }
-            if (idx < 0 || idx >= length) {
-                return;
+        }
+    };
+
+    return new Proxy(obj, {
+        get: (target: any, prop: string | symbol) => {
+            const idx = typeof prop === 'string' ? +prop : NaN;
+            if (Number.isInteger(idx)) {
+                return obj.get(idx);
             }
             return target[prop];
         }
