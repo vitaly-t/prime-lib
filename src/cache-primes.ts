@@ -5,11 +5,12 @@ import {sieveIntBoost, maxBoostLimit} from './soe-generators';
  */
 export interface IPrimesCache extends Iterable<number>, ArrayLike<number> {
     /**
-     * Fast prime accessor from index. It is 100 times faster than via Proxy.
+     * Fast primes accessor from index. It is 100 times faster than via Proxy.
      */
     readonly fastIndex: {
         /**
-         * Returns prime from index, if the latter is within the range.
+         * Returns a prime from index (0-based), or undefined when index is
+         * outside the range (0 <= index < length).
          */
         get(index: number): number | undefined;
 
@@ -33,13 +34,13 @@ export const maxSmallGaps = 23_163_298;
  * Creates a compressed cache of prime gaps, so primes can be quickly calculated
  * and accessed, while consuming only 1/8th of memory, compared to number-s.
  *
- * Access to primes is very fast, especially with for-of iteration. For index-based
- * access it uses an optimized list of segments, for faster value calculation.
+ * Access to primes is very fast, especially via indexes, for which access
+ * is optimized via segments and forward steps prediction.
  *
- * Maximum cache size is for 100mln primes.
+ * Maximum cache size is 100mln primes.
  */
 export function cachePrimes(n: number): IPrimesCache {
-    const length = Math.min(n, maxBoostLimit);
+    const length = Math.max(Math.min(n, maxBoostLimit), 0);
     const huge = length > maxSmallGaps;
     const step = Math.floor(7 * Math.log(length)); // optimum segment size
     const segmentLength = Math.floor(length / step);
@@ -63,6 +64,7 @@ export function cachePrimes(n: number): IPrimesCache {
         a = v;
     }
 
+    // last requested prime index+value
     const last = {
         index: 0,
         value: 0
@@ -100,6 +102,7 @@ export function cachePrimes(n: number): IPrimesCache {
                         end = index - k;
                     }
                     if (index === last.index + 1) {
+                        // we are likely in an index loop;
                         if (end > start) {
                             last.value += huge ? decompress(gaps[end - 1]) : gaps[end - 1];
                         } else {

@@ -43,4 +43,8 @@ describe('cachePrimes', () => {
         expect(c[1]).to.eql(3);
         expect(p).to.eql(c[size - 1]);
     }).timeout(10_000);
+    it('must handle bad cache size', () => {
+        expect([...cachePrimes(0)]).to.eql([]);
+        expect([...cachePrimes(-1)]).to.eql([]);
+    });
 });
