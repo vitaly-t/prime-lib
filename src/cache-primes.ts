@@ -18,7 +18,7 @@ export const maxSmallGaps = 23_163_298;
  *
  * Maximum cache size is for 100mln primes.
  */
-export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
+export function cachePrimes(n: number): IterableIterator<number> & ArrayLike<number> {
     const length = Math.min(n, maxBoostLimit);
     const huge = length > maxSmallGaps;
     const step = Math.floor(7 * Math.log(length)); // optimum segment size
@@ -43,24 +43,28 @@ export function cachePrimes(n: number): ArrayLike<number> & Iterable<number> {
         a = v;
     }
 
-    const obj = {
+    i = 0;
+    g = 0;
+    k = 0;
+    s = 1;
+    let value = 0;
+
+    const obj: IterableIterator<number> & ArrayLike<number> = {
         length,
-        [Symbol.iterator](): Iterator<number> {
-            let i = 0, g = 0, k = 0, s = 1, value = 0;
-            return {
-                next(): IteratorResult<number> {
-                    if (i++ === length) {
-                        return {value: undefined, done: true};
-                    }
-                    if (s++ === step) {
-                        value = segments[k++];
-                        s = 1;
-                    } else {
-                        value += huge ? decompress(gaps[g++]) : gaps[g++];
-                    }
-                    return {value, done: false};
-                }
-            };
+        [Symbol.iterator](): IterableIterator<number> {
+            return this;
+        },
+        next(): IteratorResult<number> {
+            if (i++ === length) {
+                return {value: undefined, done: true};
+            }
+            if (s++ === step) {
+                value = segments[k++];
+                s = 1;
+            } else {
+                value += huge ? decompress(gaps[g++]) : gaps[g++];
+            }
+            return {value, done: false};
         }
     };
 
