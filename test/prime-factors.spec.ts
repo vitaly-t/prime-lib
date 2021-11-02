@@ -2,11 +2,14 @@ import {expect} from './header';
 import {primes} from './primes';
 import {primeFactors} from '../src';
 
+function verifyFactors(x: number): boolean {
+    return primeFactors(x).reduce((c, i) => c *= i, 1) === x;
+}
+
 describe('primeFactors', () => {
     it('must cover complete initial range', () => {
         for (let i = 2; i < 1000; i++) {
-            const res = primeFactors(i).reduce((c, i) => c *= i, 1);
-            expect(res).to.eql(i);
+            expect(verifyFactors(i)).to.be.true;
         }
     });
     it('must work for all prime numbers', () => {
@@ -19,7 +22,11 @@ describe('primeFactors', () => {
         expect(primeFactors(600_851_475_143)).to.eql([71, 839, 1471, 6857]);
     });
     it('must handle large complex numbers', () => {
-        // TODO: This doesn't work currently (too slow)
-        // expect(primeFactors(2 ** 50 - 2)).to.eql([?]);
+        // TODO: This doesn't work currently (dead slow)
+        //  1125899906842622 = 2 ** 50 - 2
+        //  calculators where it works well:
+        //  - https://www.mathsisfun.com/numbers/prime-factorization-tool.html
+        //  - https://www.omnicalculator.com/math/prime-factorization
+        expect(primeFactors(1_125_899_906_842_622)).to.eql([2, 127, 4432676798593]);
     });
 });
