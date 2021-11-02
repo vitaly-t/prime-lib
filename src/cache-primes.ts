@@ -9,10 +9,10 @@ export interface IPrimesCache extends Iterable<number>, ArrayLike<number> {
      */
     readonly fastIndex: {
         /**
-         * Returns a prime from index (0-based), or undefined when index is
-         * outside the range (0 <= index < length).
+         * Returns a prime from index (0-based), or throws an error when index
+         * is invalid or outside the range (0 <= index < length).
          */
-        get(index: number): number | undefined;
+        get(index: number): number;
 
         /**
          * Number of primes in the cache.
@@ -64,7 +64,7 @@ export function cachePrimes(n: number): IPrimesCache {
         a = v;
     }
 
-    // last requested prime index+value
+    // last requested prime index + value:
     const last = {
         index: 0,
         value: 0
@@ -91,7 +91,7 @@ export function cachePrimes(n: number): IPrimesCache {
         },
         fastIndex: {
             length,
-            get(index: number): number | undefined {
+            get(index: number): number {
                 if (index >= 0 && index < length) {
                     const s = step - 1;
                     let a = 0, start = 0, end = index + 1;
@@ -118,6 +118,11 @@ export function cachePrimes(n: number): IPrimesCache {
                     last.index = index;
                     return a;
                 }
+                const badIndex = JSON.stringify(index);
+                if (index < 0 || index >= length) {
+                    throw new RangeError(`Prime index ${badIndex} is outsize range (length = ${length})`);
+                }
+                throw new TypeError(`Invalid prime index ${badIndex} specified.`);
             }
         }
     };
