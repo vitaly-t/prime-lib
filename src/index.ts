@@ -6,6 +6,7 @@ export {cachePrimes, IPrimesCache, maxSmallGaps} from './cache-primes';
 export {countPrimesApprox} from './count-primes-approx';
 export {nthPrimeApprox} from './nth-prime-approx';
 export {countPrimes} from './count-primes';
+export {primeFactors} from './prime-factors';
 export {nthPrime} from './nth-prime';
 export {isPrime} from './is-prime';
 
