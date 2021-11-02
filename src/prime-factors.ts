@@ -2,38 +2,23 @@
  * Calculates prime factorization of a number.
  *
  * Works up to 2^53 - 1 = 9_007_199_254_740_991
- *
- * TODO: This is a draft for high-performance calculation.
- *       It still needs a bit of refactoring + tests.
  */
 export function primeFactors(x: number): number[] {
-    cfg.result = [];
-    if (x > cfg.max) {
-        return cfg.result;
+    if (x > cfg.max || x < 2) {
+        return [];
     }
+    cfg.result.length = 0;
     cfg.numLeft = x;
-    if (cfg.numLeft === 0 || cfg.numLeft === 1) {
-        return cfg.result;
-    }
-    let doneQ = false, p = 0;
+    let done = false, p = 0;
     for (p; p < cfg.lowPrimeN; p++) {
         if (!testFact(cfg.lowPrimes[p])) {
-            doneQ = true;
+            done = true;
             break;
         }
     }
-    if (!doneQ) {
+    if (!done) {
         let fact = (((cfg.lowPrimes[p - 1] + 5) / 6) << 0) * 6 - 1;
-        while (true) {
-            if (!testFact(fact)) {
-                break;
-            }
-            fact += 2;
-            if (!testFact(fact)) {
-                break;
-            }
-            fact += 4;
-        }
+        while (testFact(fact += 2) && testFact(fact += 4));
     }
     if (cfg.numLeft !== 1) {
         addFact(cfg.numLeft, 1);
@@ -60,7 +45,7 @@ function addFact(fact: number, power: number): void {
 }
 
 const cfg = {
-    result: [] as number[],
+    result: new Array<number>(),
     max: 9007199254740991, // = 2^53 - 1
     numLeft: 0,
     lowPrimeN: 100,
