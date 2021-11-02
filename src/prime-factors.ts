@@ -19,7 +19,7 @@ export function primeFactors(x: number): number[] {
     }
     if (!done) {
         let fact = (((cfg.lowPrimes[p - 1] + 5) / 6) << 0) * 6 - 1;
-        while (testFact(fact += 2) && testFact(fact += 4)) ;
+        while (testFact(fact += 2) && testFact(fact += 4));
     }
     if (cfg.numLeft !== 1) {
         addFact(cfg.numLeft, 1);
