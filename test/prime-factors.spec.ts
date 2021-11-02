@@ -22,11 +22,6 @@ describe('primeFactors', () => {
         expect(primeFactors(600_851_475_143)).to.eql([71, 839, 1471, 6857]);
     });
     it('must handle large complex numbers', () => {
-        // TODO: This doesn't work currently (dead slow)
-        //  1125899906842622 = 2 ** 50 - 2
-        //  calculators where it works well:
-        //  - https://www.mathsisfun.com/numbers/prime-factorization-tool.html
-        //  - https://www.omnicalculator.com/math/prime-factorization
         expect(primeFactors(1_125_899_906_842_622)).to.eql([2, 127, 4432676798593]);
     });
 });
