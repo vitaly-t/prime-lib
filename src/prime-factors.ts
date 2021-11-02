@@ -1,12 +1,12 @@
 /**
  * Calculates prime factorization of a number.
  *
- * Works for 2 < x < (2^53 - 1 = 9_007_199_254_740_991 = Number.MAX_SAFE_INTEGER);
+ * Works for 2 <= x <= (2^53 - 1 = 9_007_199_254_740_991 = Number.MAX_SAFE_INTEGER);
  * throws error when x is outside the range.
  */
 export function primeFactors(x: number): number[] {
     if (x < 2 || x > Number.MAX_SAFE_INTEGER) {
-        throw new RangeError(`Value ${JSON.stringify(x)} outside range (2 < x < ${Number.MAX_SAFE_INTEGER})`);
+        throw new RangeError(`Value ${JSON.stringify(x)} outside range (2 <= x <= ${Number.MAX_SAFE_INTEGER})`);
     }
     cfg.result.length = 0;
     cfg.numLeft = x;
