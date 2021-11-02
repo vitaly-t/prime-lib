@@ -127,11 +127,12 @@ range(0, 20).pipe(filter(a => isPrime(a)))
 * `isPrime(x)` - verifies if `x` is a prime number
 * `countPrimes(x)` - precise primes counter, up to `x`, using [Meissel Lehmer algorithm]
 * `countPrimesApprox(x)` - instant primes counter, up to `x`, with error margin < 1%
+* `primeFactors(x)` - calculates prime factorization
 
 Work-in-progress:
 
 * `nthPrime(n)` - returns prime from index (_**not implemented yet**_)
-* `nthPrimeApprox` - returns approximate prime from index (_**not implemented yet**_)
+* `nthPrimeApprox(n)` - returns approximate prime from index (_**not implemented yet**_)
 
 #### <i>Extra helpers:</i>
 
