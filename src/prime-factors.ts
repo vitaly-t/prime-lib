@@ -1,16 +1,17 @@
 /**
  * Calculates prime factorization of a number.
  *
- * Works up to 2^53 - 1 = 9_007_199_254_740_991
+ * Works for 2 < x < (2^53 - 1 = 9_007_199_254_740_991 = Number.MAX_SAFE_INTEGER);
+ * throws error when x is outside the range.
  */
 export function primeFactors(x: number): number[] {
-    if (x > cfg.max || x < 2) {
-        return [];
+    if (x < 2 || x > Number.MAX_SAFE_INTEGER) {
+        throw new RangeError(`Value ${JSON.stringify(x)} outside range (2 < x < ${Number.MAX_SAFE_INTEGER})`);
     }
     cfg.result.length = 0;
     cfg.numLeft = x;
     let done = false, p = 0;
-    for (p; p < cfg.lowPrimeN; p++) {
+    for (p; p < 100; p++) {
         if (!testFact(cfg.lowPrimes[p])) {
             done = true;
             break;
@@ -18,7 +19,7 @@ export function primeFactors(x: number): number[] {
     }
     if (!done) {
         let fact = (((cfg.lowPrimes[p - 1] + 5) / 6) << 0) * 6 - 1;
-        while (testFact(fact += 2) && testFact(fact += 4));
+        while (testFact(fact += 2) && testFact(fact += 4)) ;
     }
     if (cfg.numLeft !== 1) {
         addFact(cfg.numLeft, 1);
@@ -46,9 +47,7 @@ function addFact(fact: number, power: number): void {
 
 const cfg = {
     result: new Array<number>(),
-    max: 9007199254740991, // = 2^53 - 1
     numLeft: 0,
-    lowPrimeN: 100,
     lowPrimes: [
         2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109,
         113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239,

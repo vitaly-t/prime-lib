@@ -24,4 +24,13 @@ describe('primeFactors', () => {
     it('must handle large complex numbers', () => {
         expect(primeFactors(1_125_899_906_842_622)).to.eql([2, 127, 4432676798593]);
     });
+    it('must throw error when outside range', () => {
+        const err = (x: number) => `Value ${JSON.stringify(x)} outside range (2 < x < ${Number.MAX_SAFE_INTEGER})`;
+        expect(() => {
+            primeFactors(1);
+        }).to.throw(err(1));
+        expect(() => {
+            primeFactors(Number.MAX_SAFE_INTEGER + 1);
+        }).to.throw(err(Number.MAX_SAFE_INTEGER + 1));
+    });
 });
