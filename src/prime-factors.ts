@@ -8,9 +8,9 @@ export function primeFactors(x: number): number[] {
     if (x >= 2 && x <= Number.MAX_SAFE_INTEGER) {
         cfg.result.length = 0;
         cfg.numLeft = x;
-        let done = false, p = 0;
-        const l = cfg.lowPrimes.length;
-        for (p; p < l; p++) {
+        let done, p = 0;
+        const {length} = cfg.lowPrimes;
+        for (p; p < length; p++) {
             if (!testFact(cfg.lowPrimes[p])) {
                 done = true;
                 break;
@@ -36,7 +36,7 @@ function testFact(fact: number): boolean {
     let power = 0;
     while (cfg.numLeft % fact === 0) {
         power++;
-        cfg.numLeft = cfg.numLeft / fact;
+        cfg.numLeft /= fact;
     }
     if (power !== 0) {
         addFact(fact, power);
