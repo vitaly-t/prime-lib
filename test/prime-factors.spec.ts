@@ -22,8 +22,13 @@ describe('primeFactors', () => {
         expect(primeFactors(1_125_899_906_842_622)).to.eql([2, 127, 4432676798593]);
         expect(primeFactors(Number.MAX_SAFE_INTEGER)).to.eql([6361, 69431, 20394401]);
     });
+    it('it must throw error on invalid value', () => {
+        expect(() => {
+            primeFactors('bla' as any);
+        }).to.throw('Invalid value "bla" specified.');
+    });
     it('must throw error when outside range', () => {
-        const err = (x: number) => `Value ${JSON.stringify(x)} outside range (2 <= x <= ${Number.MAX_SAFE_INTEGER})`;
+        const err = (x: number) => `Value ${JSON.stringify(x)} is outside range (2 <= x <= ${Number.MAX_SAFE_INTEGER})`;
         expect(() => {
             primeFactors(1);
         }).to.throw(err(1));

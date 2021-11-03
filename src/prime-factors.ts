@@ -5,26 +5,30 @@
  * throws error when x is outside the range.
  */
 export function primeFactors(x: number): number[] {
-    if (x < 2 || x > Number.MAX_SAFE_INTEGER) {
-        throw new RangeError(`Value ${JSON.stringify(x)} outside range (2 <= x <= ${Number.MAX_SAFE_INTEGER})`);
-    }
-    cfg.result.length = 0;
-    cfg.numLeft = x;
-    let done = false, p = 0;
-    for (p; p < 100; p++) {
-        if (!testFact(cfg.lowPrimes[p])) {
-            done = true;
-            break;
+    if (x >= 2 && x <= Number.MAX_SAFE_INTEGER) {
+        cfg.result.length = 0;
+        cfg.numLeft = x;
+        let done = false, p = 0;
+        for (p; p < 100; p++) {
+            if (!testFact(cfg.lowPrimes[p])) {
+                done = true;
+                break;
+            }
         }
+        if (!done) {
+            let fact = (((cfg.lowPrimes[p - 1] + 5) / 6) << 0) * 6 - 1;
+            while (testFact(fact += 2) && testFact(fact += 4));
+        }
+        if (cfg.numLeft !== 1) {
+            addFact(cfg.numLeft, 1);
+        }
+        return cfg.result;
     }
-    if (!done) {
-        let fact = (((cfg.lowPrimes[p - 1] + 5) / 6) << 0) * 6 - 1;
-        while (testFact(fact += 2) && testFact(fact += 4));
+    const badValue = JSON.stringify(x);
+    if (x < 2 || x > Number.MAX_SAFE_INTEGER) {
+        throw new RangeError(`Value ${badValue} is outside range (2 <= x <= ${Number.MAX_SAFE_INTEGER})`);
     }
-    if (cfg.numLeft !== 1) {
-        addFact(cfg.numLeft, 1);
-    }
-    return cfg.result;
+    throw new TypeError(`Invalid value ${badValue} specified.`);
 }
 
 function testFact(fact: number): boolean {

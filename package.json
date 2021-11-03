@@ -1,6 +1,6 @@
 {
   "name": "prime-lib",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "Prime number library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
