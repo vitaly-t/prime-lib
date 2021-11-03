@@ -4,54 +4,55 @@
  * Works for 2 <= x <= (2^53 - 1 = 9_007_199_254_740_991 = Number.MAX_SAFE_INTEGER);
  * throws error when x is outside the range.
  */
-export function primeFactors(x: number): number[] {
-    if (x >= 2 && x <= Number.MAX_SAFE_INTEGER) {
+export function primeFactors(x: bigint): bigint[] {
+    if (x >= BigInt(2)) {
         cfg.result.length = 0;
         cfg.numLeft = x;
         let done = false, p = 0;
         for (p; p < 100; p++) {
-            if (!testFact(cfg.lowPrimes[p])) {
+            if (!testFact(BigInt(cfg.lowPrimes[p]))) {
                 done = true;
                 break;
             }
         }
         if (!done) {
-            let fact = (((cfg.lowPrimes[p - 1] + 5) / 6) << 0) * 6 - 1;
-            while (testFact(fact += 2) && testFact(fact += 4));
+            let fact = BigInt((((cfg.lowPrimes[p - 1] + 5) / 6) << 0) * 6 - 1);
+            while (testFact(fact += BigInt(2)) && testFact(fact += BigInt(4))) ;
         }
-        if (cfg.numLeft !== 1) {
-            addFact(cfg.numLeft, 1);
+        if (cfg.numLeft !== BigInt(1)) {
+            addFact(cfg.numLeft, BigInt(1));
         }
         return cfg.result;
     }
     const badValue = JSON.stringify(x);
-    if (x < 2 || x > Number.MAX_SAFE_INTEGER) {
+    if (x < 2) {
         throw new RangeError(`Value ${badValue} is outside range (2 <= x <= ${Number.MAX_SAFE_INTEGER})`);
     }
     throw new TypeError(`Invalid value ${badValue} specified.`);
 }
 
-function testFact(fact: number): boolean {
-    let power = 0;
-    while (cfg.numLeft % fact === 0) {
+function testFact(fact: bigint): boolean {
+    const zero = BigInt(0);
+    let power = zero;
+    while (cfg.numLeft % fact === zero) {
         power++;
         cfg.numLeft = cfg.numLeft / fact;
     }
-    if (power !== 0) {
+    if (power !== zero) {
         addFact(fact, power);
     }
     return cfg.numLeft / fact > fact;
 }
 
-function addFact(fact: number, power: number): void {
+function addFact(fact: bigint, power: bigint): void {
     for (let i = 0; i < power; i++) {
         cfg.result.push(fact);
     }
 }
 
 const cfg = {
-    result: new Array<number>(),
-    numLeft: 0,
+    result: new Array<bigint>(),
+    numLeft: BigInt(0),
     lowPrimes: [
         2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109,
         113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239,
@@ -63,3 +64,6 @@ const cfg = {
         997, 1009, 1013, 1019, 1021, 1031, 1033, 1039
     ]
 };
+
+// THIS DOES NOT WORK! :( SCRAP IT!
+console.log(primeFactors(BigInt(99_999_999_999_999_999_990))); //=>2^20 * 5^20=1048576 * 95367431640625
