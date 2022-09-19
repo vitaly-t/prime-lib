@@ -23,7 +23,7 @@ export function primeFactors(x: number): number[] {
         if (cfg.numLeft !== 1) {
             addFact(cfg.numLeft, 1);
         }
-        return cfg.result;
+        return [...cfg.result];
     }
     const badValue = JSON.stringify(x);
     if (x < 2 || x > Number.MAX_SAFE_INTEGER) {
